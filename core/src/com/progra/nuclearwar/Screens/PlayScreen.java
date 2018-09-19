@@ -13,16 +13,14 @@ import com.progra.nuclearwar.NuclearWarGame;
 public class PlayScreen implements Screen {
 
     NuclearWarGame Game;
-    Texture texture;
 
     OrthographicCamera mainCamera;
     Viewport gameport;
 
     public PlayScreen(NuclearWarGame game) {
         this.Game = game;
-        texture = new Texture("badlogic.jpg");
         mainCamera = new OrthographicCamera();
-        gameport = new FitViewport(800,480, mainCamera);
+        gameport = new FitViewport(Game.V_WIDTH,Game.V_HEIGHT, mainCamera);
     }
 
     @Override
@@ -33,11 +31,10 @@ public class PlayScreen implements Screen {
     @Override
     public void render(float delta) {
 
-        Gdx.gl.glClearColor(1, 0, 0, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         Game.batch.setProjectionMatrix(mainCamera.combined);
         Game.batch.begin();
-        Game.batch.draw(texture,0,0);
         Game.batch.end();
     }
 
