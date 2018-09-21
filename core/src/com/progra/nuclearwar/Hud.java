@@ -12,7 +12,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class Hud {
 
-    Stage stage;
+    public Stage stage;
     Viewport vport;
     Integer worldtimer;
     float timer;
@@ -52,6 +52,18 @@ public class Hud {
         name = new Label("Player", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
 
+
+        playerhud.add(name).expandX().padTop(10);
+        playerhud.add(world).expandX().padTop(10);
+        playerhud.add(time).expandX().padTop(10);
+
+        playerhud.row();
+        playerhud.add(scorelabel).expandX();
+        playerhud.add(worldnmb).expandX();
+        playerhud.add(timertxt).expandX();
+
+
+        stage.addActor(playerhud);
 
     }
 }

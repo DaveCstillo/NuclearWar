@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.progra.nuclearwar.Hud;
 import com.progra.nuclearwar.NuclearWarGame;
 
 public class PlayScreen implements Screen {
@@ -16,11 +17,13 @@ public class PlayScreen implements Screen {
 
     OrthographicCamera mainCamera;
     Viewport gameport;
+    Hud hud;
 
     public PlayScreen(NuclearWarGame game) {
         this.Game = game;
         mainCamera = new OrthographicCamera();
         gameport = new FitViewport(Game.V_WIDTH,Game.V_HEIGHT, mainCamera);
+        hud = new Hud(Game.batch);
     }
 
     @Override
@@ -33,9 +36,8 @@ public class PlayScreen implements Screen {
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        Game.batch.setProjectionMatrix(mainCamera.combined);
-        Game.batch.begin();
-        Game.batch.end();
+        Game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.stage.draw();
     }
 
     @Override
