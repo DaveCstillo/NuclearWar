@@ -10,8 +10,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.progra.nuclearwar.Screens.PlayScreen;
 
 public class NuclearWarGame extends Game {
-	public static final int V_WIDTH = 400;
-	public static final int V_HEIGHT = 240;
+	public static final int V_WIDTH = 800;
+	public static final int V_HEIGHT = 460;
 
 	public SpriteBatch batch;
 	
