@@ -4,9 +4,19 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -24,6 +34,9 @@ public class PlayScreen implements Screen {
     OrthogonalTiledMapRenderer renderer;
     TmxMapLoader loader;
 
+    World world;
+    Box2DDebugRenderer box2drenderer;
+
     public PlayScreen(NuclearWarGame game) {
         this.Game = game;
         mainCamera = new OrthographicCamera();
@@ -33,7 +46,90 @@ public class PlayScreen implements Screen {
         map = loader.load("mapa1.tmx");
         renderer = new OrthogonalTiledMapRenderer(map);
         mainCamera.position.set(gameport.getWorldWidth()/2,gameport.getWorldHeight()/2,0);
+        world = new World(new Vector2(0, 0),true);
+        Box2dRenderer = new Box2DDebugRenderer();
 
+        BodyDef bodydef = new BodyDef();
+        PolygonShape polygonshape = new PolygonShape();
+        FixtureDef fixturedef = new FixtureDef();
+        Body body;
+
+
+        for (MapObject object : map.getLayers().get(7).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject)object).getRectangle();
+
+            bodydef.type = BodyDef.BodyType.StaticBody;
+            bodydef.position.set(rect.getX()+ rect.getWidth()/2, rect.getY()+rect.getHeight()/2);
+
+            body = world.createBody(bodydef);
+
+            polygonshape.setAsBox(rect.getWidth()/2,rect.getHeight()/2);
+
+            fixturedef.shape = polygonshape;
+
+            body.createFixture(fixturedef);
+        }
+
+
+        for (MapObject object : map.getLayers().get(9).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject)object).getRectangle();
+
+            bodydef.type = BodyDef.BodyType.StaticBody;
+            bodydef.position.set(rect.getX()+ rect.getWidth()/2, rect.getY()+rect.getHeight()/2);
+
+            body = world.createBody(bodydef);
+
+            polygonshape.setAsBox(rect.getWidth()/2,rect.getHeight()/2);
+
+            fixturedef.shape = polygonshape;
+
+            body.createFixture(fixturedef);
+        }
+
+        for (MapObject object : map.getLayers().get(11).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject)object).getRectangle();
+
+            bodydef.type = BodyDef.BodyType.StaticBody;
+            bodydef.position.set(rect.getX()+ rect.getWidth()/2, rect.getY()+rect.getHeight()/2);
+
+            body = world.createBody(bodydef);
+
+            polygonshape.setAsBox(rect.getWidth()/2,rect.getHeight()/2);
+
+            fixturedef.shape = polygonshape;
+
+            body.createFixture(fixturedef);
+        }
+
+        for (MapObject object : map.getLayers().get(12).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject)object).getRectangle();
+
+            bodydef.type = BodyDef.BodyType.StaticBody;
+            bodydef.position.set(rect.getX()+ rect.getWidth()/2, rect.getY()+rect.getHeight()/2);
+
+            body = world.createBody(bodydef);
+
+            polygonshape.setAsBox(rect.getWidth()/2,rect.getHeight()/2);
+
+            fixturedef.shape = polygonshape;
+
+            body.createFixture(fixturedef);
+        }
+
+        for (MapObject object : map.getLayers().get(14).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject)object).getRectangle();
+
+            bodydef.type = BodyDef.BodyType.StaticBody;
+            bodydef.position.set(rect.getX()+ rect.getWidth()/2, rect.getY()+rect.getHeight()/2);
+
+            body = world.createBody(bodydef);
+
+            polygonshape.setAsBox(rect.getWidth()/2,rect.getHeight()/2);
+
+            fixturedef.shape = polygonshape;
+
+            body.createFixture(fixturedef);
+        }
     }
 
         public void handleinput(float dt){
@@ -66,6 +162,7 @@ public class PlayScreen implements Screen {
 
         renderer.render();
 
+        box2drenderer.render(world, mainCamera.combined);
 
         Game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
