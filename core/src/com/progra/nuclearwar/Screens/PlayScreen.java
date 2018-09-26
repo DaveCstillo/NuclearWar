@@ -25,6 +25,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.progra.nuclearwar.Hud;
 import com.progra.nuclearwar.NuclearWarGame;
+import com.progra.nuclearwar.Sprites.Character;
 
 public class PlayScreen implements Screen {
 
@@ -40,16 +41,18 @@ public class PlayScreen implements Screen {
     World world;
     Box2DDebugRenderer box2drenderer;
 
+    Character player;
+
     public PlayScreen(NuclearWarGame game) {
         this.Game = game;
         mainCamera = new OrthographicCamera();
-        gameport = new FitViewport(Game.V_WIDTH, Game.V_HEIGHT,mainCamera);
+        gameport = new FitViewport(Game.V_WIDTH /Game.PPM, Game.V_HEIGHT / Game.PPM,mainCamera);
         hud = new Hud(Game.batch);
         loader = new TmxMapLoader();
         map = loader.load("mapa1.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map);
+        renderer = new OrthogonalTiledMapRenderer(map,1/Game.PPM);
         mainCamera.position.set(gameport.getWorldWidth()/2,gameport.getWorldHeight()/2,0);
-        world = new World(new Vector2(0, 0),true);
+        world = new World(new Vector2(0, -10/Game.PPM),true);
         box2drenderer = new Box2DDebugRenderer();
 
         BodyDef bodydef = new BodyDef();
@@ -58,16 +61,17 @@ public class PlayScreen implements Screen {
         FixtureDef fixturedef = new FixtureDef();
         Body body;
 
+        player = new Character(world);
 
         for (MapObject object : map.getLayers().get("ground").getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject)object).getRectangle();
 
             bodydef.type = BodyDef.BodyType.StaticBody;
-            bodydef.position.set(rect.getX()+ rect.getWidth()/2, rect.getY()+rect.getHeight()/2);
+            bodydef.position.set((rect.getX()+ rect.getWidth()/2)/Game.PPM, (rect.getY()+rect.getHeight()/2)/Game.PPM);
 
             body = world.createBody(bodydef);
 
-            polygonshape.setAsBox(rect.getWidth()/2,rect.getHeight()/2);
+            polygonshape.setAsBox((rect.getWidth()/2)/Game.PPM,(rect.getHeight()/2)/Game.PPM);
 
             fixturedef.shape = polygonshape;
 
@@ -79,11 +83,11 @@ public class PlayScreen implements Screen {
             Rectangle rect = ((RectangleMapObject)object).getRectangle();
 
             bodydef.type = BodyDef.BodyType.StaticBody;
-            bodydef.position.set(rect.getX()+ rect.getWidth()/2, rect.getY()+rect.getHeight()/2);
+            bodydef.position.set((rect.getX()+ rect.getWidth()/2)/Game.PPM, (rect.getY()+rect.getHeight()/2)/Game.PPM);
 
             body = world.createBody(bodydef);
 
-            polygonshape.setAsBox(rect.getWidth()/2,rect.getHeight()/2);
+            polygonshape.setAsBox((rect.getWidth()/2)/Game.PPM,(rect.getHeight()/2)/Game.PPM);
 
             fixturedef.shape = polygonshape;
 
@@ -94,11 +98,11 @@ public class PlayScreen implements Screen {
             Rectangle rect = ((RectangleMapObject)object).getRectangle();
 
             bodydef.type = BodyDef.BodyType.StaticBody;
-            bodydef.position.set(rect.getX()+ rect.getWidth()/2, rect.getY()+rect.getHeight()/2);
+            bodydef.position.set((rect.getX()+ rect.getWidth()/2)/Game.PPM, (rect.getY()+rect.getHeight()/2)/Game.PPM);
 
             body = world.createBody(bodydef);
 
-            polygonshape.setAsBox(rect.getWidth()/2,rect.getHeight()/2);
+            polygonshape.setAsBox((rect.getWidth()/2)/Game.PPM,(rect.getHeight()/2)/Game.PPM);
 
             fixturedef.shape = polygonshape;
 
@@ -109,11 +113,11 @@ public class PlayScreen implements Screen {
             Rectangle rect = ((RectangleMapObject)object).getRectangle();
 
             bodydef.type = BodyDef.BodyType.StaticBody;
-            bodydef.position.set(rect.x+ rect.width/2, rect.getY()+rect.getHeight()/2);
+            bodydef.position.set((rect.getX()+ rect.getWidth()/2)/Game.PPM, (rect.getY()+rect.getHeight()/2)/Game.PPM);
 
             body = world.createBody(bodydef);
 
-            polygonshape.setAsBox(rect.getWidth()/2,rect.getHeight()/2);
+            polygonshape.setAsBox((rect.getWidth()/2)/Game.PPM,(rect.getHeight()/2)/Game.PPM);
 
             fixturedef.shape = polygonshape;
 
@@ -124,11 +128,11 @@ public class PlayScreen implements Screen {
             Rectangle rect = ((RectangleMapObject)object).getRectangle();
 
             bodydef.type = BodyDef.BodyType.StaticBody;
-            bodydef.position.set(rect.getX()+ rect.getWidth()/2, rect.getY()+rect.getHeight()/2);
+            bodydef.position.set((rect.getX()+ rect.getWidth()/2)/Game.PPM, (rect.getY()+rect.getHeight()/2)/Game.PPM);
 
             body = world.createBody(bodydef);
 
-            polygonshape.setAsBox(rect.getWidth()/2,rect.getHeight()/2);
+            polygonshape.setAsBox((rect.getWidth()/2)/Game.PPM,(rect.getHeight()/2)/Game.PPM);
 
             fixturedef.shape = polygonshape;
 
@@ -138,9 +142,9 @@ public class PlayScreen implements Screen {
         for (MapObject object : map.getLayers().get("coins").getObjects().getByType(EllipseMapObject.class)){
             Ellipse ellipse = ((EllipseMapObject)object).getEllipse();
             bodydef.type = BodyDef.BodyType.StaticBody;
-            bodydef.position.set(ellipse.x+ ellipse.width/2, ellipse.y+ellipse.height/2);
+            bodydef.position.set((ellipse.x+ ellipse.width/2) / Game.PPM,(ellipse.y+ellipse.height/2)/Game.PPM);
             body = world.createBody(bodydef);
-            circle.setRadius(ellipse.height/2);
+            circle.setRadius((ellipse.height/2)/Game.PPM);
             fixturedef.shape = circle;
 
             body.createFixture(fixturedef);
@@ -149,7 +153,7 @@ public class PlayScreen implements Screen {
 
         public void handleinput(float dt){
             if(Gdx.input.isTouched()){
-                mainCamera.position.x += 200*dt;
+                mainCamera.position.x += 20*dt;
 
             }
     }
@@ -180,8 +184,13 @@ public class PlayScreen implements Screen {
         renderer.render();
 
         box2drenderer.render(world, mainCamera.combined);
-
         Game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+
+    //    Game.batch.begin();
+  //      player.draw(Game.batch);
+//        Game.batch.end();
+
+
         hud.stage.draw();
 
     }
