@@ -157,8 +157,10 @@ public class PlayScreen implements Screen {
 
      public void update(float dt){
         handleinput(dt);
+        world.step(1/60f,6,2);
         mainCamera.update();
         renderer.setView(mainCamera);
+
 
      }
 
