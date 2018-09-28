@@ -65,4 +65,24 @@ public class MController {
     public boolean isRpressed() {
         return rpressed;
     }
+
+    public boolean isanypressed(){
+        if(isLpressed()){
+            return true;
+        }
+        if(isRpressed()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public void resize(int width,int height){
+        btnvport.update(width,height);
+    }
+
+    public void draw(){
+        stage.draw();
+
+    }
 }
