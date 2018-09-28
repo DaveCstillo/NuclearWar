@@ -26,6 +26,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.progra.nuclearwar.Hud;
 import com.progra.nuclearwar.NuclearWarGame;
 import com.progra.nuclearwar.Sprites.Character;
+import com.progra.nuclearwar.Tools.AController;
+import com.progra.nuclearwar.Tools.MController;
 
 public class PlayScreen implements Screen {
 
@@ -43,6 +45,10 @@ public class PlayScreen implements Screen {
 
     Character player;
 
+    //Area de controles
+    MController mcontroller;
+    AController acontroller;
+
     public PlayScreen(NuclearWarGame game) {
         this.Game = game;
         mainCamera = new OrthographicCamera();
@@ -54,6 +60,8 @@ public class PlayScreen implements Screen {
         mainCamera.position.set(gameport.getWorldWidth()/2,gameport.getWorldHeight()/2,0);
         world = new World(new Vector2(0, -10/Game.PPM),true);
         box2drenderer = new Box2DDebugRenderer();
+        mcontroller = new MController(this);
+        acontroller = new AController(this);
 
         BodyDef bodydef = new BodyDef();
         PolygonShape polygonshape = new PolygonShape();
@@ -154,7 +162,15 @@ public class PlayScreen implements Screen {
         public void handleinput(float dt){
             if(Gdx.input.isTouched()){
                 mainCamera.position.x += 20*dt;
-
+            }
+            if(mcontroller.isLpressed()){
+                player.body.applyLinearImpulse(new Vector2(-1f,0),player.body.getWorldCenter(),true);
+            }
+            if(mcontroller.isRpressed()){
+                player.body.applyLinearImpulse(new Vector2(1f,0),player.body.getWorldCenter(),true);
+            }
+            if(acontroller.isJumppressed()){
+                player.body.applyLinearImpulse(new Vector2(0,0.03f),player.body.getWorldCenter(),true);
             }
     }
 
@@ -166,6 +182,10 @@ public class PlayScreen implements Screen {
         renderer.setView(mainCamera);
 
 
+     }
+
+     public Viewport getViewport(){
+        return gameport;
      }
 
     @Override

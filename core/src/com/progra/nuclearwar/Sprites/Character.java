@@ -14,7 +14,7 @@ import com.progra.nuclearwar.NuclearWarGame;
 public class Character extends Sprite {
 
     World world;
-    Body body;
+    public Body body;
 
     Stage stage;
     Viewport vport;

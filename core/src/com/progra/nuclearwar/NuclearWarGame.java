@@ -14,7 +14,7 @@ public class NuclearWarGame extends Game {
 	public static final int V_HEIGHT = 416;
 	public static final float PPM = 100; //Pixeles Por Metro
 
-	public SpriteBatch batch;
+	public static SpriteBatch batch;
 	
 	@Override
 	public void create () {
