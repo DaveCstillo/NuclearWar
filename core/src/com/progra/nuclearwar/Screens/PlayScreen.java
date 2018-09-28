@@ -172,6 +172,7 @@ public class PlayScreen implements Screen {
             if(acontroller.isJumppressed()){
                 player.body.applyLinearImpulse(new Vector2(0,0.03f),player.body.getWorldCenter(),true);
             }
+            
     }
 
 
@@ -212,12 +213,16 @@ public class PlayScreen implements Screen {
 
 
         hud.stage.draw();
+        acontroller.draw();
+        mcontroller.draw();
 
     }
 
     @Override
     public void resize(int width, int height) {
         gameport.update(width,height);
+        acontroller.resize(width,height);
+        mcontroller.resize(width,height);
 
     }
 

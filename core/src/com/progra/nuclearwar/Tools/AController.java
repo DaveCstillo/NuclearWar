@@ -45,4 +45,23 @@ public class AController {
     public boolean isJumppressed() {
         return jumppressed;
     }
+
+
+    public boolean isAnyPressed(){
+
+        if(isJumppressed()){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
+    public void resize(int width, int height){
+        btnvport.update(width,height);
+    }
+
+    public void draw(){
+        stage.draw();
+    }
 }
