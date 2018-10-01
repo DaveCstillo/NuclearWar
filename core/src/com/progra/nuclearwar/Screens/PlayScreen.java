@@ -60,8 +60,8 @@ public class PlayScreen implements Screen {
         mainCamera.position.set(gameport.getWorldWidth()/2,gameport.getWorldHeight()/2,0);
         world = new World(new Vector2(0, -10/Game.PPM),true);
         box2drenderer = new Box2DDebugRenderer();
-        mcontroller = new MController(this);
-        acontroller = new AController(this);
+        mcontroller = new MController(Game.batch);
+        acontroller = new AController(Game.batch);
 
         BodyDef bodydef = new BodyDef();
         PolygonShape polygonshape = new PolygonShape();
@@ -160,19 +160,17 @@ public class PlayScreen implements Screen {
     }
 
         public void handleinput(float dt){
-            if(Gdx.input.isTouched()){
-                mainCamera.position.x += 20*dt;
-            }
+
             if(mcontroller.isLpressed()){
                 player.body.applyLinearImpulse(new Vector2(-1f,0),player.body.getWorldCenter(),true);
             }
             if(mcontroller.isRpressed()){
-                player.body.applyLinearImpulse(new Vector2(1f,0),player.body.getWorldCenter(),true);
+                player.body.applyLinearImpulse(new Vector2(5f,0),player.body.getWorldCenter(),true);
             }
             if(acontroller.isJumppressed()){
                 player.body.applyLinearImpulse(new Vector2(0,0.03f),player.body.getWorldCenter(),true);
             }
-            
+
     }
 
 
