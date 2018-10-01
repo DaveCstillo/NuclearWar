@@ -20,6 +20,7 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -43,6 +44,8 @@ public class PlayScreen implements Screen {
     World world;
     Box2DDebugRenderer box2drenderer;
 
+    Stage stage;
+
     Character player;
 
     //Area de controles
@@ -58,10 +61,13 @@ public class PlayScreen implements Screen {
         map = loader.load("mapa1.tmx");
         renderer = new OrthogonalTiledMapRenderer(map,1/Game.PPM);
         mainCamera.position.set(gameport.getWorldWidth()/2,gameport.getWorldHeight()/2,0);
-        world = new World(new Vector2(0, -10/Game.PPM),true);
+        world = new World(new Vector2(0, -20),true);//gravedad
         box2drenderer = new Box2DDebugRenderer();
-        mcontroller = new MController(Game.batch);
-        acontroller = new AController(Game.batch);
+
+        stage = new Stage(gameport,Game.batch);
+
+        mcontroller = new MController(stage,gameport);
+        acontroller = new AController(stage,gameport);
 
         BodyDef bodydef = new BodyDef();
         PolygonShape polygonshape = new PolygonShape();
@@ -157,18 +163,22 @@ public class PlayScreen implements Screen {
 
             body.createFixture(fixturedef);
         }
+    Gdx.input.setInputProcessor(stage);
     }
 
         public void handleinput(float dt){
 
             if(mcontroller.isLpressed()){
-                player.body.applyLinearImpulse(new Vector2(-1f,0),player.body.getWorldCenter(),true);
+                player.body.setLinearVelocity(new Vector2(-2f,0));
             }
             if(mcontroller.isRpressed()){
-                player.body.applyLinearImpulse(new Vector2(5f,0),player.body.getWorldCenter(),true);
+                player.body.setLinearVelocity(new Vector2(2f,0));
             }
             if(acontroller.isJumppressed()){
                 player.body.applyLinearImpulse(new Vector2(0,0.03f),player.body.getWorldCenter(),true);
+            }
+            if(!mcontroller.isanypressed()){
+                player.body.setLinearVelocity(0,0);
             }
 
     }

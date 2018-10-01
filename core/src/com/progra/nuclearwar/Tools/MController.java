@@ -1,5 +1,6 @@
 package com.progra.nuclearwar.Tools;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -19,16 +20,16 @@ public class MController {
     Viewport btnvport;
     Stage stage;
 
-    public MController(SpriteBatch image) {
-        OrthographicCamera camera = new OrthographicCamera();
-        btnvport = new FitViewport(NuclearWarGame.V_WIDTH,NuclearWarGame.V_HEIGHT,camera);
-        stage = new Stage(btnvport, image);
+    public MController(Stage stage, Viewport vport) {
+        this.stage = stage;
+        btnvport = vport;
 
         Table table = new Table();
-        table.bottom().left();
+        table.setSize(60,60);
+        table.left().bottom();
 
         Image leftbtn = new Image(new Texture("leftbtn.png"));
-        leftbtn.setSize(20/NuclearWarGame.PPM,20/NuclearWarGame.PPM);
+        leftbtn.setSize(50/ NuclearWarGame.PPM,50/NuclearWarGame.PPM);
         leftbtn.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -42,7 +43,7 @@ public class MController {
             }
         });
         Image rightbtn = new Image(new Texture("rightbtn.png"));
-        rightbtn.setSize(80,80);
+        rightbtn.setSize(60/NuclearWarGame.PPM,60/NuclearWarGame.PPM);
         rightbtn.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -56,10 +57,10 @@ public class MController {
             }
         });
 
-        table.add(leftbtn).size(leftbtn.getWidth(),leftbtn.getHeight());
-        table.add(rightbtn).size(rightbtn.getWidth(),rightbtn.getHeight());
+        table.add(leftbtn).size(leftbtn.getWidth(),leftbtn.getHeight()).pad(1/NuclearWarGame.PPM,0.2f,1/NuclearWarGame.PPM,2/NuclearWarGame.PPM);
+        table.add(rightbtn).size(rightbtn.getWidth(),rightbtn.getHeight()).pad(1/NuclearWarGame.PPM,2/NuclearWarGame.PPM,1/NuclearWarGame.PPM,0.2f);
 
-        stage.addActor(table);
+        this.stage.addActor(table);
     }
 
     public boolean isLpressed() {

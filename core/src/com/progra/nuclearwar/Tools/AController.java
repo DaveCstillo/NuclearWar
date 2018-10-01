@@ -1,5 +1,6 @@
 package com.progra.nuclearwar.Tools;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -19,16 +20,16 @@ public class AController {
     Viewport btnvport;
     Stage stage;
 
-    public AController(SpriteBatch image) {
-        OrthographicCamera camera = new OrthographicCamera();
-        btnvport = new FitViewport(NuclearWarGame.V_WIDTH,NuclearWarGame.V_HEIGHT,camera);
-        stage = new Stage(btnvport, image);
+    public AController(Stage stage, Viewport vport) {
+        this.stage = stage;
+        btnvport = vport;
 
         Table table = new Table();
-        table.bottom().right();
+        table.setSize(60,60);
+        table.bottom().setBounds(2,0,1,1);
 
         Image jumpbtn = new Image(new Texture("jumpbtn.png"));
-        jumpbtn.setSize(20/NuclearWarGame.PPM,20/NuclearWarGame.PPM);
+        jumpbtn.setSize(80/NuclearWarGame.PPM,80/NuclearWarGame.PPM);
         jumpbtn.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -43,7 +44,7 @@ public class AController {
         });
         table.add(jumpbtn).size(jumpbtn.getWidth(),jumpbtn.getHeight());
 
-        stage.addActor(table);
+        this.stage.addActor(table);
     }
 
     public boolean isJumppressed() {
