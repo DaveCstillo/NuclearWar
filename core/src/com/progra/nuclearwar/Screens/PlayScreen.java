@@ -28,6 +28,7 @@ import com.progra.nuclearwar.Hud;
 import com.progra.nuclearwar.NuclearWarGame;
 import com.progra.nuclearwar.Sprites.Character;
 import com.progra.nuclearwar.Tools.AController;
+import com.progra.nuclearwar.Tools.B2worldcreator;
 import com.progra.nuclearwar.Tools.MController;
 
 public class PlayScreen implements Screen {
@@ -69,100 +70,9 @@ public class PlayScreen implements Screen {
         mcontroller = new MController(stage,gameport);
         acontroller = new AController(stage,gameport);
 
-        BodyDef bodydef = new BodyDef();
-        PolygonShape polygonshape = new PolygonShape();
-        CircleShape circle = new CircleShape();
-        FixtureDef fixturedef = new FixtureDef();
-        Body body;
+        new B2worldcreator(this);
 
         player = new Character(world);
-
-        for (MapObject object : map.getLayers().get("ground").getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect = ((RectangleMapObject)object).getRectangle();
-
-            bodydef.type = BodyDef.BodyType.StaticBody;
-            bodydef.position.set((rect.getX()+ rect.getWidth()/2)/Game.PPM, (rect.getY()+rect.getHeight()/2)/Game.PPM);
-
-            body = world.createBody(bodydef);
-
-            polygonshape.setAsBox((rect.getWidth()/2)/Game.PPM,(rect.getHeight()/2)/Game.PPM);
-
-            fixturedef.shape = polygonshape;
-
-            body.createFixture(fixturedef);
-        }
-
-
-        for (MapObject object : map.getLayers().get("spikes").getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect = ((RectangleMapObject)object).getRectangle();
-
-            bodydef.type = BodyDef.BodyType.StaticBody;
-            bodydef.position.set((rect.getX()+ rect.getWidth()/2)/Game.PPM, (rect.getY()+rect.getHeight()/2)/Game.PPM);
-
-            body = world.createBody(bodydef);
-
-            polygonshape.setAsBox((rect.getWidth()/2)/Game.PPM,(rect.getHeight()/2)/Game.PPM);
-
-            fixturedef.shape = polygonshape;
-
-            body.createFixture(fixturedef);
-        }
-
-        for (MapObject object : map.getLayers().get("ladder").getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect = ((RectangleMapObject)object).getRectangle();
-
-            bodydef.type = BodyDef.BodyType.StaticBody;
-            bodydef.position.set((rect.getX()+ rect.getWidth()/2)/Game.PPM, (rect.getY()+rect.getHeight()/2)/Game.PPM);
-
-            body = world.createBody(bodydef);
-
-            polygonshape.setAsBox((rect.getWidth()/2)/Game.PPM,(rect.getHeight()/2)/Game.PPM);
-
-            fixturedef.shape = polygonshape;
-
-            body.createFixture(fixturedef);
-        }
-
-        for (MapObject object : map.getLayers().get("platforms").getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect = ((RectangleMapObject)object).getRectangle();
-
-            bodydef.type = BodyDef.BodyType.StaticBody;
-            bodydef.position.set((rect.getX()+ rect.getWidth()/2)/Game.PPM, (rect.getY()+rect.getHeight()/2)/Game.PPM);
-
-            body = world.createBody(bodydef);
-
-            polygonshape.setAsBox((rect.getWidth()/2)/Game.PPM,(rect.getHeight()/2)/Game.PPM);
-
-            fixturedef.shape = polygonshape;
-
-            body.createFixture(fixturedef);
-        }
-
-        for (MapObject object : map.getLayers().get("walls").getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect = ((RectangleMapObject)object).getRectangle();
-
-            bodydef.type = BodyDef.BodyType.StaticBody;
-            bodydef.position.set((rect.getX()+ rect.getWidth()/2)/Game.PPM, (rect.getY()+rect.getHeight()/2)/Game.PPM);
-
-            body = world.createBody(bodydef);
-
-            polygonshape.setAsBox((rect.getWidth()/2)/Game.PPM,(rect.getHeight()/2)/Game.PPM);
-
-            fixturedef.shape = polygonshape;
-
-            body.createFixture(fixturedef);
-        }
-
-        for (MapObject object : map.getLayers().get("coins").getObjects().getByType(EllipseMapObject.class)){
-            Ellipse ellipse = ((EllipseMapObject)object).getEllipse();
-            bodydef.type = BodyDef.BodyType.StaticBody;
-            bodydef.position.set((ellipse.x+ ellipse.width/2) / Game.PPM,(ellipse.y+ellipse.height/2)/Game.PPM);
-            body = world.createBody(bodydef);
-            circle.setRadius((ellipse.height/2)/Game.PPM);
-            fixturedef.shape = circle;
-
-            body.createFixture(fixturedef);
-        }
     Gdx.input.setInputProcessor(stage);
     }
 
@@ -252,5 +162,13 @@ public class PlayScreen implements Screen {
     @Override
     public void dispose() {
 
+    }
+
+    public World getWorld() {
+        return world;
+    }
+
+    public TiledMap getMap() {
+        return map;
     }
 }
