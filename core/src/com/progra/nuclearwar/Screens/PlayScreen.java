@@ -61,7 +61,7 @@ public class PlayScreen implements Screen {
         map = loader.load("mapa1.tmx");
         renderer = new OrthogonalTiledMapRenderer(map,1/Game.PPM);
         mainCamera.position.set(gameport.getWorldWidth()/2,gameport.getWorldHeight()/2,0);
-        world = new World(new Vector2(0, -20),true);//gravedad
+        world = new World(new Vector2(0, -25),true);//gravedad
         box2drenderer = new Box2DDebugRenderer();
 
         stage = new Stage(gameport,Game.batch);
@@ -175,9 +175,9 @@ public class PlayScreen implements Screen {
                 player.body.setLinearVelocity(new Vector2(2f,0));
             }
             if(acontroller.isJumppressed()){
-                player.body.applyLinearImpulse(new Vector2(0,0.03f),player.body.getWorldCenter(),true);
+                player.body.applyLinearImpulse(new Vector2(0,1f),player.body.getWorldCenter(),true);
             }
-            if(!mcontroller.isanypressed()){
+            if(!mcontroller.isanypressed()&&!acontroller.isAnyPressed()){
                 player.body.setLinearVelocity(0,0);
             }
 

@@ -26,7 +26,7 @@ public class AController {
 
         Table table = new Table();
         table.setSize(60,60);
-        table.bottom().setBounds(2,0,1,1);
+        table.bottom().setBounds(7,0,1,1);
 
         Image jumpbtn = new Image(new Texture("jumpbtn.png"));
         jumpbtn.setSize(80/NuclearWarGame.PPM,80/NuclearWarGame.PPM);

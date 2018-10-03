@@ -25,11 +25,10 @@ public class MController {
         btnvport = vport;
 
         Table table = new Table();
-        table.setSize(60,60);
-        table.left().bottom();
+        table.left().bottom().setBounds(0,0,1,1);
 
         Image leftbtn = new Image(new Texture("leftbtn.png"));
-        leftbtn.setSize(50/ NuclearWarGame.PPM,50/NuclearWarGame.PPM);
+        leftbtn.setSize(60/ NuclearWarGame.PPM,60/NuclearWarGame.PPM);
         leftbtn.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
