@@ -18,11 +18,11 @@ public class AController {
     boolean jumppressed, firepressed;
 
     Viewport btnvport;
-    Stage stage;
+    public Stage stage;
 
-    public AController(Stage stage, Viewport vport) {
-        this.stage = stage;
-        btnvport = vport;
+    public AController(Stage escenario, Viewport puerto) {
+        btnvport = puerto;
+        stage = escenario;
 
         Table table = new Table();
         table.setSize(60,60);
@@ -41,7 +41,9 @@ public class AController {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 jumppressed = false;
             }
+
         });
+
         table.add(jumpbtn).size(jumpbtn.getWidth(),jumpbtn.getHeight());
 
         this.stage.addActor(table);

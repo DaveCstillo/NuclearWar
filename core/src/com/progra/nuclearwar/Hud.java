@@ -7,10 +7,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-public class Hud {
+public class Hud implements Disposable {
 
     public Stage stage;
     Viewport vport;
@@ -21,13 +22,13 @@ public class Hud {
 
     Label name, scorelabel, world, worldnmb, timertxt, time;
 
-    public Hud(SpriteBatch image) {
+    public Hud(SpriteBatch batch) {
         worldtimer = 300;
         timer = 0;
         score = 0;
         camera = new OrthographicCamera();
-        vport = new FitViewport(NuclearWarGame.V_WIDTH,NuclearWarGame.V_HEIGHT,camera);
-        stage = new Stage(vport, image);
+        vport = new FitViewport(NuclearWarGame.V_WIDTH, NuclearWarGame.V_HEIGHT,camera);
+        stage = new Stage(vport,batch);
 
 
 
@@ -66,4 +67,14 @@ public class Hud {
         stage.addActor(playerhud);
 
     }
+
+    public void draw(){
+        stage.draw();
+    }
+
+    @Override
+    public void dispose() {
+
+    }
+
 }

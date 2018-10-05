@@ -4,21 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.EllipseMapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Ellipse;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -30,13 +21,14 @@ import com.progra.nuclearwar.Sprites.Character;
 import com.progra.nuclearwar.Tools.AController;
 import com.progra.nuclearwar.Tools.B2worldcreator;
 import com.progra.nuclearwar.Tools.MController;
+import com.progra.nuclearwar.Tools.screenControllers;
 
 public class PlayScreen implements Screen {
 
     NuclearWarGame Game;
 
     OrthographicCamera mainCamera;
-    Viewport gameport;
+    Viewport gameport, UIport;
     Hud hud;
     TiledMap map;
     OrthogonalTiledMapRenderer renderer;
@@ -45,35 +37,43 @@ public class PlayScreen implements Screen {
     World world;
     Box2DDebugRenderer box2drenderer;
 
-    Stage stage;
+    Stage gameStage, UIstage;
 
     Character player;
 
     //Area de controles
     MController mcontroller;
     AController acontroller;
+    screenControllers controllers;
 
     public PlayScreen(NuclearWarGame game) {
         this.Game = game;
         mainCamera = new OrthographicCamera();
         gameport = new FitViewport(Game.V_WIDTH /Game.PPM, Game.V_HEIGHT / Game.PPM,mainCamera);
-        hud = new Hud(Game.batch);
         loader = new TmxMapLoader();
         map = loader.load("mapa1.tmx");
         renderer = new OrthogonalTiledMapRenderer(map,1/Game.PPM);
+        SpriteBatch batch = new SpriteBatch();
+
         mainCamera.position.set(gameport.getWorldWidth()/2,gameport.getWorldHeight()/2,0);
-        world = new World(new Vector2(0, -25),true);//gravedad
+        world = new World(new Vector2(0, -40),true);//gravedad
         box2drenderer = new Box2DDebugRenderer();
 
-        stage = new Stage(gameport,Game.batch);
+        gameStage = new Stage(gameport,batch);
 
-        mcontroller = new MController(stage,gameport);
-        acontroller = new AController(stage,gameport);
+        controllers = new screenControllers(Game.batch);
+        hud = new Hud(Game.batch);
+
+
+        mcontroller = controllers.getMovementC();
+        acontroller = controllers.getActionC();
 
         new B2worldcreator(this);
 
         player = new Character(world);
-    Gdx.input.setInputProcessor(stage);
+
+        //Gdx.input.setInputProcessor(UIstage);
+
     }
 
         public void handleinput(float dt){
@@ -85,7 +85,7 @@ public class PlayScreen implements Screen {
                 player.body.setLinearVelocity(new Vector2(2f,0));
             }
             if(acontroller.isJumppressed()){
-                player.body.applyLinearImpulse(new Vector2(0,1f),player.body.getWorldCenter(),true);
+                player.body.applyLinearImpulse(new Vector2(0,2f),player.body.getWorldCenter(),true);
             }
             if(!mcontroller.isanypressed()&&!acontroller.isAnyPressed()){
                 player.body.setLinearVelocity(0,0);
@@ -96,8 +96,12 @@ public class PlayScreen implements Screen {
 
      public void update(float dt){
         handleinput(dt);
-        world.step(1/60f,6,2);
+        world.step(1/60f,12,4);
+
+        mainCamera.position.x = player.body.getPosition().x;
         mainCamera.update();
+
+
         renderer.setView(mainCamera);
 
 
@@ -123,16 +127,15 @@ public class PlayScreen implements Screen {
         renderer.render();
 
         box2drenderer.render(world, mainCamera.combined);
-        Game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        Game.batch.setProjectionMatrix(mainCamera.combined);
 
     //    Game.batch.begin();
   //      player.draw(Game.batch);
 //        Game.batch.end();
 
 
-        hud.stage.draw();
-        acontroller.draw();
-        mcontroller.draw();
+        hud.draw();
+        controllers.draw();
 
     }
 
@@ -161,6 +164,12 @@ public class PlayScreen implements Screen {
 
     @Override
     public void dispose() {
+        map.dispose();
+        renderer.dispose();
+        world.dispose();
+        box2drenderer.dispose();
+        hud.dispose();
+        controllers.dispose();
 
     }
 
