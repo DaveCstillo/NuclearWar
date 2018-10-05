@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -40,6 +41,8 @@ public class PlayScreen implements Screen {
     Stage gameStage;
 
     Character player;
+    TextureAtlas atlas;
+
 
 
 
@@ -49,6 +52,8 @@ public class PlayScreen implements Screen {
     screenControllers controllers;
 
     public PlayScreen(NuclearWarGame game) {
+        atlas = new TextureAtlas("character.atlas");
+
         this.Game = game;
         mainCamera = new OrthographicCamera();
         gameport = new FitViewport(Game.V_WIDTH /Game.PPM, Game.V_HEIGHT / Game.PPM,mainCamera);
@@ -72,11 +77,15 @@ public class PlayScreen implements Screen {
 
         new B2worldcreator(this);
 
-        player = new Character(world);
+        player = new Character(world,this);
 
     }
 
-        public void handleinput(float dt){
+    public TextureAtlas getAtlas() {
+        return atlas;
+    }
+
+    public void handleinput(float dt){
 
             if(mcontroller.isLpressed()){
                 player.body.setLinearVelocity(new Vector2(-2f,0));
@@ -95,6 +104,8 @@ public class PlayScreen implements Screen {
 
 
      public void update(float dt){
+        player.update(dt);
+
         handleinput(dt);
         world.step(1/60f,12,4);
 
@@ -129,9 +140,10 @@ public class PlayScreen implements Screen {
         box2drenderer.render(world, mainCamera.combined);
         Game.batch.setProjectionMatrix(mainCamera.combined);
 
-    //    Game.batch.begin();
-  //      player.draw(Game.batch);
-//        Game.batch.end();
+        Game.batch.begin();
+        player.draw(Game.batch);
+        Game.batch.end();
+
 
 
         hud.draw();
