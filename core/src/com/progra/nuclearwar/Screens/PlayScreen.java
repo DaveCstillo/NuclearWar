@@ -13,7 +13,6 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.progra.nuclearwar.Hud;
 import com.progra.nuclearwar.NuclearWarGame;
@@ -23,12 +22,13 @@ import com.progra.nuclearwar.Tools.B2worldcreator;
 import com.progra.nuclearwar.Tools.MController;
 import com.progra.nuclearwar.Tools.screenControllers;
 
+
 public class PlayScreen implements Screen {
 
     NuclearWarGame Game;
 
     OrthographicCamera mainCamera;
-    Viewport gameport, UIport;
+    Viewport gameport;
     Hud hud;
     TiledMap map;
     OrthogonalTiledMapRenderer renderer;
@@ -37,9 +37,11 @@ public class PlayScreen implements Screen {
     World world;
     Box2DDebugRenderer box2drenderer;
 
-    Stage gameStage, UIstage;
+    Stage gameStage;
 
     Character player;
+
+
 
     //Area de controles
     MController mcontroller;
@@ -71,8 +73,6 @@ public class PlayScreen implements Screen {
         new B2worldcreator(this);
 
         player = new Character(world);
-
-        //Gdx.input.setInputProcessor(UIstage);
 
     }
 
