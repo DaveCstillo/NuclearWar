@@ -52,10 +52,10 @@ public class Character extends Sprite {
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
 
-        for(int i=6;i<9;i++){
+        for(int i=6;i<8;i++){
             frames.add(new TextureRegion(getTexture(),i*32,0,32,32));
         }
-        characterRun = new Animation(0.1f,frames);
+        characterRun = new Animation(0.2f,frames);
         frames.clear();
 
         characterJump = new TextureRegion(getTexture(),64,0,32,32);
@@ -81,7 +81,7 @@ public class Character extends Sprite {
                 region = (TextureRegion) characterRun.getKeyFrame(stateTimer,true);
                 break;
             case FALLING:
-            case STANDING:
+                case STANDING:
             default: region = characterStand;
             break;
         }
@@ -100,7 +100,7 @@ public class Character extends Sprite {
 
 
     public State getState(){
-        if(body.getLinearVelocity().y>0){
+        if(body.getLinearVelocity().y>0||body.getLinearVelocity().y<0&&PreviousState == State.JUMPING){
             return State.JUMPING;
         }else if(body.getLinearVelocity().y<0){
             return State.FALLING;
