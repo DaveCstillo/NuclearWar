@@ -3,9 +3,11 @@ package com.progra.nuclearwar.Sprites;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -125,6 +127,14 @@ public class Character extends Sprite {
         fixturedef.shape = circle;
 
         body.createFixture(fixturedef);
+
+        EdgeShape feet = new EdgeShape();
+        feet.set(new Vector2(-4/NuclearWarGame.PPM, -14/NuclearWarGame.PPM),new Vector2(4/NuclearWarGame.PPM, -14/NuclearWarGame.PPM));
+        fixturedef.shape = feet;
+        fixturedef.isSensor = true;
+
+        body.createFixture(fixturedef).setUserData("feet");
+
     }
 
 
