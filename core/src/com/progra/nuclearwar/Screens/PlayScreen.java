@@ -22,6 +22,7 @@ import com.progra.nuclearwar.Tools.AController;
 import com.progra.nuclearwar.Tools.B2worldcreator;
 import com.progra.nuclearwar.Tools.MController;
 import com.progra.nuclearwar.Tools.screenControllers;
+import com.progra.nuclearwar.Tools.worldContactListener;
 
 
 public class PlayScreen implements Screen {
@@ -78,6 +79,8 @@ public class PlayScreen implements Screen {
         new B2worldcreator(this);
 
         player = new Character(world,this);
+
+        world.setContactListener(new worldContactListener());
 
     }
 
