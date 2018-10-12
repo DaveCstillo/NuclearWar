@@ -22,11 +22,12 @@ public class Character extends Sprite {
 
     TextureRegion characterStand, characterJump;
 
-    public enum State{FALLING, JUMPING, STANDING, RUNNING}
+    public enum State{FALLING, JUMPING, STANDING, RUNNING, CLIMBING}
 
     public State Currentstate, PreviousState;
 
     Animation characterRun;
+    Animation characterClimb;
 
     boolean runningRight;
     float stateTimer;
@@ -36,6 +37,8 @@ public class Character extends Sprite {
 
     Stage stage;
     Viewport vport;
+
+    static boolean isClimbing;
 
     public Character(World world, PlayScreen screen) {
         super(screen.getAtlas().findRegion("walk"));
@@ -54,6 +57,12 @@ public class Character extends Sprite {
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
 
+        for(int i=0;i<2;i++){
+            frames.add(new TextureRegion(getTexture(),i*32,0,32,32));
+        }
+        characterClimb = new Animation(0.2f,frames);
+        frames.clear();
+
         for(int i=6;i<8;i++){
             frames.add(new TextureRegion(getTexture(),i*32,0,32,32));
         }
@@ -61,8 +70,8 @@ public class Character extends Sprite {
         frames.clear();
 
         characterJump = new TextureRegion(getTexture(),64,0,32,32);
-
     }
+
     public void update(float dt){
         setPosition(body.getPosition().x-getWidth()/2,body.getPosition().y-getHeight()/2);
         setRegion(getFrame(dt));
@@ -81,6 +90,9 @@ public class Character extends Sprite {
                 break;
             case RUNNING:
                 region = (TextureRegion) characterRun.getKeyFrame(stateTimer,true);
+                break;
+            case CLIMBING:
+                region = (TextureRegion) characterClimb.getKeyFrame(stateTimer,true);
                 break;
             case FALLING:
                 case STANDING:
@@ -103,12 +115,19 @@ public class Character extends Sprite {
 
     public State getState(){
         if(body.getLinearVelocity().y>0||body.getLinearVelocity().y<0&&PreviousState == State.JUMPING){
+            isClimbing = false;
             return State.JUMPING;
         }else if(body.getLinearVelocity().y<0){
+            isClimbing=false;
             return State.FALLING;
         }else if(body.getLinearVelocity().x!=0){
+            isClimbing=false;
             return State.RUNNING;
-        }else{
+        }else if(isClimbing && (Currentstate!=State.JUMPING && body.getLinearVelocity().y>0||body.getLinearVelocity().y<0)){
+            return State.CLIMBING;
+        }
+        else{
+            isClimbing = false;
             return State.STANDING;
         }
     }
@@ -124,8 +143,11 @@ public class Character extends Sprite {
         FixtureDef fixturedef = new FixtureDef();
 
         circle.setRadius(14/NuclearWarGame.PPM);
-        fixturedef.shape = circle;
 
+        fixturedef.filter.categoryBits = NuclearWarGame.PLAYER_BIT;
+        fixturedef.filter.maskBits = NuclearWarGame.GROUND_BIT | NuclearWarGame.SPIKES_BIT;
+
+        fixturedef.shape = circle;
         body.createFixture(fixturedef);
 
         EdgeShape feet = new EdgeShape();
@@ -135,6 +157,10 @@ public class Character extends Sprite {
 
         body.createFixture(fixturedef).setUserData("feet");
 
+    }
+
+    public void setClimbing(boolean climbing) {
+        this.isClimbing = climbing;
     }
 
 

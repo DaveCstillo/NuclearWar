@@ -14,6 +14,13 @@ public class NuclearWarGame extends Game {
 	public static final int V_HEIGHT = 416;
 	public static final float PPM = 100; //Pixeles Por Metro
 
+	public static final short DEFAULT_BIT = 1;
+	public static final short PLAYER_BIT = 2;
+	public static final short COINS_BIT = 4;
+	public static final short GROUND_BIT = 8;
+	public static final short LADDERS_BIT = 16;
+	public static final short SPIKES_BIT = 32;
+
 	public SpriteBatch batch;
 	
 	@Override

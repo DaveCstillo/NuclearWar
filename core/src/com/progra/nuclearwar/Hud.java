@@ -17,10 +17,11 @@ public class Hud implements Disposable {
     Viewport vport;
     Integer worldtimer;
     float timer;
-    Integer score;
+    static Integer score;
     OrthographicCamera camera;
 
-    Label name, scorelabel, world, worldnmb, timertxt, time;
+    Label name, world, worldnmb, timertxt, time;
+    static Label scorelabel;
 
     public Hud(SpriteBatch batch) {
         worldtimer = 300;
@@ -67,6 +68,19 @@ public class Hud implements Disposable {
         stage.addActor(playerhud);
 
     }
+    public void update(float dt){
+        timer += dt;
+        if(timer>= 1){
+            worldtimer--;
+            timertxt.setText(String.format("%03d", worldtimer));
+            timer=0;
+        }
+    }
+    public static void addScore(int value){
+        score += value;
+        scorelabel.setText(String.format("%06d", score));
+    }
+
 
     public void draw(){
         stage.draw();

@@ -21,7 +21,7 @@ public abstract class InteractiveTileObject {
     protected Rectangle bounds;
     protected Body body;
     protected Fixture fixture;
-    //public boolean DoorOpen;
+    public boolean Climbing;
 
     public InteractiveTileObject(PlayScreen screen, Rectangle bounds) {
         this.world = screen.getWorld();
@@ -30,7 +30,7 @@ public abstract class InteractiveTileObject {
         BodyDef bdef = new BodyDef();
         FixtureDef fdef = new FixtureDef();
         PolygonShape shape = new PolygonShape();
-      //  DoorOpen = false;
+        Climbing = false;
 
         bdef.type = BodyDef.BodyType.StaticBody;
         bdef.position.set((bounds.getX() + bounds.getWidth() / 2)  / NuclearWarGame.PPM, (bounds.getY() + bounds.getHeight() / 2)  / NuclearWarGame.PPM);
@@ -50,9 +50,11 @@ public abstract class InteractiveTileObject {
         fixture.setFilterData(filter);
     }
 
-  //  public boolean isDoorOpen(){return DoorOpen;
-  //  }
-//    public void setDoorOpen(boolean isOpen){this.DoorOpen = isOpen;
-  //  }
+    public boolean isClimbing() {
+        return Climbing;
+    }
 
+    public void setClimbing(boolean climbing) {
+        Climbing = climbing;
+    }
 }

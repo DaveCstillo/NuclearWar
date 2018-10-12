@@ -5,13 +5,15 @@ import com.badlogic.gdx.math.Ellipse;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
+import com.progra.nuclearwar.Hud;
 import com.progra.nuclearwar.NuclearWarGame;
 import com.progra.nuclearwar.Screens.PlayScreen;
 
-public class Coins {
+public class Coins  {
 World world;
 TiledMap map;
 Ellipse bounds;
@@ -31,9 +33,10 @@ Fixture fixture;
         body = world.createBody(bodydef);
         circle.setRadius((bounds.height/2)/NuclearWarGame.PPM);
 
+        fixdef.filter.categoryBits = NuclearWarGame.COINS_BIT;
+
         fixdef.shape = circle;
         fixture = body.createFixture(fixdef);
 
     }
-
 }

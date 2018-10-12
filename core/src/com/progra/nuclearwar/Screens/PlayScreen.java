@@ -64,7 +64,7 @@ public class PlayScreen implements Screen {
         SpriteBatch batch = new SpriteBatch();
 
         mainCamera.position.set(gameport.getWorldWidth()/2,gameport.getWorldHeight()/2,0);
-        world = new World(new Vector2(0, -40),true);//gravedad
+        world = new World(new Vector2(0, -80),true);//gravedad
         box2drenderer = new Box2DDebugRenderer();
 
         gameStage = new Stage(gameport,batch);
@@ -97,7 +97,7 @@ public class PlayScreen implements Screen {
                 player.body.setLinearVelocity(new Vector2(2f,0));
             }
             if(acontroller.isJumppressed()){
-                player.body.applyLinearImpulse(new Vector2(0,2f),player.body.getWorldCenter(),true);
+                player.body.applyLinearImpulse(new Vector2(0,4f),player.body.getWorldCenter(),true);
             }
             if(!mcontroller.isanypressed()&&!acontroller.isAnyPressed()){
                 player.body.setLinearVelocity(0,0);
@@ -108,9 +108,10 @@ public class PlayScreen implements Screen {
 
      public void update(float dt){
         player.update(dt);
+        hud.update(dt);
 
         handleinput(dt);
-        world.step(1/60f,12,4);
+        world.step(1/60f,6,2);
 
         mainCamera.position.x = player.body.getPosition().x;
         mainCamera.update();
@@ -194,5 +195,9 @@ public class PlayScreen implements Screen {
 
     public TiledMap getMap() {
         return map;
+    }
+
+    public Character getPlayer() {
+        return player;
     }
 }
