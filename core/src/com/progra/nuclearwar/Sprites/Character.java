@@ -18,6 +18,8 @@ import com.progra.nuclearwar.Screens.PlayScreen;
 
 import org.omg.CORBA.Current;
 
+import sun.security.krb5.internal.crypto.NullEType;
+
 public class Character extends Sprite {
 
     TextureRegion characterStand, characterJump;
@@ -115,19 +117,15 @@ public class Character extends Sprite {
 
     public State getState(){
         if(body.getLinearVelocity().y>0||body.getLinearVelocity().y<0&&PreviousState == State.JUMPING){
-            isClimbing = false;
             return State.JUMPING;
         }else if(body.getLinearVelocity().y<0){
-            isClimbing=false;
             return State.FALLING;
         }else if(body.getLinearVelocity().x!=0){
-            isClimbing=false;
             return State.RUNNING;
-        }else if(isClimbing && (Currentstate!=State.JUMPING && body.getLinearVelocity().y>0||body.getLinearVelocity().y<0)){
+        }else if(isClimbing){
             return State.CLIMBING;
         }
         else{
-            isClimbing = false;
             return State.STANDING;
         }
     }
@@ -151,9 +149,10 @@ public class Character extends Sprite {
         body.createFixture(fixturedef);
 
         EdgeShape feet = new EdgeShape();
-        feet.set(new Vector2(-4/NuclearWarGame.PPM, -14/NuclearWarGame.PPM),new Vector2(4/NuclearWarGame.PPM, -14/NuclearWarGame.PPM));
+        feet.set(new Vector2(-4/NuclearWarGame.PPM, -14 /NuclearWarGame.PPM),new Vector2(4/NuclearWarGame.PPM, -14/NuclearWarGame.PPM));
         fixturedef.shape = feet;
         fixturedef.isSensor = true;
+        fixturedef.filter.maskBits = NuclearWarGame.LADDERS_BIT | NuclearWarGame.SPIKES_BIT;
 
         body.createFixture(fixturedef).setUserData("feet");
 
