@@ -91,4 +91,7 @@ public class Hud implements Disposable {
 
     }
 
+    //TODO: ver como pasar el score cuando se tocan las monedas
+    //TODO: arreglar lo de la gravedad y el boton de salto
+
 }

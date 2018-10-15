@@ -39,4 +39,7 @@ Fixture fixture;
         fixture = body.createFixture(fixdef);
 
     }
+
+
+    //TODO: ver porque no detecta cuando topa con los coins
 }

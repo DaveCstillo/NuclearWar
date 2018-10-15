@@ -64,7 +64,7 @@ public class PlayScreen implements Screen {
         SpriteBatch batch = new SpriteBatch();
 
         mainCamera.position.set(gameport.getWorldWidth()/2,gameport.getWorldHeight()/2,0);
-        world = new World(new Vector2(0, -80),true);//gravedad
+        world = new World(new Vector2(0, -80),false);//gravedad
         box2drenderer = new Box2DDebugRenderer();
 
         gameStage = new Stage(gameport,batch);
@@ -82,6 +82,10 @@ public class PlayScreen implements Screen {
 
         world.setContactListener(new worldContactListener());
 
+    }
+
+    public void setGravity(float x, float y){
+        world.setGravity(new Vector2(x,y));
     }
 
     public TextureAtlas getAtlas() {
