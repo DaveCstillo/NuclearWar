@@ -143,16 +143,16 @@ public class Character extends Sprite {
         circle.setRadius(14/NuclearWarGame.PPM);
 
         fixturedef.filter.categoryBits = NuclearWarGame.PLAYER_BIT;
-        fixturedef.filter.maskBits = NuclearWarGame.GROUND_BIT | NuclearWarGame.SPIKES_BIT;
+        fixturedef.filter.maskBits = NuclearWarGame.GROUND_BIT | NuclearWarGame.SPIKES_BIT | NuclearWarGame.GROUND_LADDDER_BIT;
 
         fixturedef.shape = circle;
         body.createFixture(fixturedef);
 
         EdgeShape feet = new EdgeShape();
-        feet.set(new Vector2(-4/NuclearWarGame.PPM, -14 /NuclearWarGame.PPM),new Vector2(4/NuclearWarGame.PPM, -14/NuclearWarGame.PPM));
+        feet.set(new Vector2(-4/NuclearWarGame.PPM, -15 /NuclearWarGame.PPM),new Vector2(4/NuclearWarGame.PPM, -15/NuclearWarGame.PPM));
         fixturedef.shape = feet;
         fixturedef.isSensor = true;
-        fixturedef.filter.maskBits = NuclearWarGame.LADDERS_BIT | NuclearWarGame.SPIKES_BIT;
+        fixturedef.filter.maskBits = NuclearWarGame.LADDERS_BIT | NuclearWarGame.SPIKES_BIT | NuclearWarGame.GROUND_LADDDER_BIT;
 
         body.createFixture(fixturedef).setUserData("feet");
 

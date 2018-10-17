@@ -100,8 +100,11 @@ public class PlayScreen implements Screen {
             if(mcontroller.isRpressed()){
                 player.body.setLinearVelocity(new Vector2(2f,0));
             }
+            if(acontroller.isJumppressed() && player.body.getLinearVelocity().x!=0){
+                player.body.applyLinearImpulse(new Vector2(0,3f),player.body.getWorldCenter(),true);
+            }
             if(acontroller.isJumppressed()){
-                player.body.applyLinearImpulse(new Vector2(0,4f),player.body.getWorldCenter(),true);
+                player.body.applyLinearImpulse(new Vector2(0,2f),player.body.getWorldCenter(),true);
             }
             if(!mcontroller.isanypressed()&&!acontroller.isAnyPressed()){
                 player.body.setLinearVelocity(0,0);

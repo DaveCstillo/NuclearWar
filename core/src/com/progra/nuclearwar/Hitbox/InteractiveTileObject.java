@@ -50,6 +50,10 @@ public abstract class InteractiveTileObject {
         fixture.setFilterData(filter);
     }
 
+    public Filter getCategoryFilter(){
+        return fixture.getFilterData();
+    }
+
     public boolean isClimbing() {
         return Climbing;
     }

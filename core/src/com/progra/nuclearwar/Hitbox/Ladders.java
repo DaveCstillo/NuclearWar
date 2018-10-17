@@ -27,17 +27,21 @@ PlayScreen pantalla;
     public void onFeetHit() {
         Character player = pantalla.getPlayer();
 
-        Gdx.app.log("Ladder","Collision");
-        if(player.body.getLinearVelocity().y!=0 && !isClimbing()){
-            Gdx.app.log("Ladder","Climbing False");
+        //Gdx.app.log("Ladder","Collision");
+        if (player.body.getLinearVelocity().y != 0 && !isClimbing()) {
+            Gdx.app.log("Ladder", "Climbing false to True");
             setClimbing(true);
-            pantalla.setGravity(0,0);
+            pantalla.setGravity(0, -15);
             player.setClimbing(true);
+            //setCategoryFilter(NuclearWarGame.GROUND_LADDDER_BIT);
+        }if(player.body.getLinearVelocity().y==0 && !isClimbing() ){
+            setCategoryFilter(NuclearWarGame.GROUND_LADDDER_BIT);
         }else{
-            Gdx.app.log("Ladder","Climbing True");
+            Gdx.app.log("Ladder","Climbing true to False");
             setClimbing(false);
             pantalla.setGravity(0,-80);
             player.setClimbing(false);
+            setCategoryFilter(NuclearWarGame.LADDERS_BIT);
         }
     }
 
