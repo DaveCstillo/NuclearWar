@@ -24,6 +24,7 @@ public class NuclearWarGame extends Game {
 	public static final short DESTROYED_BIT = 128;
 
 	public SpriteBatch batch;
+
 	
 	@Override
 	public void create () {
