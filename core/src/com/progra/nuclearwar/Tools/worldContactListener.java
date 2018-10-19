@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.progra.nuclearwar.Hitbox.Ground;
 import com.progra.nuclearwar.Hitbox.InteractiveTileObject;
 
 public class worldContactListener implements ContactListener {
@@ -21,6 +22,10 @@ public class worldContactListener implements ContactListener {
 
             if(object.getUserData()!=null && InteractiveTileObject.class.isAssignableFrom(object.getUserData().getClass())){
                 ((InteractiveTileObject) object.getUserData()).onFeetHit();
+            if(object.getUserData() == Ground.class){
+                Gdx.app.log("Ground","tocando");
+                ((Ground)object.getUserData()).tocando();
+            }
 
             }
         }
@@ -38,7 +43,11 @@ public class worldContactListener implements ContactListener {
 
             if(object.getUserData()!=null && InteractiveTileObject.class.isAssignableFrom(object.getUserData().getClass())){
                 ((InteractiveTileObject) object.getUserData()).onFeetHit();
+                if(object.getUserData() == Ground.class){
+                    Gdx.app.log("Ground","no tocando");
+                    ((Ground)object.getUserData()).notocando();
 
+                }
             }
         }
     }

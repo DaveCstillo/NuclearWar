@@ -2,6 +2,7 @@ package com.progra.nuclearwar.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -44,7 +45,7 @@ public class PlayScreen implements Screen {
     Character player;
     TextureAtlas atlas;
 
-
+    private Music music;
 
 
     //Area de controles
@@ -82,6 +83,9 @@ public class PlayScreen implements Screen {
 
         world.setContactListener(new worldContactListener());
 
+        music = NuclearWarGame.assetManager.get("audio/music/music1.wav",Music.class);
+        music.setLooping(true);
+        music.play();
     }
 
     public void setGravity(float x, float y){

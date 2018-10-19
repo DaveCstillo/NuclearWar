@@ -3,6 +3,9 @@ package com.progra.nuclearwar;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -25,20 +28,34 @@ public class NuclearWarGame extends Game {
 
 	public SpriteBatch batch;
 
+	public static AssetManager assetManager;
+
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
+		assetManager = new AssetManager();
+		assetManager.load("audio/music/music1.wav",Music.class);
+		assetManager.load("audio/music/music2.wav",Music.class);
+		assetManager.load("audio/music/music3.wav",Music.class);
+		assetManager.load("audio/music/music4.wav",Music.class);
+		assetManager.load("audio/sounds/jump.wav",Music.class);
+		assetManager.load("audio/sounds/ladder.wav",Music.class);
+		assetManager.load("audio/sounds/running_in_grass.wav",Music.class);
+		assetManager.load("audio/sounds/spike_trap.wav",Music.class);
+		assetManager.finishLoading();
 		setScreen(new PlayScreen(this));
 	}
 
 	@Override
 	public void render () {
 		super.render();
+		assetManager.update();
 	}
-	
+
 	@Override
-	public void dispose () {
+	public void dispose() {
 		batch.dispose();
+		assetManager.dispose();
 	}
 }
