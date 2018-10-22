@@ -8,8 +8,11 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.progra.nuclearwar.Hitbox.Ground;
 import com.progra.nuclearwar.Hitbox.InteractiveTileObject;
+import com.progra.nuclearwar.Hitbox.Ladders;
 
 public class worldContactListener implements ContactListener {
+    boolean onLadder;
+
     @Override
     public void beginContact(Contact contact) {
         Gdx.app.log("Contact","Begin Contact");
@@ -22,11 +25,20 @@ public class worldContactListener implements ContactListener {
 
             if(object.getUserData()!=null && InteractiveTileObject.class.isAssignableFrom(object.getUserData().getClass())){
                 ((InteractiveTileObject) object.getUserData()).onFeetHit();
-            if(object.getUserData() == Ground.class){
+            if(object.getUserData().getClass() == Ground.class){
                 Gdx.app.log("Ground","tocando");
                 ((Ground)object.getUserData()).tocando();
             }
-
+            if(object.getUserData().getClass() == Ladders.class){
+                Gdx.app.log("Ladder","dentroEscalera");
+                ((Ladders)object.getUserData()).setToLadder();
+                if(onLadder){
+                    Gdx.app.log("Ladder","dentroEscalera");
+                    ((Ladders)object.getUserData()).setToLadder();
+                }else{
+                    ((Ladders)object.getUserData()).groundLadder();
+                }
+            }
             }
         }
     }
@@ -43,11 +55,19 @@ public class worldContactListener implements ContactListener {
 
             if(object.getUserData()!=null && InteractiveTileObject.class.isAssignableFrom(object.getUserData().getClass())){
                 ((InteractiveTileObject) object.getUserData()).onFeetHit();
-                if(object.getUserData() == Ground.class){
+                if(object.getUserData().getClass() == Ground.class){
                     Gdx.app.log("Ground","no tocando");
                     ((Ground)object.getUserData()).notocando();
-
                 }
+                if(object.getUserData().getClass() == Ladders.class){
+                    Gdx.app.log("Ladder","fueraEscalera");
+                    if(onLadder){
+                        onLadder = false;
+                    }else{
+                        onLadder = true;
+                    }
+                }
+
             }
         }
     }

@@ -34,7 +34,7 @@ PlayScreen pantalla;
             pantalla.setGravity(0, -15);
             player.setClimbing(true);
             //setCategoryFilter(NuclearWarGame.GROUND_LADDDER_BIT);
-        }if(player.body.getLinearVelocity().y==0 && !isClimbing() ){
+        }else if(player.body.getLinearVelocity().y==0 && !isClimbing() ){
             setCategoryFilter(NuclearWarGame.GROUND_LADDDER_BIT);
         }else{
             Gdx.app.log("Ladder","Climbing true to False");
@@ -44,6 +44,11 @@ PlayScreen pantalla;
             setCategoryFilter(NuclearWarGame.LADDERS_BIT);
         }
     }
-
+    public void groundLadder(){
+        setCategoryFilter(NuclearWarGame.GROUND_LADDDER_BIT);
+    }
+    public void setToLadder(){
+        setCategoryFilter(NuclearWarGame.LADDERS_BIT);
+    }
     //TODO: ver porque no detecta cuando esta sobre la escalera
 }

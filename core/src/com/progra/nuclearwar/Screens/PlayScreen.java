@@ -45,8 +45,9 @@ public class PlayScreen implements Screen {
     Character player;
     TextureAtlas atlas;
 
-    private Music music;
+    private Music music, grassSound;
 
+    boolean onGround = false;
 
     //Area de controles
     MController mcontroller;
@@ -85,7 +86,11 @@ public class PlayScreen implements Screen {
 
         music = NuclearWarGame.assetManager.get("audio/music/music1.wav",Music.class);
         music.setLooping(true);
-        music.play();
+
+        grassSound =  NuclearWarGame.assetManager.get("audio/sounds/running_in_grass.wav", Music.class);
+        grassSound.setLooping(true);
+
+        //music.play();
     }
 
     public void setGravity(float x, float y){
@@ -130,9 +135,19 @@ public class PlayScreen implements Screen {
 
         renderer.setView(mainCamera);
 
+        corriendo();
+
 
      }
 
+     public void corriendo(){
+        if(player.getState() == Character.State.RUNNING && isOnGround()){
+            grassSound.play();
+        }else{
+            grassSound.stop();
+         }
+
+     }
      public Viewport getViewport(){
         return gameport;
      }
@@ -210,5 +225,13 @@ public class PlayScreen implements Screen {
 
     public Character getPlayer() {
         return player;
+    }
+
+    public boolean isOnGround() {
+        return onGround;
+    }
+
+    public void setOnGround(boolean onGround) {
+        this.onGround = onGround;
     }
 }
