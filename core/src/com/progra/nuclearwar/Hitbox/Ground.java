@@ -8,14 +8,13 @@ import com.progra.nuclearwar.NuclearWarGame;
 import com.progra.nuclearwar.Screens.PlayScreen;
 
 public class Ground extends InteractiveTileObject{
-    private Music music;
+    PlayScreen pantalla;
 
     public Ground(PlayScreen screen, Rectangle bounds) {
         super(screen, bounds);
+        pantalla = screen;
         fixture.setUserData(this);
         setCategoryFilter(NuclearWarGame.GROUND_BIT);
-        music =  NuclearWarGame.assetManager.get("audio/music/music4.wav", Music.class);
-        music.setLooping(true);
     }
 
     @Override
@@ -26,21 +25,12 @@ public class Ground extends InteractiveTileObject{
     @Override
     public void onFeetHit() {
         Gdx.app.log("Ground","Collision");
-
-        if(music.isPlaying()){
-            music.stop();
-        }else{
-            music.play();
-        }
-
     }
 
     public void tocando(){
-       // if(!music.isPlaying())
-        music.play();
+        pantalla.setOnGround(true);
     }
     public void notocando(){
-     //   if(music.isPlaying())
-            music.stop();
+        pantalla.setOnGround(false);
     }
 }
