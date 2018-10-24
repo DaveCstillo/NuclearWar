@@ -54,6 +54,8 @@ public class PlayScreen implements Screen {
     AController acontroller;
     screenControllers controllers;
 
+    //TODo: Escalera.
+
     public PlayScreen(NuclearWarGame game) {
         atlas = new TextureAtlas("character.atlas");
 
@@ -109,11 +111,17 @@ public class PlayScreen implements Screen {
             if(mcontroller.isRpressed()){
                 player.body.setLinearVelocity(new Vector2(2f,0));
             }
-            if(acontroller.isJumppressed() && player.body.getLinearVelocity().x!=0){
-                player.body.applyLinearImpulse(new Vector2(0,3f),player.body.getWorldCenter(),true);
+            if(isOnGround() && acontroller.isJumppressed() && (mcontroller.isRpressed()||mcontroller.isLpressed())) {
+                if (mcontroller.isLpressed())
+                    player.body.applyLinearImpulse(new Vector2(0, 12f),player.body.getWorldCenter(),true);
+                else
+                    player.body.applyLinearImpulse(new Vector2(0,12f),player.body.getWorldCenter(),true);
             }
-            if(acontroller.isJumppressed()){
-                player.body.applyLinearImpulse(new Vector2(0,2f),player.body.getWorldCenter(),true);
+
+            //TODO: Arreglar salto.^v
+
+            if(isOnGround() && acontroller.isJumppressed()){
+                player.body.applyLinearImpulse(new Vector2(0,15f),player.body.getWorldCenter(),false);
             }
             if(!mcontroller.isanypressed()&&!acontroller.isAnyPressed()){
                 player.body.setLinearVelocity(0,0);

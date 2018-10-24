@@ -6,8 +6,11 @@ import com.progra.nuclearwar.NuclearWarGame;
 import com.progra.nuclearwar.Screens.PlayScreen;
 
 public class Platforms extends InteractiveTileObject {
+    PlayScreen Pantalla;
+
     public Platforms(PlayScreen screen, Rectangle bounds) {
         super(screen, bounds);
+        Pantalla = screen;
         fixture.setUserData(this);
         setCategoryFilter(NuclearWarGame.GROUND_BIT);
     }
@@ -20,5 +23,17 @@ public class Platforms extends InteractiveTileObject {
     @Override
     public void onFeetHit() {
         Gdx.app.log("Platform","Collision");
+
+        if(Pantalla.isOnGround()){
+            notocando();
+        }else{
+            tocando();
+        }
+    }
+    public void tocando(){
+        Pantalla.setOnGround(true);
+    }
+    public void notocando(){
+        Pantalla.setOnGround(false);
     }
 }
