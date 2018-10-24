@@ -19,6 +19,7 @@ public class AController {
 
     Viewport btnvport;
     public Stage stage;
+    Image jumpbtn;
 
     public AController(Stage escenario, Viewport puerto) {
         btnvport = puerto;
@@ -28,7 +29,7 @@ public class AController {
         table.setSize(60,60);
         table.bottom().setBounds(7,0,1,1);
 
-        Image jumpbtn = new Image(new Texture("jumpbtn.png"));
+        jumpbtn = new Image(new Texture("jumpbtn.png"));
         jumpbtn.setSize(80/NuclearWarGame.PPM,80/NuclearWarGame.PPM);
         jumpbtn.addListener(new InputListener(){
             @Override
@@ -70,5 +71,9 @@ public class AController {
 
     public void draw(){
         stage.draw();
+    }
+
+    public void toggleJumpDown(){
+
     }
 }

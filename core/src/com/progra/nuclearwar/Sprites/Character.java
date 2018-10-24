@@ -16,9 +16,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.progra.nuclearwar.NuclearWarGame;
 import com.progra.nuclearwar.Screens.PlayScreen;
 
-import org.omg.CORBA.Current;
-
-import sun.security.krb5.internal.crypto.NullEType;
 
 public class Character extends Sprite {
 
@@ -149,11 +146,12 @@ public class Character extends Sprite {
         body.createFixture(fixturedef);
 
         EdgeShape feet = new EdgeShape();
-        feet.set(new Vector2(-4/NuclearWarGame.PPM, -15 /NuclearWarGame.PPM),new Vector2(4/NuclearWarGame.PPM, -15/NuclearWarGame.PPM));
+        feet.set(new Vector2(-8/NuclearWarGame.PPM, -15 /NuclearWarGame.PPM),new Vector2(8/NuclearWarGame.PPM, -15/NuclearWarGame.PPM));
         fixturedef.shape = feet;
         fixturedef.isSensor = true;
         fixturedef.filter.maskBits = NuclearWarGame.LADDERS_BIT | NuclearWarGame.SPIKES_BIT | NuclearWarGame.GROUND_LADDDER_BIT | NuclearWarGame.GROUND_BIT;
 
+        body.createFixture(fixturedef).setUserData("feet");
     }
 
     public void setClimbing(boolean climbing) {
