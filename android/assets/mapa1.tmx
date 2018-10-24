@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="left-up" width="250" height="13" tilewidth="32" tileheight="32" infinite="0" nextobjectid="96">
+<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="left-up" width="250" height="13" tilewidth="32" tileheight="32" infinite="0" nextobjectid="103">
  <tileset firstgid="1" source="Tiny Platform Quest Tiles.tsx"/>
  <layer name="fondo" width="250" height="13">
   <data encoding="base64" compression="zlib">
@@ -8,12 +8,12 @@
  </layer>
  <layer name="suelofondo" width="250" height="13">
   <data encoding="base64" compression="zlib">
-   eJztmElOw0AURL8YAyy4AXcAEoaw4hwMx4KwhwzAiiHZmxyMKhkL0wrCCR13264nvYWj7qRTUvnHMRNCCCGEEMLsAB7CNuzAI3gMT+Ap7MKziq8ToumwH1O4CtfgOtyAm7AFt+A23IErFVv3Yc3p+QW8hFfw+o/rXqAzinCo5/XgAfbhwNJMmAFzYSbMaQRv4K2lPb8Lc0wRCPW82rzCN/gOX3LXzIa5MJ97+3kfGFra+0f4VP6RRQDcnidWvEdJwXXu+yWe17mfm9h3z6f+oooSdtid08yFGTEX5sSMeB8Yw8nXuibN9r3QB4iArAsxzN9lzPM693zWnM53PDPr+uiXPYvM9nMv36AcdkMfIALU8+qR/32en9OzOu523d2zKPv/2CvKx2fP5/nPd1nX7mt1fz4Xogh8PvfRr2eLb55znXouhBBCiNB8AijVapU=
+   eJztmElOw0AURL8gDIEFN+AOjGFYcQ6GYzHsEyAJS4a9ycGokmnRaSFhoONu2/Wkt0j8k3RKKv04ZkIIIYQQQpjtwj24Dw/gIRzAI3gMT+Bpw+eE6Drsxwwuwx5cgatwDa7DPtyAm3CpYXPv1p2en8MLeAmvfnh8m+iMIh3qeTsYwmt4Y2UmzIC5MBPmNPaus+d3aY4pEqGeNxu/3/fwAT5bmQ1z6X/OjLzrj1b2fgKn9R9ZJCDseWHVe1RUnAvfr4g8F35uYV89n8WLKitcv/3+suvc08yFGTEX5sSMXuArfLNyn3dpt2+nPkAGuC7ksH8Xsc/b2HPX8aHN73N23e+403V9bPF2+1mE71EXW6kPkAHqefNwPR3ZfGe/63jYdf6m93f7X9n5x2tF/cTs+W/+813U4/C5tt+fC1EF3p/H6NeT5bfPOaeeCyGEECI1HxFMbCo=
   </data>
  </layer>
  <layer name="suelo" width="250" height="13">
   <data encoding="base64" compression="zlib">
-   eJztlU1OxDAMhXMmGGBACCSuwKLQHeJn1nSE2HA0DkcqxcJjbCehrajC+6Sn9DeJkzw7BAAAAAAAAAAAAID5OYo6Ttr88VwAAMsw+nwbdR7gcwBag9fxs6jTgLr+X/g0BNqD13HZwudtA5+3j1bHZYu63jbw+SHPUY8ZPS3Ub8m4N78Y26vjtXV9rjhahq/RErF+rFRr3HvrvO6i9obukl6Mfz1Rv/dMvE9Sz8TH3qb2KqPLqOukkjpu1fVcHO9RQ2r5PMdnbyJGKWv9as7AHPlmKfEzRLHO7SnrjK5dr9pmLgCdD8/PXHReyYd7cV0j3he/7oPub35PPrxwtEni35bWcdlq85fzJEk/36Zn1ntLNflzx9awC4f5k49trWtpbJ1x3xn98Hyn9c/7m+oZ6mcQYw7hZ0zae+97a+28eXjrWevzqXm81N/e/o0ir/McQPfeevbhO0fk1pm/9/xNOlHuS+u4bEv3kvKX9n3u7Gixypzo5YheGUf+b/ksF1tuTOufXJwyb0zxXq5vbX1y89ZyYc0ctJj481KfPxTux1z6ApezUr4=
+   eJztlctOxDAMRfNNMMCAEEj8AotCd4jHrOkIseHjJ5ViYYztJLQRpdwjXaVPJ3ZiOwQAAAAAAAAAAACA+TmKOk7a/PJaAABtGPN8G3UekOcArA3ex8+iTgP6OgBrg/dxOSLPAfjbaH1cjujr4D/xHPWY0VMjuyXz3vxgbq+P1/b1ufxYMzxGLXz9WKiWuPfWed1F7Q3dJb0Y/3oiu/dM3CapZ+Jzb9N4ldFl1HVSSR+3+nrOj/eoIY18neOzN+GjlBW/mjMwR71pJX6GyNe5c8o6o0vXq7aZDaDz4eUzF51XysO9uK4Rt8Wv+6DnN7+nPLxwtEni35b2cTlq65frJMl8vk3PrPeWaurnjsWwC1/rJ5/bimupb51x3xl2eL3T7HN7U3OG7AxiziF890l7731vxc5bhxfP2jyfWsdL89vbv1GU67wG0L0Xzz581ohcnPl7L79JJ8p9aR+XY+leUv3Svs+dHc1XWRO9GtEr88j/rTzL+Zab0/on56esG1NyL2dbi09u3VotrFmD5hN/XprnD4X7MZcO/yRFhg==
   </data>
  </layer>
  <layer name="castillo" width="250" height="13">
@@ -23,17 +23,17 @@
  </layer>
  <layer name="objetos" width="250" height="13">
   <data encoding="base64" compression="zlib">
-   eJzt2bsNwjAQBmAPgIjEANCwACOwFtkhA/IoQNACDQUVhOIQHHa4OHc4Cf8nWeJhHybxH6PgHLTJUqkPALTHKrIBWBmkngA8rR3yDjaGqSfQUb69eKtUm+cdv+lB0yb1BOAN9newgJzLaO3bUsg7aPq3nN8EfXCvLI1d6gm02LjheI2czxVqWLso1JBcI2LHNqndF8h5WOZ5bVFjPOU8dA9eUmvGno9qfL6l4uUx5XzC+uRlm3rG1jmGXTB24T0hF4w/lu1UtrPajD5RzvcVTVPoHBeB138pZv351jahnFvfg5espVh0TCzWwlW5HtWsqkvv0/c6VPQNrUl+zjPn3xNAz7ff1r691DIX0BzPKc9u7ukD/cavo/xai/+zAQAA4OEO3cZKOA==
+   eJzt2cENwjAMBdAMgKjEAOXCAozAWnSHLgSTABckuAIXDpwglQgCKwmW6zSl/CdZgpKY0MZJVYyBPtkotQGA/tgKA7q1yj2ADo1yDwBedgb1DmmMcw/gR/n24r1SblrvuKcHGC7s7wD5aO3bXKh3ALk7ow2eleWzDsS/K3MPwFrkHgDDVSEHZ42Q9m2TeyhCNY46N6bwHFsK8oSewXNyzcn7ieD7U6jfXrs6n5I2lY2Zp6/kHPZZacJ7QsXof7JxtnFRG9GnWI03cXiGptA1rgPHuySZf765TaV+Bs+ZS1LunKSYCzflfC5nLK/73P2uY6RtaE7Sa14Y/54Aer7dW/v20pR1Ae3ROqW1W3nawLDRdZSutfg/GwAAABoPqNlOFw==
   </data>
  </layer>
  <layer name="plataformas" width="250" height="13">
   <data encoding="base64" compression="zlib">
-   eJzt1aENwDAMBECPl50zSmgHKYkKStKQWFbvpOcGr3cEAKz17AOAx3gFgH9pG6Eefx6o7tSG2Usq0llOsI8AfHHNAAAAAGS5AQ45GG4=
+   eJzt1bsNgCAABFC2cRV2dhRbB6FRCxM/hREvvpdcRUPBHaUAwLWx9wWAzbQLANSDkMc/z0qfSfXWhqXupV7/W+Kb5b6vdDt1HwF43nByNi8BAAAA6KUBc4UZtQ==
   </data>
  </layer>
  <layer name="casas" width="250" height="13">
   <data encoding="base64" compression="zlib">
-   eJzt07ENgDAMRUGPA9k+I2QENkqKFKYJBU1Ad9KTm986AgAgoqSAfzpG57wAAADA3ZV6swH2VVOrTXvYAPvywwAAAPANHcy6DDc=
+   eJzt2LENgDAMBECPE7I9IzACGyUFhVEkKNIEdCe93Hzr5iMAACJqCvBPpWe7LgAAAHB3psx0gNEq+/Oe8tQ5XjrAaJX92Q8DAADANzRvcA0u
   </data>
  </layer>
  <objectgroup name="ground">
@@ -59,8 +59,9 @@
   <object id="23" x="7680" y="288" width="222" height="30"/>
   <object id="24" x="7874" y="256" width="126" height="34"/>
   <object id="57" x="5695.67" y="192.667" width="191.667" height="7.33333"/>
-  <object id="64" x="320" y="128" width="125.333" height="12"/>
-  <object id="65" x="480" y="127.333" width="192" height="13.3333"/>
+  <object id="64" x="480.5" y="128" width="191.333" height="12"/>
+  <object id="101" x="5664" y="224.5" width="31" height="5.5"/>
+  <object id="102" x="5631" y="256" width="32" height="7.5"/>
  </objectgroup>
  <objectgroup name="doorH1">
   <object id="66" x="35" y="260.5" width="25.75" height="27.5"/>
@@ -91,8 +92,9 @@
   <object id="50" x="3808" y="299.5" width="31.25" height="20.25"/>
   <object id="51" x="4672" y="32" width="30" height="25"/>
   <object id="52" x="4863.5" y="256" width="97.5" height="32"/>
-  <object id="53" x="5728" y="268.5" width="287.5" height="18.5"/>
+  <object id="53" x="5887.5" y="268.5" width="128" height="18.5"/>
   <object id="58" x="3584" y="225.333" width="32.6667" height="29.3333"/>
+  <object id="96" x="6465" y="32" width="30" height="26"/>
  </objectgroup>
  <objectgroup name="coins">
   <object id="59" x="3209.33" y="18.6667" width="14.6667" height="14">
@@ -107,8 +109,6 @@
  </objectgroup>
  <objectgroup name="ladder">
   <object id="54" x="1608" y="-324"/>
-  <object id="55" x="448" y="128" width="32" height="191.333"/>
-  <object id="56" x="5664" y="190" width="31.3333" height="97.3333"/>
  </objectgroup>
  <objectgroup name="platforms">
   <object id="68" x="1280" y="240" width="127.5" height="15.5"/>
@@ -128,6 +128,9 @@
   <object id="89" x="4353" y="208" width="94.5" height="14"/>
   <object id="93" x="6783" y="175.5" width="128" height="15.5"/>
   <object id="94" x="5952" y="178.667" width="94.6667" height="12"/>
+  <object id="97" x="352.5" y="160.5" width="128" height="12.5"/>
+  <object id="98" x="256.5" y="192.5" width="94.5" height="11.5"/>
+  <object id="99" x="192.5" y="225.5" width="64.5" height="12"/>
  </objectgroup>
  <objectgroup name="Edoor">
   <object id="95" x="7748.5" y="259.5" width="22.5" height="29"/>
