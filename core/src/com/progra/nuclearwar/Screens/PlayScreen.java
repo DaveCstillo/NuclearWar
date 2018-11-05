@@ -54,7 +54,7 @@ public class PlayScreen implements Screen {
     AController acontroller;
     screenControllers controllers;
 
-    //TODo: Escalera.
+    //TODo: Arreglar bien el mapa.
 
     public PlayScreen(NuclearWarGame game) {
         atlas = new TextureAtlas("character.atlas");
@@ -63,12 +63,12 @@ public class PlayScreen implements Screen {
         mainCamera = new OrthographicCamera();
         gameport = new FitViewport(Game.V_WIDTH /Game.PPM, Game.V_HEIGHT / Game.PPM,mainCamera);
         loader = new TmxMapLoader();
-        map = loader.load("mapa1.tmx");
+        map = loader.load("mapas/mapa2.tmx");
         renderer = new OrthogonalTiledMapRenderer(map,1/Game.PPM);
         SpriteBatch batch = new SpriteBatch();
 
         mainCamera.position.set(gameport.getWorldWidth()/2,gameport.getWorldHeight()/2,0);
-        world = new World(new Vector2(0, -80),false);//gravedad
+        world = new World(new Vector2(0, -100),false);//gravedad
         box2drenderer = new Box2DDebugRenderer();
 
         gameStage = new Stage(gameport,batch);
@@ -105,27 +105,24 @@ public class PlayScreen implements Screen {
 
     public void handleinput(float dt){
 
-            if(mcontroller.isLpressed()){
-                player.body.setLinearVelocity(new Vector2(-2f,0));
-            }
-            if(mcontroller.isRpressed()){
-                player.body.setLinearVelocity(new Vector2(2f,0));
-            }
-            if(isOnGround() && acontroller.isJumppressed() && (mcontroller.isRpressed()||mcontroller.isLpressed())) {
-                if (mcontroller.isLpressed())
-                    player.body.applyLinearImpulse(new Vector2(0, 12f),player.body.getWorldCenter(),true);
-                else
-                    player.body.applyLinearImpulse(new Vector2(0,12f),player.body.getWorldCenter(),true);
-            }
-
-            //TODO: Arreglar salto.^v
-
-            if(isOnGround() && acontroller.isJumppressed()){
-                player.body.applyLinearImpulse(new Vector2(0,15f),player.body.getWorldCenter(),false);
-            }
-            if(!mcontroller.isanypressed()&&!acontroller.isAnyPressed()){
+        if(mcontroller.isLpressed() ){
+            player.body.setLinearVelocity(new Vector2(-2f,0));
+        }
+        if(mcontroller.isRpressed()){
+            player.body.setLinearVelocity(new Vector2(2f,0));
+        }
+        //TODO: Arreglar salto.^v
+        if(isOnGround() && acontroller.isJumppressed() && mcontroller.isanypressed()){
+            player.body.applyLinearImpulse(new Vector2(0,25f),player.body.getWorldCenter(),false);
+        }
+        if(!isOnGround() && acontroller.isJumppressed()){
+        }
+        if(isOnGround() && acontroller.isJumppressed() && !mcontroller.isanypressed()){
+            player.body.applyLinearImpulse(new Vector2(0,8f),player.body.getWorldCenter(),false);
+        }
+        if(!mcontroller.isanypressed()&&!acontroller.isAnyPressed()){
                 player.body.setLinearVelocity(0,0);
-            }
+        }
 
     }
 

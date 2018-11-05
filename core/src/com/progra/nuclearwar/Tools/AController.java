@@ -30,7 +30,7 @@ public class AController {
         table.bottom().setBounds(7,0,1,1);
 
         jumpbtn = new Image(new Texture("jumpbtn.png"));
-        jumpbtn.setSize(80/NuclearWarGame.PPM,80/NuclearWarGame.PPM);
+        jumpbtn.setSize(60/NuclearWarGame.PPM,60/NuclearWarGame.PPM);
         jumpbtn.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
