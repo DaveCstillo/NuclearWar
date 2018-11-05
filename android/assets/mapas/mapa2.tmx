@@ -89,9 +89,10 @@
   <object id="5" x="480.667" y="256.333">
    <polygon points="0,0 46,47 0,47.3333"/>
   </object>
-  <object id="6" x="528" y="303.667" width="1072.17" height="16"/>
+  <object id="6" x="528" y="303.667" width="703.667" height="16"/>
   <object id="7" x="1120.67" y="257.333" width="47.3333" height="15"/>
   <object id="8" x="1183.67" y="224" width="48.3333" height="16"/>
+  <object id="9" x="1312" y="303.667" width="288" height="17"/>
   <object id="11" x="1183.33" y="224.667">
    <polygon points="0,0 -31,32.3333 1,32"/>
   </object>
@@ -113,7 +114,8 @@
   <object id="31" x="1507" y="261.5" width="25" height="41"/>
  </objectgroup>
  <objectgroup id="16" name="plataformas">
-  <object id="12" x="1280" y="191.667" width="47.3333" height="16.6667"/>
+  <object id="10" x="1232" y="304" width="79" height="7"/>
+  <object id="12" x="1280" y="191.667" width="47.3333" height="9.66667"/>
   <object id="13" x="288.333" y="224.333" width="47" height="15.3333"/>
   <object id="14" x="240" y="256.333" width="47.6667" height="15.3333"/>
   <object id="20" x="864.5" y="112" width="47.5" height="16"/>
