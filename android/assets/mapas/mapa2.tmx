@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="left-up" width="100" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="22" nextobjectid="36">
+<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="left-up" width="100" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="21" nextobjectid="32">
  <tileset firstgid="1" source="GrassLand_Background_1.tsx"/>
  <tileset firstgid="326" source="GrassLand_Background_2.tsx"/>
  <tileset firstgid="638" source="GrassLand_Background_3.tsx"/>
@@ -14,6 +14,7 @@
  <tileset firstgid="2107" source="GrassLand_WaterBubbles.tsx"/>
  <tileset firstgid="2112" source="GrassLand_WaterSurfaceAnim.tsx"/>
  <tileset firstgid="2122" source="GrassLand_WaterBubblesGone.tsx"/>
+ <tileset firstgid="2128" source="Stronghold_WallTorch.tsx"/>
  <layer id="8" name="Sky" width="100" height="25" locked="1">
   <data encoding="base64" compression="zlib">
    eJztwwEJAAAMA6DB+/dbnOU4KNhLqqqqqqqqqqqqqs8PP4dbJQ==
@@ -44,9 +45,9 @@
    eJzt100KgzAQhuGBZNUbuPT+J+jPyu7qTleFXqClhzChDg1huoxT8H1gEFxJPr4kigAA8P+OQeSU5mw8L8H76/bnmdb8VUwXRW7hMw/ycHdPGfRrJodIV7xpX4bw7UmZDbn4mNZMxiKTkT3M1fSjJ3rm18NdoD0rk7Iv1vt8/tCjdjSTPtrrn+da3dPe5NGU1RPNJ2cxs/6bq/9VdMgCAAAAAABgPxZSWktp
   </data>
  </layer>
- <layer id="5" name="BlackBack" width="100" height="25">
+ <layer id="5" name="BlackBack" width="100" height="25" locked="1">
   <data encoding="base64" compression="zlib">
-   eJzt0ndKA0EYhvGF9UJ6AW9h19h7iS323mvsva+917vkOD6CghnWKO4YiLwP/FjIH9/M8MVxlFJKKaWUUkoppZRSSimllPq7slzHyUYOcpGHfBSgEEUIoRglKEUZylGBSlShGjWoRR3q0eCm9nxzdqJsnd2IJoTRjBa0og3tiKADnehCN3rQiz6fOw7z2whGMRZgfnpavMz3b4bx/fDb+/djAIMYcuPv//nub2ckKmLp7HFMYBJTmMYMZjGHeUSxgEUsYRkrWPW5wxa2sYNdC/PXsI4NbCZ5vjn7p/+tIGfvYR8HOMQRPBzjBKc4wzkucIkrXOPG5/2PeMIzXizMv8Ud7vGQ5PnmbO+b3XsWzg76npjhP+3jq/nmm2MW52sf2of2oX2kyj5eATyH2Pg=
+   eJzt0gdKA1EURuGBcUO6AXdh19h7iS323mvsvY+91724HI+gYB5jFOcZNPwHPgZCuO9OXhxHKaWUUkoppZRSSimllFJKqd8rw3WcTGQhGznIRR7yUYAQClGEYpSgFGUoRwUqUYVq1KAWde7/nm/Ojpets+vRgDAa0YRmtKAVEbShHR3oRBe60eOz4yCfDWEYIwHmp6bESn97phnPdz/dvxd96MeAG7v/x91fz4hXxNLZoxjDOCYwiSlMYwaziGIO81jAIpaw7LPDBjaxhW0L81ewijWsJ3i+Ofu7/60gZ+9gF3vYxwE8HOIIxzjBKc5wjgtc4srn/e/xgEc8WZh/jRvc4i7B883Z3hd371k4O+j7mN9Ppvv4bP6zD1vzg76Puddf+L10H7oP3Udy3scLVRTYJg==
   </data>
  </layer>
  <layer id="10" name="CastilloTerreno" width="100" height="25" locked="1">
@@ -64,9 +65,9 @@
    eJzt0TEKgDAMheEMHbyEd/IEnsBdcVfcFXfFgxqwXYTiZBvo/8EjpFPJEwEAAAAAAChD70SGj4wu9y/L0eitJ80cyeIn0mj11qtmi2T3E2nQhy30YQt92PLuI6CPPOjDlk5vfWhOn7p63sN+0QcAAMAvbqcnLx0=
   </data>
  </layer>
- <layer id="13" name="CastilloEntrada" width="100" height="25" locked="1">
+ <layer id="13" name="CastilloEntrada" width="100" height="25">
   <data encoding="base64" compression="zlib">
-   eJzt1rmNAkEYBeGWQJp4OAPB4pSIgABwWI5YOGPhjAXYncWhJDDwgWmQ6pPKwmn9D2NCkCRJ+i5pLoT/hy652C+Sspf6/5ekt+nnY79Aj2ru8bRXfjd03eOjuEf2CkkIRSpRmSpUTW6/uUf26ty+QU1qUZs67hHNgNv/0JBGNKaJe0Qz5fYzmtOClrRyj2jW3H5DW9rRng73PXrukbkjtz/RmX7pj9Ik9qskSdIrXQHMGiRu
+   eJzt1rkJQkEUheELTxjbca1DjFzBCizAxLUW11pca3F7mnhAg5cYiDqj8H/wJ5oM9xhoBgAA8F/iyOyS6BqFfhHgX8zvHwC+ppMK/QIkldnjba/+byiln3/WYo+fwh7+ZZxZVuVUXhVU0d2/Yw//Krp9VdVUXTVUkz2C6er2PdVXAzVUI/YIZqzbT9RUzdRcLdgjmKVuv1JrtVFbtXvs0WYP7/a6/UEd1UmdVexCvwoAAHzSDb/tJR4=
   </data>
  </layer>
  <layer id="7" name="Floor" width="100" height="25" locked="1">
@@ -76,7 +77,7 @@
  </layer>
  <layer id="9" name="Decoration" width="100" height="25">
   <data encoding="base64" compression="zlib">
-   eJzt2NEKwiAUBuAD7cIX6aIRtrqJZtZad73/W/QSKR2ZiDQIMp3/B4dZbnFMjuiIAAAgZt+8w9o203f+FQDibI20qJMsYf0CmKd5D3Aw0ZuQJtaCaED9AAAAFOG5irdTs3uJjvcUNTs18XZKxwXPQVfI2DZcC0ueC4DSKK5HW5/heVfzZ3+NUTP123/5PrD18nDO3N4Ffe49/YWvY9Bvn3PPxM7wms/48sM9KvhNGeQScv1XrG/gGQTRzcRo4i7+nU0adpw1jjtXCv9/tnKbG5fPI7O8fq228dbqBQa/Ecc=
+   eJzt2NEKwiAUBmAhL/YiXTTCVjfRzBpd9v5v0UvkoSOTkzQINnT+HxzmZosjckSnFAAApBz1J8hej8/iKwCkUY20qJMsYf0CmOZ4D3Dy0fswPraNUgPqBwAAoAivTbq9NNpLdLynqNlFp9tLOq94DrpCxrbjWljzXACUxnI9Un3K867j+3iNsRP12//5PbCN8giu3D6IvvCd/sbXh+in98I7qTO84zO++fEbK/7TiFyk0H/H+gaVG5rvyEWuec3JVjLOEuU2NyGfZ2Z5za228dbqDdw+Ebg=
   </data>
  </layer>
  <objectgroup id="2" name="suelo">
@@ -89,10 +90,9 @@
   <object id="5" x="480.667" y="256.333">
    <polygon points="0,0 46,47 0,47.3333"/>
   </object>
-  <object id="6" x="528" y="303.667" width="703.667" height="16"/>
+  <object id="6" x="528" y="303.667" width="1072.17" height="16"/>
   <object id="7" x="1120.67" y="257.333" width="47.3333" height="15"/>
   <object id="8" x="1183.67" y="224" width="48.3333" height="16"/>
-  <object id="9" x="1312" y="303.667" width="288" height="17"/>
   <object id="11" x="1183.33" y="224.667">
    <polygon points="0,0 -31,32.3333 1,32"/>
   </object>
@@ -103,7 +103,6 @@
   <object id="27" x="560.667" y="80" width="15" height="32.3333"/>
   <object id="28" x="448.333" y="64.3333" width="127" height="15.6667"/>
  </objectgroup>
- <objectgroup id="21" name="agua"/>
  <objectgroup id="18" name="puerta1">
   <object id="29" x="723.25" y="279.75" width="9.25" height="24"/>
  </objectgroup>
@@ -114,7 +113,6 @@
   <object id="31" x="1507" y="261.5" width="25" height="41"/>
  </objectgroup>
  <objectgroup id="16" name="plataformas">
-  <object id="10" x="1232" y="304" width="79" height="7"/>
   <object id="12" x="1280" y="191.667" width="47.3333" height="9.66667"/>
   <object id="13" x="288.333" y="224.333" width="47" height="15.3333"/>
   <object id="14" x="240" y="256.333" width="47.6667" height="15.3333"/>
@@ -123,11 +121,7 @@
  </objectgroup>
  <objectgroup id="17" name="limites">
   <object id="17" x="-1" y="1" width="6" height="304"/>
-  <object id="18" x="4.5" y="0" width="1593.59" height="4"/>
+  <object id="18" x="10" y="0" width="1588.09" height="4"/>
   <object id="19" x="1598.18" y="0.181818" width="1.81818" height="303.636"/>
-  <object id="32" x="1216.5" y="319.5" width="15.5" height="81"/>
-  <object id="33" x="1311" y="320.5" width="18" height="80.5"/>
-  <object id="34" x="240.5" y="320.5" width="16" height="79.5"/>
-  <object id="35" x="320.5" y="319.5" width="15.5" height="80.5"/>
  </objectgroup>
 </map>

@@ -129,7 +129,7 @@ public class Character extends Sprite {
 
     public void defineCharacter(){
         BodyDef bodydef = new BodyDef();
-        bodydef.position.set(160/ NuclearWarGame.PPM,224/NuclearWarGame.PPM);
+        bodydef.position.set(64/ NuclearWarGame.PPM,128/NuclearWarGame.PPM);
         bodydef.type = BodyDef.BodyType.DynamicBody;
 
         body = world.createBody(bodydef);

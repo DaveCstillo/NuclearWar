@@ -21,6 +21,10 @@ public class MController {
     Viewport btnvport;
     public Stage stage;
 
+
+    boolean ispaused;
+
+
     public MController(Stage escenario, Viewport puerto) {
         btnvport = puerto;
         stage = escenario;
@@ -64,11 +68,17 @@ public class MController {
     }
 
     public boolean isLpressed() {
+        if(ispaused)
+            return false;
+        else
         return lpressed;
     }
 
     public boolean isRpressed() {
-        return rpressed;
+        if(ispaused)
+            return false;
+        else
+            return rpressed;
     }
 
     public boolean isanypressed(){
@@ -89,5 +99,9 @@ public class MController {
     public void draw(){
         stage.draw();
 
+    }
+
+    public void setPressedButtons(boolean paused){
+       ispaused = paused;
     }
 }

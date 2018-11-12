@@ -61,14 +61,14 @@ public class PlayScreen implements Screen {
 
         this.Game = game;
         mainCamera = new OrthographicCamera();
-        gameport = new FitViewport(Game.V_WIDTH /Game.PPM, Game.V_HEIGHT / Game.PPM,mainCamera);
+        gameport = new FitViewport((Game.V_WIDTH/2) /Game.PPM, (Game.V_HEIGHT/2) / Game.PPM,mainCamera);
         loader = new TmxMapLoader();
         map = loader.load("mapas/mapa2.tmx");
         renderer = new OrthogonalTiledMapRenderer(map,1/Game.PPM);
         SpriteBatch batch = new SpriteBatch();
 
         mainCamera.position.set(gameport.getWorldWidth()/2,gameport.getWorldHeight()/2,0);
-        world = new World(new Vector2(0, -100),false);//gravedad
+        world = new World(new Vector2(0, -50),false);//gravedad
         box2drenderer = new Box2DDebugRenderer();
 
         gameStage = new Stage(gameport,batch);
@@ -104,26 +104,32 @@ public class PlayScreen implements Screen {
     }
 
     public void handleinput(float dt){
-
+        if (isOnGround()) {
         if(mcontroller.isLpressed() ){
-            player.body.setLinearVelocity(new Vector2(-2f,0));
+            player.body.setLinearVelocity(new Vector2(-1.5f,0));
         }
         if(mcontroller.isRpressed()){
-            player.body.setLinearVelocity(new Vector2(2f,0));
+            player.body.setLinearVelocity(new Vector2(1.5f,0));
         }
         //TODO: Arreglar salto.^v
-        if(isOnGround() && acontroller.isJumppressed() && mcontroller.isanypressed()){
-            player.body.applyLinearImpulse(new Vector2(0,25f),player.body.getWorldCenter(),false);
+        if(acontroller.isJumppressed()) {
+               mcontroller.setPressedButtons(true);
+                player.body.applyLinearImpulse(new Vector2(0, 5f), player.body.getWorldCenter(), true);
+                //  player.body.applyForceToCenter(player.body.getLinearVelocity().x,300f,true);
         }
-        if(!isOnGround() && acontroller.isJumppressed()){
-        }
-        if(isOnGround() && acontroller.isJumppressed() && !mcontroller.isanypressed()){
-            player.body.applyLinearImpulse(new Vector2(0,8f),player.body.getWorldCenter(),false);
-        }
-        if(!mcontroller.isanypressed()&&!acontroller.isAnyPressed()){
-                player.body.setLinearVelocity(0,0);
+        if(!acontroller.isJumppressed()){
+            mcontroller.setPressedButtons(false);
         }
 
+        if(!mcontroller.isLpressed() && ! mcontroller.isRpressed() && !acontroller.isJumppressed()){
+                player.body.setLinearVelocity(0,0);
+        }
+//        if(isOnGround() && acontroller.isJumppressed() && mcontroller.isanypressed()){
+//            player.body.applyLinearImpulse(new Vector2(0,5f),player.body.getWorldCenter(),true);
+//        }
+//        if(!isOnGround() && acontroller.isJumppressed()){
+//        }
+        }
     }
 
 
@@ -135,6 +141,7 @@ public class PlayScreen implements Screen {
         world.step(1/60f,6,2);
 
         mainCamera.position.x = player.body.getPosition().x;
+        mainCamera.position.y = player.body.getPosition().y;
         mainCamera.update();
 
 
