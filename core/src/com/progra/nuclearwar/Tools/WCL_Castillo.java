@@ -6,13 +6,13 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.progra.nuclearwar.Hitbox.Entrada;
 import com.progra.nuclearwar.Hitbox.Ground;
 import com.progra.nuclearwar.Hitbox.InteractiveTileObject;
-import com.progra.nuclearwar.Hitbox.Ladders;
+import com.progra.nuclearwar.Hitbox.Suelo;
+import com.progra.nuclearwar.Hitbox.Suelo_Total;
 
-public class worldContactListener implements ContactListener {
-    boolean onLadder;
-
+public class WCL_Castillo implements ContactListener {
     @Override
     public void beginContact(Contact contact) {
         Gdx.app.log("Contact","Begin Contact");
@@ -25,13 +25,18 @@ public class worldContactListener implements ContactListener {
 
             if(object.getUserData()!=null && InteractiveTileObject.class.isAssignableFrom(object.getUserData().getClass())){
                 ((InteractiveTileObject) object.getUserData()).onFeetHit();
-            if(object.getUserData().getClass() == Ground.class){
-                Gdx.app.log("Ground","tocando");
-                ((Ground)object.getUserData()).tocando();
-            }
-            }
+                if(object.getUserData().getClass() == Suelo.class){
+                    Gdx.app.log("Ground","tocando");
+                    ((Suelo)object.getUserData()).tocando();
+                }
+                if(object.getUserData().getClass() == Suelo_Total.class){
+                    Gdx.app.log("Ground","tocando");
+                    ((Suelo_Total)object.getUserData()).tocando();
+                }
+
             }
         }
+    }
 
     @Override
     public void endContact(Contact contact) {
@@ -45,11 +50,18 @@ public class worldContactListener implements ContactListener {
 
             if(object.getUserData()!=null && InteractiveTileObject.class.isAssignableFrom(object.getUserData().getClass())){
                 ((InteractiveTileObject) object.getUserData()).onFeetHit();
-                if(object.getUserData().getClass() == Ground.class){
+                if(object.getUserData().getClass() == Suelo.class){
                     Gdx.app.log("Ground","no tocando");
-                    ((Ground)object.getUserData()).notocando();
+                    ((Suelo)object.getUserData()).notocando();
                 }
-
+                if(object.getUserData().getClass() == Suelo_Total.class){
+                    Gdx.app.log("Ground","tocando");
+                    ((Suelo_Total)object.getUserData()).notocando();
+                }
+                if(object.getUserData().getClass() == Entrada.class){
+                    Gdx.app.log("Entrada","tocando");
+                    ((Entrada)object.getUserData()).cerrando();
+                }
             }
         }
     }

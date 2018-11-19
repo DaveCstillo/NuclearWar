@@ -35,7 +35,7 @@ PlayScreen pantalla;
             player.setClimbing(true);
             //setCategoryFilter(NuclearWarGame.GROUND_LADDDER_BIT);
         }else if(player.body.getLinearVelocity().y==0 && !isClimbing() ){
-            setCategoryFilter(NuclearWarGame.GROUND_LADDDER_BIT);
+            //setCategoryFilter(NuclearWarGame.GROUND_LADDDER_BIT);
         }else{
             Gdx.app.log("Ladder","Climbing true to False");
             setClimbing(false);
@@ -43,9 +43,6 @@ PlayScreen pantalla;
             player.setClimbing(false);
             //setCategoryFilter(NuclearWarGame.LADDERS_BIT);
         }
-    }
-    public void groundLadder(){
-        setCategoryFilter(NuclearWarGame.GROUND_LADDDER_BIT);
     }
     public void setToLadder(){
         //setCategoryFilter(NuclearWarGame.LADDERS_BIT);
