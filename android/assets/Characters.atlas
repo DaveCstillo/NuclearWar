@@ -1,0 +1,54 @@
+
+Characters.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Slimes
+  rotate: false
+  xy: 1, 67
+  size: 256, 32
+  orig: 256, 32
+  offset: 0, 0
+  index: -1
+Robot
+  rotate: false
+  xy: 1, 1
+  size: 128, 64
+  orig: 128, 64
+  offset: 0, 0
+  index: -1
+Oliver
+  rotate: false
+  xy: 259, 67
+  size: 128, 32
+  orig: 128, 32
+  offset: 0, 0
+  index: -1
+Fire_Skull
+  rotate: false
+  xy: 131, 33
+  size: 64, 32
+  orig: 64, 32
+  offset: 0, 0
+  index: -1
+Goblin
+  rotate: false
+  xy: 389, 67
+  size: 64, 32
+  orig: 64, 32
+  offset: 0, 0
+  index: -1
+Mushroom
+  rotate: false
+  xy: 197, 33
+  size: 64, 32
+  orig: 64, 32
+  offset: 0, 0
+  index: -1
+Skeleton
+  rotate: false
+  xy: 263, 33
+  size: 64, 32
+  orig: 64, 32
+  offset: 0, 0
+  index: -1

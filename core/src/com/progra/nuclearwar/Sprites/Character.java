@@ -33,20 +33,25 @@ public class Character extends Sprite {
 
     World world;
     public Body body;
+    public BodyDef bodydef;
 
     Stage stage;
     Viewport vport;
 
     static boolean isClimbing;
 
+
+    //posicion del atlas
+    int x = 259, y = 67;
+
     public Character(World world, PlayScreen screen) {
-        super(screen.getAtlas().findRegion("walk"));
+        super(screen.getAtlas().findRegion("Oliver"));
 
         Currentstate = State.STANDING;
         PreviousState = State.STANDING;
 
-        characterStand = new TextureRegion(getTexture(),576,0,32,32);
-        setBounds(0,0,32/NuclearWarGame.PPM,32/NuclearWarGame.PPM);
+        characterStand = new TextureRegion(getTexture(),x,y,10,18);
+        setBounds(0,0,10/NuclearWarGame.PPM,18/NuclearWarGame.PPM);
         setRegion(characterStand);
         this.world = world;
         defineCharacter();
@@ -56,26 +61,25 @@ public class Character extends Sprite {
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
 
-        for(int i=0;i<2;i++){
-            frames.add(new TextureRegion(getTexture(),i*32,0,32,32));
-        }
-        characterClimb = new Animation(0.2f,frames);
-        frames.clear();
+//        for(int i=0;i<2;i++){
+//            frames.add(new TextureRegion(getTexture(),i*8,0,8,16));
+//        }
+//        characterClimb = new Animation(0.2f,frames);
+//        frames.clear();
 
-        for(int i=6;i<8;i++){
-            frames.add(new TextureRegion(getTexture(),i*32,0,32,32));
+        for(int i=3;i<7;i++){
+            frames.add(new TextureRegion(getTexture(),x+ (i*10),y,10,18));
         }
         characterRun = new Animation(0.2f,frames);
         frames.clear();
 
-        characterJump = new TextureRegion(getTexture(),64,0,32,32);
+        characterJump = new TextureRegion(getTexture(),x+10,y,10,18);
+
     }
 
     public void update(float dt){
         setPosition(body.getPosition().x-getWidth()/2,body.getPosition().y-getHeight()/2);
         setRegion(getFrame(dt));
-
-
     }
 
 
@@ -128,7 +132,7 @@ public class Character extends Sprite {
     }
 
     public void defineCharacter(){
-        BodyDef bodydef = new BodyDef();
+        bodydef = new BodyDef();
         bodydef.position.set(64/ NuclearWarGame.PPM,128/NuclearWarGame.PPM);
         bodydef.type = BodyDef.BodyType.DynamicBody;
 
@@ -137,27 +141,36 @@ public class Character extends Sprite {
         CircleShape circle = new CircleShape();
         FixtureDef fixturedef = new FixtureDef();
 
-        circle.setRadius(14/NuclearWarGame.PPM);
+        circle.setRadius(8/NuclearWarGame.PPM);
 
         fixturedef.filter.categoryBits = NuclearWarGame.PLAYER_BIT;
-        fixturedef.filter.maskBits = NuclearWarGame.GROUND_BIT | NuclearWarGame.SPIKES_BIT | NuclearWarGame.GROUND_LADDDER_BIT;
+        fixturedef.filter.maskBits = NuclearWarGame.GROUND_BIT | NuclearWarGame.SPIKES_BIT | NuclearWarGame.GROUND_LADDDER_BIT | NuclearWarGame.DOORS_BIT;
 
         fixturedef.shape = circle;
-        body.createFixture(fixturedef);
+        body.createFixture(fixturedef).setUserData("player");
 
         EdgeShape feet = new EdgeShape();
-        feet.set(new Vector2(-8/NuclearWarGame.PPM, -15 /NuclearWarGame.PPM),new Vector2(8/NuclearWarGame.PPM, -15/NuclearWarGame.PPM));
+        feet.set(new Vector2(-9/NuclearWarGame.PPM, -9 /NuclearWarGame.PPM),new Vector2(9/NuclearWarGame.PPM, -9/NuclearWarGame.PPM));
         fixturedef.shape = feet;
         fixturedef.isSensor = true;
-        fixturedef.filter.maskBits = NuclearWarGame.LADDERS_BIT | NuclearWarGame.SPIKES_BIT | NuclearWarGame.GROUND_LADDDER_BIT | NuclearWarGame.GROUND_BIT;
+        fixturedef.filter.maskBits = NuclearWarGame.SPIKES_BIT | NuclearWarGame.GROUND_LADDDER_BIT | NuclearWarGame.GROUND_BIT;
 
         body.createFixture(fixturedef).setUserData("feet");
     }
 
+    public void moveCharacter( float x, float y){
+
+        bodydef.position.set(x,y);
+
+
+
+    }
+
+
+
     public void setClimbing(boolean climbing) {
         this.isClimbing = climbing;
     }
-
 
 
 }

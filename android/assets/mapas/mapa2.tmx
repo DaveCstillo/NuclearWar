@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="left-up" width="100" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="21" nextobjectid="32">
+<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="left-up" width="100" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="21" nextobjectid="35">
  <tileset firstgid="1" source="GrassLand_Background_1.tsx"/>
  <tileset firstgid="326" source="GrassLand_Background_2.tsx"/>
  <tileset firstgid="638" source="GrassLand_Background_3.tsx"/>
@@ -35,9 +35,9 @@
    eJzt1fWv1WUAx/HzvSigIAiKlCAooSIiIaWAgtLd3d3drRIipYKB0m2AAqKUUtKp/BuACkgZLzY2zpAr97DLxmXPZ3vtPju7e+/Zc344sVhYWFhYWFhYWFhqrnoUi9WgJrWoTR3qUi+68X8NnRvRmCY0pRnNo/822/isLe2i2/fr0yD6/34LWtKK1tH93W9PBzrSic50oSvd6E6PuDfv7dyHvvSjPwMYyCAG3+L7SUm/J72ilPWHMJRhCdw/rfSHM4KRjGI0YxjLOMYzgYlx7/yW89u8wxSmMo3pvMsM3mPm9f7NS64/iclR4v2U3j8t9GcxmznM5X0+4EPmMZ+P+JhP+DTufT93XsgiFrOEpSxjOSuS6cfvVv0FfBbdef9297+X+ytZxWrWsJYv+JKv+Jp1rOcbvmXD9Tfd5O93bOZ7fmALW9nG9hT04xff3xilTj+5+9+r/R38yE9xb7PbeQ97+Zl97OcABznEYY5wlGMc5wQn+YVfOXVTfye7ouT78bsb/bt9/9Toh4WFhYWF3clO+w05w1l+43f+4BznucCfXOQSl7nCVf7ib/659juUFItFJJGOB3gwKfQT7af3WQYy8hAPk4nMPEIWsvIo2cjOYzxODp4gJ7nITR7y8iT5kkI/0X5+nqIABXmaZyhEYYpQlGd5jucpxgsU50VK8BIlKUVpyvBy6CfcL0s5ylOBirzCq1SiMlV4jdepSjXe4E2qU4Oa1KI2dahLvdBPuF+fBjSkEY1pQlOa0ZwWtKQVrWlDW9rRng50pBOd6UJXuoV+wv3u9KAnvehNH/rSj/4MYCCDGMwQhjKM4YxgJKMYzRjGMi70E+6HhYWFpZX9C6VECN8=
   </data>
  </layer>
- <layer id="14" name="Terrenopared" width="100" height="25" locked="1">
+ <layer id="14" name="Terrenopared" width="100" height="25">
   <data encoding="base64" compression="zlib">
-   eJztmcsOgjAQRYtT3ePr/z/G+AWEveJjjRrXdkJJmjIVN20j3JNMIGEB6c2dF0qBuXMipc4mGnsN3fP1Qrm/dvoUWqm3OeeFDsfDPn9Bj+gU3tmToMMReiSjHfGGG1rn/trp4/vDDTePEfyRhELIU/BHPkpzxhshdoIeK40eKxdlQBPkrHxImrBHGvoe8FA8uL48Sa7zfT/c1x6yz+ChePwyL/qaQI94cM5aj9R5N/YmtujDksHzo+SXmqBFDvp53tcklRYH896bjTvy4mC/ckzoC9aioq6P4B4D82mnB59H7egSu35frR8q7G8GtF6Pm2KPEtp5ztUf7j+rpbDv4hkx5j+rkB7wBwAAAADAf/EBDHJHZw==
+   eJztmUkOwjAMRVMc2Jfp/qfpEdhDGdZlWhNLqbCCQ9kkEe1/ktVKXSTK1/eQGgOmzp6MObho/TP2zs8jld7t+KmsMU93zjMbj6v/foceyamCsydFhwZ6ZKMb8IYMa0vvdvyE/pAh8xjBH1molDwFf5Sjdme8UmKj6LGw6LFKUUc0Qc4qh6YJe6Sl7wEPpYPry430Ot/3w33tIf8NHkrHL/NiqAn0SAfnrOVAnZexdbFGH5YNnh81v+wIWpSgn+dDTXJpcXLrnn1ckBc/7leazL7g9bmP4B4D8+n7PHZCl9T1W3riQegbJF3Q4+a4R4ndeU7VH/Kf1Vy57+IZMeU/q5ge8AcAAAAAwH/xApzRR+I=
   </data>
  </layer>
  <layer id="15" name="TerrnoFondo" width="100" height="25" locked="1">
@@ -72,36 +72,25 @@
  </layer>
  <layer id="7" name="Floor" width="100" height="25">
   <data encoding="base64" compression="zlib">
-   eJztlNsKgkAQhhcU6jk6vP911kXd6o1eCj1Mu6C06KyO61pE3wc/kcx5Ro0BAAAAAAAAAAAAAAAA+G3umTGF1dX7dXpk367s/3C7qK1Kq6pT2alhJyOGd1t4kv77tjdhlpeBb+3NX1ITyCXVFaozZB/qQ5NDsut7PuTGHDudrM75u29tLyG7GMrO7yn4twti9nGqFe+I5Lsm3hxSz44lfafE71WzD99eO6ct5xmbr5q4QUervK25eYT8NTXu8/GznfAsJnYKtsgj9ezQ9J0SqbfYfaTKH/OtitmR77N0HyluQhtDs4+pWJ/+LmmYqynF+zF1Ry/P9nF+
+   eJzt1G0OgjAMgOElkOg5/Lj/b8ETyAlIOIwuwTilHV0d+ud9ksVA1q7dJiEAAAAAAAAAAAAAAP6ha0Lom/ffLvOczr02y3wXJTY3emX+Z11andp8rQ/LGlqNsedDG8JxHqfHOLevvrUcUn5pnsdtjpuE+LEg5zPP4KxDi/0m3xqp56ik75rSXi3nkc637tOW++ldb8jcwWg03q21/dDiLTXu2+W7nfDOk7uGLdaReo4sfdck9eY9j1rre75VnjNKY0rPo8adsOawnEcu16+/SxZrNdX4f+Tu0R27bmR2
   </data>
  </layer>
  <layer id="9" name="Decoration" width="100" height="25">
   <data encoding="base64" compression="zlib">
-   eJzt2NEKwiAUBmAhL/YiXTTCVjfRzBpd9v5v0UvkoSOTkzQINnT+HxzmZosjckSnFAAApBz1J8hej8/iKwCkUY20qJMsYf0CmOZ4D3Dy0fswPraNUgPqBwAAoAivTbq9NNpLdLynqNlFp9tLOq94DrpCxrbjWljzXACUxnI9Un3K867j+3iNsRP12//5PbCN8giu3D6IvvCd/sbXh+in98I7qTO84zO++fEbK/7TiFyk0H/H+gaVG5rvyEWuec3JVjLOEuU2NyGfZ2Z5za228dbqDdw+Ebg=
+   eJzt2NEKgjAUgOFBXvgiXSSxrLtclnTZ+79FL5GjMxprJETGkf0fHJxO5aicsWkMACBnXz3D21avY/EWQJ6vkYY6UYnxC5jWyxzgMEY3hh1jXRszUD8AACzCfZVv/5ufS7QypyjZscq38RvtQt7phloA1HFSk74+0/VuL/vxGOMmarj78n9gE+URnKS9S/rCf/qzbK9Jv78uXJNbw/eyxrcfznHJPW2SSyr0XxjjULihfg8ttOY1J1fIcy6Rtm8T8rkpy2tupT1vqR7RmRFC
   </data>
  </layer>
  <objectgroup id="2" name="suelo">
   <object id="1" x="0.5" y="305.5" width="255" height="14.5"/>
-  <object id="2" x="320" y="304" width="80" height="16"/>
-  <object id="3" x="384" y="303.443">
-   <polygon points="0,0 32.6667,-31.4437 32.4398,0.223004"/>
-  </object>
-  <object id="4" x="416.333" y="272.333" width="80.3334" height="16"/>
-  <object id="5" x="496.334" y="272.333">
-   <polygon points="0,0 30.3333,31.1127 0,31.3333"/>
-  </object>
-  <object id="6" x="528" y="303.667" width="1072.17" height="16"/>
-  <object id="7" x="1120.67" y="257.333" width="47.3333" height="15"/>
-  <object id="8" x="1183.67" y="224" width="48.3333" height="16"/>
-  <object id="11" x="1183.33" y="224.667">
-   <polygon points="0,0 -31,32.3333 1,32"/>
-  </object>
+  <object id="6" x="318.667" y="303.667" width="1281.5" height="16"/>
   <object id="22" x="655.667" y="143.667" width="160.333" height="16.3333"/>
   <object id="23" x="640" y="128.333" width="15.6667" height="31.6667"/>
   <object id="25" x="608.333" y="112" width="47.3333" height="16.6667"/>
   <object id="26" x="576" y="96.3333" width="47.6667" height="15.6667"/>
   <object id="27" x="560.667" y="80" width="15" height="32.3333"/>
   <object id="28" x="448.333" y="64.3333" width="127" height="15.6667"/>
+  <object id="33" x="1168" y="224" width="64" height="32"/>
+  <object id="34" x="1120" y="256" width="112" height="16"/>
  </objectgroup>
  <objectgroup id="18" name="puerta1">
   <object id="29" x="723.25" y="279.75" width="9.25" height="24"/>

@@ -15,7 +15,7 @@ PlayScreen pantalla;
         super(screen, bounds);
         pantalla = screen;
         fixture.setUserData(this);
-        setCategoryFilter(NuclearWarGame.LADDERS_BIT);
+        //setCategoryFilter(NuclearWarGame.LADDERS_BIT);
     }
 
     @Override
@@ -41,14 +41,14 @@ PlayScreen pantalla;
             setClimbing(false);
             pantalla.setGravity(0,-80);
             player.setClimbing(false);
-            setCategoryFilter(NuclearWarGame.LADDERS_BIT);
+            //setCategoryFilter(NuclearWarGame.LADDERS_BIT);
         }
     }
     public void groundLadder(){
         setCategoryFilter(NuclearWarGame.GROUND_LADDDER_BIT);
     }
     public void setToLadder(){
-        setCategoryFilter(NuclearWarGame.LADDERS_BIT);
+        //setCategoryFilter(NuclearWarGame.LADDERS_BIT);
     }
     //TODO: ver porque no detecta cuando esta sobre la escalera
 }

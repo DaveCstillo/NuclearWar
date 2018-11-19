@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.progra.nuclearwar.Hitbox.GroundTriangles;
 import com.progra.nuclearwar.Hud;
 import com.progra.nuclearwar.NuclearWarGame;
 import com.progra.nuclearwar.Sprites.Character;
@@ -48,6 +49,7 @@ public class PlayScreen implements Screen {
     private Music music, grassSound;
 
     boolean onGround = false;
+    boolean onTriangle = false;
 
     //Area de controles
     MController mcontroller;
@@ -57,7 +59,7 @@ public class PlayScreen implements Screen {
     //TODo: Arreglar bien el mapa.
 
     public PlayScreen(NuclearWarGame game) {
-        atlas = new TextureAtlas("character.atlas");
+        atlas = new TextureAtlas("Characters.atlas");
 
         this.Game = game;
         mainCamera = new OrthographicCamera();
@@ -68,14 +70,13 @@ public class PlayScreen implements Screen {
         SpriteBatch batch = new SpriteBatch();
 
         mainCamera.position.set(gameport.getWorldWidth()/2,gameport.getWorldHeight()/2,0);
-        world = new World(new Vector2(0, -50),false);//gravedad
+        world = new World(new Vector2(0, -40),false);//gravedad
         box2drenderer = new Box2DDebugRenderer();
 
         gameStage = new Stage(gameport,batch);
 
         controllers = new screenControllers(Game.batch);
         hud = new Hud(Game.batch);
-
 
         mcontroller = controllers.getMovementC();
         acontroller = controllers.getActionC();
@@ -85,6 +86,8 @@ public class PlayScreen implements Screen {
         player = new Character(world,this);
 
         world.setContactListener(new worldContactListener());
+
+        mainCamera.position.y = 1f;
 
         music = NuclearWarGame.assetManager.get("audio/music/music1.wav",Music.class);
         music.setLooping(true);
@@ -105,16 +108,16 @@ public class PlayScreen implements Screen {
 
     public void handleinput(float dt){
         if (isOnGround()) {
-        if(mcontroller.isLpressed() ){
-            player.body.setLinearVelocity(new Vector2(-1.5f,0));
-        }
-        if(mcontroller.isRpressed()){
-            player.body.setLinearVelocity(new Vector2(1.5f,0));
-        }
+                if (mcontroller.isLpressed()) {
+                    player.body.setLinearVelocity(new Vector2(-1.5f, 0));
+                }
+                if (mcontroller.isRpressed()) {
+                    player.body.setLinearVelocity(new Vector2(1.5f, 0));
+                }
         //TODO: Arreglar salto.^v
         if(acontroller.isJumppressed()) {
                mcontroller.setPressedButtons(true);
-                player.body.applyLinearImpulse(new Vector2(0, 5f), player.body.getWorldCenter(), true);
+                player.body.applyLinearImpulse(new Vector2(0, 4f), player.body.getWorldCenter(), true);
                 //  player.body.applyForceToCenter(player.body.getLinearVelocity().x,300f,true);
         }
         if(!acontroller.isJumppressed()){
@@ -129,6 +132,13 @@ public class PlayScreen implements Screen {
 //        }
 //        if(!isOnGround() && acontroller.isJumppressed()){
 //        }
+        }else{
+            if (mcontroller.isLpressed()) {
+                player.body.setLinearVelocity(new Vector2(-1.5f, 0));
+            }
+            if (mcontroller.isRpressed()) {
+                player.body.setLinearVelocity(new Vector2(1.5f, 0));
+            }
         }
     }
 
@@ -245,5 +255,13 @@ public class PlayScreen implements Screen {
 
     public void setOnGround(boolean onGround) {
         this.onGround = onGround;
+    }
+
+    public boolean isOnTriangle() {
+        return onTriangle;
+    }
+
+    public void setOnTriangle(boolean onTriangle) {
+        this.onTriangle = onTriangle;
     }
 }

@@ -21,7 +21,8 @@ public class NuclearWarGame extends Game {
 	public static final short PLAYER_BIT = 2;
 	public static final short COINS_BIT = 4;
 	public static final short GROUND_BIT = 8;
-	public static final short LADDERS_BIT = 16;
+	public static final short DOORS_BIT = 16;
+	//public static final short LADDERS_BIT = 16;
 	public static final short SPIKES_BIT = 32;
 	public static final short GROUND_LADDDER_BIT = 64;
 	public static final short DESTROYED_BIT = 128;
