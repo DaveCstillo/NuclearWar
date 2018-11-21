@@ -9,7 +9,7 @@ public class Spikes extends InteractiveTileObject {
     public Spikes(PlayScreen screen, Rectangle bounds) {
         super(screen, bounds);
         fixture.setUserData(this);
-        setCategoryFilter(NuclearWarGame.SPIKES_BIT);
+        //setCategoryFilter(NuclearWarGame.SPIKES_BIT);
     }
 
     @Override

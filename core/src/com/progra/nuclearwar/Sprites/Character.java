@@ -36,15 +36,6 @@ public class Character extends Sprite {
     public Body body;
     public BodyDef bodydef;
 
-    Stage stage;
-    Viewport vport;
-
-    static boolean isClimbing;
-
-
-    //posicion del atlas
-    int x = 259, y = 67;
-
     public Character(World world, PlayScreen screen) {
         super(screen.getAtlas().findRegion("Oliver"));
 
@@ -62,12 +53,6 @@ public class Character extends Sprite {
         runningRight = true;
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
-
-//        for(int i=0;i<2;i++){
-//            frames.add(new TextureRegion(getTexture(),i*8,0,8,16));
-//        }
-//        characterClimb = new Animation(0.2f,frames);
-//        frames.clear();
 
         for(int i=3;i<7;i++){
             frames.add(new TextureRegion(atlas,i*10,0,10,18));
@@ -96,9 +81,6 @@ public class Character extends Sprite {
             case RUNNING:
                 region = (TextureRegion) characterRun.getKeyFrame(stateTimer,true);
                 break;
-            case CLIMBING:
-                region = (TextureRegion) characterClimb.getKeyFrame(stateTimer,true);
-                break;
             case FALLING:
                 case STANDING:
             default: region = characterStand;
@@ -125,8 +107,6 @@ public class Character extends Sprite {
             return State.FALLING;
         }else if(body.getLinearVelocity().x!=0){
             return State.RUNNING;
-        }else if(isClimbing){
-            return State.CLIMBING;
         }
         else{
             return State.STANDING;
@@ -146,7 +126,11 @@ public class Character extends Sprite {
         circle.setRadius(8/NuclearWarGame.PPM);
 
         fixturedef.filter.categoryBits = NuclearWarGame.PLAYER_BIT;
-        fixturedef.filter.maskBits = NuclearWarGame.GROUND_BIT | NuclearWarGame.SPIKES_BIT;
+        fixturedef.filter.maskBits =
+                NuclearWarGame.GROUND_BIT |
+                NuclearWarGame.WALL_BIT |
+                NuclearWarGame.ENEMY_BIT |
+                NuclearWarGame.ENEMY_HEAD_BIT;
 
         fixturedef.shape = circle;
         body.createFixture(fixturedef).setUserData("player");
@@ -155,7 +139,7 @@ public class Character extends Sprite {
         feet.set(new Vector2(-4/NuclearWarGame.PPM, -9 /NuclearWarGame.PPM),new Vector2(4/NuclearWarGame.PPM, -9/NuclearWarGame.PPM));
         fixturedef.shape = feet;
         fixturedef.isSensor = true;
-        fixturedef.filter.maskBits = NuclearWarGame.SPIKES_BIT | NuclearWarGame.GROUND_BIT | NuclearWarGame.DOORS_BIT;
+        fixturedef.filter.maskBits = NuclearWarGame.GROUND_BIT | NuclearWarGame.DOORS_BIT;
 
         body.createFixture(fixturedef).setUserData("feet");
     }
@@ -167,12 +151,5 @@ public class Character extends Sprite {
 
 
     }
-
-
-
-    public void setClimbing(boolean climbing) {
-        this.isClimbing = climbing;
-    }
-
 
 }

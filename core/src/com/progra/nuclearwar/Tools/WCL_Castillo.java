@@ -11,6 +11,8 @@ import com.progra.nuclearwar.Hitbox.Ground;
 import com.progra.nuclearwar.Hitbox.InteractiveTileObject;
 import com.progra.nuclearwar.Hitbox.Suelo;
 import com.progra.nuclearwar.Hitbox.Suelo_Total;
+import com.progra.nuclearwar.NuclearWarGame;
+import com.progra.nuclearwar.Sprites.Enemy;
 
 public class WCL_Castillo implements ContactListener {
     @Override
@@ -18,6 +20,8 @@ public class WCL_Castillo implements ContactListener {
         Gdx.app.log("Contact","Begin Contact");
         Fixture fixA = contact.getFixtureA();
         Fixture fixB = contact.getFixtureB();
+
+        int cDef =  fixA.getFilterData().categoryBits | fixB.getFilterData().categoryBits;
 
         if(fixA.getUserData()=="feet"||fixB.getUserData()=="feet"){
             Fixture feet = fixA.getUserData() =="feet" ? fixA:fixB;
@@ -35,6 +39,19 @@ public class WCL_Castillo implements ContactListener {
                 }
 
             }
+        }
+
+        switch (cDef){
+
+            case NuclearWarGame.ENEMY_HEAD_BIT | NuclearWarGame.PLAYER_BIT:
+                if(fixA.getFilterData().categoryBits == NuclearWarGame.ENEMY_HEAD_BIT)
+                    ((Enemy)fixA.getUserData()).onHeadHit();
+                if(fixB.getFilterData().categoryBits==NuclearWarGame.ENEMY_HEAD_BIT)
+                    ((Enemy)fixB.getUserData()).onHeadHit();
+
+                break;
+
+
         }
     }
 

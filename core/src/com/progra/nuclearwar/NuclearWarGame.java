@@ -17,16 +17,19 @@ public class NuclearWarGame extends Game {
 	public static final int V_HEIGHT = 416;  //416
 	public static final float PPM = 100; //Pixeles Por Metro
 
-	public static final short DEFAULT_BIT = 1;
+	public static final short GROUND_BIT = 1;
 	public static final short PLAYER_BIT = 2;
 	public static final short COINS_BIT = 4;
-	public static final short GROUND_BIT = 8;
+	public static final short ENEMY_BIT = 8;
 	public static final short DOORS_BIT = 16;
-	//public static final short LADDERS_BIT = 16;
-	public static final short SPIKES_BIT = 32;
-	//public static final short GROUND_LADDDER_BIT = 64;
-	public static final short DESTROYED_BIT = 128;
+	public static final short WALL_BIT = 32;
+	public static final short DESTROYED_BIT = 64;
+	public static final short ENEMY_HEAD_BIT = 128;
 
+
+	/*por ejemplo,  si el personaje esta tocando el suelo, la combinacion en numeros binarios
+	de esa colision es de 00011 que es actualmente 3
+*/
 	public SpriteBatch batch;
 
 	public static AssetManager assetManager;

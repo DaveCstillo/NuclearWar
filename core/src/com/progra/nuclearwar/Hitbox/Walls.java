@@ -9,7 +9,7 @@ public class Walls extends InteractiveTileObject{
     public Walls(PlayScreen screen, Rectangle bounds) {
         super(screen, bounds);
         fixture.setUserData(this);
-        setCategoryFilter(NuclearWarGame.GROUND_BIT);
+        setCategoryFilter(NuclearWarGame.WALL_BIT);
     }
 
     @Override

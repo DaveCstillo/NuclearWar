@@ -20,6 +20,7 @@ import com.progra.nuclearwar.Hitbox.GroundTriangles;
 import com.progra.nuclearwar.Hud;
 import com.progra.nuclearwar.NuclearWarGame;
 import com.progra.nuclearwar.Sprites.Character;
+import com.progra.nuclearwar.Sprites.Skull;
 import com.progra.nuclearwar.Tools.AController;
 import com.progra.nuclearwar.Tools.B2WC_Castillo;
 import com.progra.nuclearwar.Tools.B2worldcreator;
@@ -58,6 +59,9 @@ public class PlayScreen implements Screen {
     AController acontroller;
     screenControllers controllers;
 
+
+    private Skull esqueleto;
+
     //TODo: Arreglar bien el mapa.
 
     public PlayScreen(NuclearWarGame game) {
@@ -87,6 +91,8 @@ public class PlayScreen implements Screen {
         new B2WC_Castillo(this);
 
         player = new Character(world,this);
+
+        esqueleto = new Skull(this,.32f,.32f);
 
         //world.setContactListener(new worldContactListener());
         world.setContactListener(new WCL_Castillo());
@@ -136,12 +142,13 @@ public class PlayScreen implements Screen {
 //        }
 //        if(!isOnGround() && acontroller.isJumppressed()){
 //        }
-        }else{
+        }
+        if(!isOnGround()) {
             if (mcontroller.isLpressed()) {
-                player.body.setLinearVelocity(new Vector2(-1.5f, 0));
+                player.body.setLinearVelocity(new Vector2(-1.0f, 0));
             }
             if (mcontroller.isRpressed()) {
-                player.body.setLinearVelocity(new Vector2(1.5f, 0));
+                player.body.setLinearVelocity(new Vector2(1.0f, 0));
             }
         }
     }
@@ -150,6 +157,7 @@ public class PlayScreen implements Screen {
      public void update(float dt){
         player.update(dt);
         hud.update(dt);
+        esqueleto.update(dt);
 
         handleinput(dt);
         world.step(1/60f,6,2);
@@ -198,6 +206,7 @@ public class PlayScreen implements Screen {
 
         Game.batch.begin();
         player.draw(Game.batch);
+        esqueleto.draw(Game.batch);
         Game.batch.end();
 
 
