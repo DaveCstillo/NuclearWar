@@ -1,5 +1,6 @@
 package com.progra.nuclearwar.Hitbox;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.Map;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -31,9 +32,9 @@ public class GroundTriangles {
         PolygonShape shape = polygon;
         Body body;
 
-        //bdef.type = BodyDef.BodyType.StaticBody;
+
         //bdef.position.set((polygon. + polygon.getWidth() / 2)  / NuclearWarGame.PPM, (polygon.getY() + polygon.getHeight() / 2)  / NuclearWarGame.PPM);
-        //body = world.createBody(bdef);
+
 
         bdef.type = BodyDef.BodyType.StaticBody;
         body = world.createBody(bdef);
@@ -51,4 +52,11 @@ public class GroundTriangles {
         filter.categoryBits = filterBit;
         fixture.setFilterData(filter);
     }
+
+
+    public void onFeetHit(boolean onTriangle){
+        Gdx.app.log("Triangle", "tochando");
+        pantalla.setOnTriangle(onTriangle);
+    }
+
 }

@@ -2,6 +2,7 @@ package com.progra.nuclearwar.Sprites;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -47,10 +48,11 @@ public class Character extends Sprite {
     public Character(World world, PlayScreen screen) {
         super(screen.getAtlas().findRegion("Oliver"));
 
+        TextureAtlas.AtlasRegion atlas = screen.getAtlas().findRegion("Oliver");
         Currentstate = State.STANDING;
         PreviousState = State.STANDING;
 
-        characterStand = new TextureRegion(getTexture(),x,y,10,18);
+        characterStand = new TextureRegion(atlas,0,0,10,18);
         setBounds(0,0,10/NuclearWarGame.PPM,18/NuclearWarGame.PPM);
         setRegion(characterStand);
         this.world = world;
@@ -68,12 +70,12 @@ public class Character extends Sprite {
 //        frames.clear();
 
         for(int i=3;i<7;i++){
-            frames.add(new TextureRegion(getTexture(),x+ (i*10),y,10,18));
+            frames.add(new TextureRegion(atlas,i*10,0,10,18));
         }
         characterRun = new Animation(0.2f,frames);
         frames.clear();
 
-        characterJump = new TextureRegion(getTexture(),x+10,y,10,18);
+        characterJump = new TextureRegion(atlas,10,0,10,18);
 
     }
 
@@ -144,7 +146,7 @@ public class Character extends Sprite {
         circle.setRadius(8/NuclearWarGame.PPM);
 
         fixturedef.filter.categoryBits = NuclearWarGame.PLAYER_BIT;
-        fixturedef.filter.maskBits = NuclearWarGame.GROUND_BIT | NuclearWarGame.SPIKES_BIT | NuclearWarGame.GROUND_LADDDER_BIT | NuclearWarGame.DOORS_BIT;
+        fixturedef.filter.maskBits = NuclearWarGame.GROUND_BIT | NuclearWarGame.SPIKES_BIT;
 
         fixturedef.shape = circle;
         body.createFixture(fixturedef).setUserData("player");
@@ -153,7 +155,7 @@ public class Character extends Sprite {
         feet.set(new Vector2(-9/NuclearWarGame.PPM, -9 /NuclearWarGame.PPM),new Vector2(9/NuclearWarGame.PPM, -9/NuclearWarGame.PPM));
         fixturedef.shape = feet;
         fixturedef.isSensor = true;
-        fixturedef.filter.maskBits = NuclearWarGame.SPIKES_BIT | NuclearWarGame.GROUND_LADDDER_BIT | NuclearWarGame.GROUND_BIT;
+        fixturedef.filter.maskBits = NuclearWarGame.SPIKES_BIT | NuclearWarGame.GROUND_BIT | NuclearWarGame.DOORS_BIT;
 
         body.createFixture(fixturedef).setUserData("feet");
     }
