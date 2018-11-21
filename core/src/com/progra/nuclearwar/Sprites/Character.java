@@ -152,7 +152,7 @@ public class Character extends Sprite {
         body.createFixture(fixturedef).setUserData("player");
 
         EdgeShape feet = new EdgeShape();
-        feet.set(new Vector2(-9/NuclearWarGame.PPM, -9 /NuclearWarGame.PPM),new Vector2(9/NuclearWarGame.PPM, -9/NuclearWarGame.PPM));
+        feet.set(new Vector2(-4/NuclearWarGame.PPM, -9 /NuclearWarGame.PPM),new Vector2(4/NuclearWarGame.PPM, -9/NuclearWarGame.PPM));
         fixturedef.shape = feet;
         fixturedef.isSensor = true;
         fixturedef.filter.maskBits = NuclearWarGame.SPIKES_BIT | NuclearWarGame.GROUND_BIT | NuclearWarGame.DOORS_BIT;
