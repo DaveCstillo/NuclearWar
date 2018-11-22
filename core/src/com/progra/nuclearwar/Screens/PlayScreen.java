@@ -59,7 +59,7 @@ public class PlayScreen implements Screen {
     AController acontroller;
     screenControllers controllers;
 
-
+    //Enemigos
     private Skull esqueleto;
 
     //TODo: Arreglar bien el mapa.
@@ -92,7 +92,13 @@ public class PlayScreen implements Screen {
 
         player = new Character(world,this);
 
+
+        //temporal
         esqueleto = new Skull(this,.32f,.32f);
+
+
+        //temporal
+
 
         //world.setContactListener(new worldContactListener());
         world.setContactListener(new WCL_Castillo());
