@@ -20,6 +20,7 @@ import com.progra.nuclearwar.Hitbox.GroundTriangles;
 import com.progra.nuclearwar.Hud;
 import com.progra.nuclearwar.NuclearWarGame;
 import com.progra.nuclearwar.Sprites.Character;
+import com.progra.nuclearwar.Sprites.Goblin;
 import com.progra.nuclearwar.Sprites.Skull;
 import com.progra.nuclearwar.Tools.AController;
 import com.progra.nuclearwar.Tools.B2WC_Castillo;
@@ -61,6 +62,7 @@ public class PlayScreen implements Screen {
 
     //Enemigos
     private Skull esqueleto;
+    private Goblin duende;
 
     //TODo: Arreglar bien el mapa.
 
@@ -95,6 +97,7 @@ public class PlayScreen implements Screen {
 
         //temporal
         esqueleto = new Skull(this,.32f,.32f);
+        duende = new Goblin(this,2.72f,2.40f);
 
 
         //temporal
@@ -164,6 +167,7 @@ public class PlayScreen implements Screen {
         player.update(dt);
         hud.update(dt);
         esqueleto.update(dt);
+        duende.update(dt);
 
         handleinput(dt);
         world.step(1/60f,6,2);
@@ -213,6 +217,7 @@ public class PlayScreen implements Screen {
         Game.batch.begin();
         player.draw(Game.batch);
         esqueleto.draw(Game.batch);
+        duende.draw(Game.batch);
         Game.batch.end();
 
 
