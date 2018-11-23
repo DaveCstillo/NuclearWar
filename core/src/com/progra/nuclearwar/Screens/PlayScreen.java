@@ -11,16 +11,21 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.progra.nuclearwar.Hitbox.GroundTriangles;
+import com.progra.nuclearwar.Hitbox.InteractiveTileObject;
 import com.progra.nuclearwar.Hud;
 import com.progra.nuclearwar.NuclearWarGame;
 import com.progra.nuclearwar.Sprites.Character;
+import com.progra.nuclearwar.Sprites.Enemy;
+import com.progra.nuclearwar.Sprites.FireSkull;
 import com.progra.nuclearwar.Sprites.Goblin;
+import com.progra.nuclearwar.Sprites.Mushroom;
 import com.progra.nuclearwar.Sprites.Skull;
 import com.progra.nuclearwar.Tools.AController;
 import com.progra.nuclearwar.Tools.B2WC_Castillo;
@@ -29,6 +34,11 @@ import com.progra.nuclearwar.Tools.MController;
 import com.progra.nuclearwar.Tools.WCL_Castillo;
 import com.progra.nuclearwar.Tools.screenControllers;
 import com.progra.nuclearwar.Tools.worldContactListener;
+
+import java.util.SimpleTimeZone;
+
+import static com.progra.nuclearwar.NuclearWarGame.V_HEIGHT;
+import static com.progra.nuclearwar.NuclearWarGame.V_WIDTH;
 
 
 public class PlayScreen implements Screen {
@@ -61,9 +71,13 @@ public class PlayScreen implements Screen {
     screenControllers controllers;
 
     //Enemigos
-    private Skull esqueleto;
-    private Goblin duende;
 
+    private Goblin duende;
+    private FireSkull calaca;
+    private Mushroom hongo;
+
+
+    B2WC_Castillo creator;
     //TODo: Arreglar bien el mapa.
 
     public PlayScreen(NuclearWarGame game) {
@@ -71,7 +85,7 @@ public class PlayScreen implements Screen {
 
         this.Game = game;
         mainCamera = new OrthographicCamera();
-        gameport = new FitViewport((Game.V_WIDTH/2) /Game.PPM, (Game.V_HEIGHT/2) / Game.PPM,mainCamera);
+        gameport = new FitViewport((V_WIDTH/2) /Game.PPM, (Game.V_HEIGHT/2) / Game.PPM,mainCamera);
         loader = new TmxMapLoader();
         map = loader.load("mapas/Castillo_Mapa.tmx");
         renderer = new OrthogonalTiledMapRenderer(map,1/Game.PPM);
@@ -90,15 +104,16 @@ public class PlayScreen implements Screen {
         acontroller = controllers.getActionC();
 
         //new B2worldcreator(this);
-        new B2WC_Castillo(this);
+        creator = new B2WC_Castillo(this);
 
         player = new Character(world,this);
 
 
         //temporal
-        esqueleto = new Skull(this,.32f,.32f);
-        duende = new Goblin(this,2.72f,2.40f);
 
+        duende = new Goblin(this,3.68f,2.88f);
+        calaca = new FireSkull(this, 2.88f,5.28f);
+        hongo = new Mushroom(this,1.12f,2.56f);
 
         //temporal
 
@@ -166,15 +181,37 @@ public class PlayScreen implements Screen {
      public void update(float dt){
         player.update(dt);
         hud.update(dt);
-        esqueleto.update(dt);
+
+        for(Enemy enemy :creator.getEsqueletos()){
+            enemy.update(dt);
+        }
+
         duende.update(dt);
+        calaca.update(dt);
+        hongo.update(dt);
 
         handleinput(dt);
         world.step(1/60f,6,2);
 
         mainCamera.position.x = player.body.getPosition().x;
-        mainCamera.position.y = player.body.getPosition().y;
-        mainCamera.update();
+
+        /*float res = player.body.getPosition().y%7;
+        int simpleRes = (int) res;
+        float secRes = simpleRes%2;
+        int simpleSecRes = (int) secRes;
+        Gdx.app.log("PosicionP", "simpleRes: "+ String.valueOf(simpleRes));
+        Gdx.app.log("PosicionP", "simpleSecRes: "+ String.valueOf(simpleSecRes));*/
+
+
+        if(player.getState() != Character.State.JUMPING)
+            mainCamera.position.y = player.body.getPosition().y;
+
+
+
+
+
+         mainCamera.update();
+         Game.batch.setProjectionMatrix(mainCamera.combined);
 
 
         renderer.setView(mainCamera);
@@ -216,8 +253,12 @@ public class PlayScreen implements Screen {
 
         Game.batch.begin();
         player.draw(Game.batch);
-        esqueleto.draw(Game.batch);
+        for(Enemy enemy : creator.getEsqueletos()){
+            enemy.draw(Game.batch);
+        }
         duende.draw(Game.batch);
+        calaca.draw(Game.batch);
+        hongo.draw(Game.batch);
         Game.batch.end();
 
 

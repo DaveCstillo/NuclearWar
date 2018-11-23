@@ -4,14 +4,23 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
+import com.progra.nuclearwar.Hitbox.Enemy_Bounds;
 import com.progra.nuclearwar.Hitbox.Entrada;
 import com.progra.nuclearwar.Hitbox.Suelo;
 import com.progra.nuclearwar.Hitbox.Suelo_Temporal;
 import com.progra.nuclearwar.Hitbox.Suelo_Total;
 import com.progra.nuclearwar.Hitbox.Walls;
+import com.progra.nuclearwar.NuclearWarGame;
 import com.progra.nuclearwar.Screens.PlayScreen;
+import com.progra.nuclearwar.Sprites.Goblin;
+import com.progra.nuclearwar.Sprites.Skull;
 
 public class B2WC_Castillo {
+
+    Array<Skull> Esqueletos;
+    Array<Goblin> Duendes;
+
 
     public B2WC_Castillo(PlayScreen playScreen) {
         TiledMap map = playScreen.getMap();
@@ -42,5 +51,25 @@ public class B2WC_Castillo {
             Rectangle rect = ((RectangleMapObject)object).getRectangle();
             new Walls(playScreen, rect);
         }
+        for (MapObject object : map.getLayers().get("BOUNDS").getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject)object).getRectangle();
+            new Enemy_Bounds(playScreen, rect);
+        }
+
+        //creando enemigos
+        Esqueletos = new Array<Skull>();
+        for (MapObject object : map.getLayers().get("Esqueletos").getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject)object).getRectangle();
+            Esqueletos.add(new Skull(playScreen, rect.getX() / NuclearWarGame.PPM, rect.getY() / NuclearWarGame.PPM));
+        }
+    }
+
+
+    public Array<Skull> getEsqueletos() {
+        return Esqueletos;
+    }
+
+    public Array<Goblin> getDuendes() {
+        return Duendes;
     }
 }

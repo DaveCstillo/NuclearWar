@@ -46,11 +46,24 @@ public class WCL_Castillo implements ContactListener {
             case NuclearWarGame.ENEMY_HEAD_BIT | NuclearWarGame.PLAYER_BIT:
                 if(fixA.getFilterData().categoryBits == NuclearWarGame.ENEMY_HEAD_BIT)
                     ((Enemy)fixA.getUserData()).onHeadHit();
-                if(fixB.getFilterData().categoryBits==NuclearWarGame.ENEMY_HEAD_BIT)
+                else
                     ((Enemy)fixB.getUserData()).onHeadHit();
 
                 break;
+            case NuclearWarGame.ENEMY_BIT | NuclearWarGame.ENEMY_BOUNDS_BIT:
+                if(fixA.getFilterData().categoryBits == NuclearWarGame.ENEMY_BIT)
+                    ((Enemy) fixA.getUserData()).reverseVelocity(true,false);
+                else
+                    ((Enemy)fixB.getUserData()).reverseVelocity(true,false);
 
+                break;
+            case NuclearWarGame.ENEMY_BIT | NuclearWarGame.PLAYER_BIT:
+                if(fixA.getFilterData().categoryBits == NuclearWarGame.ENEMY_BIT)
+                    Gdx.app.log("Jugador", "DEAD");
+                else
+                    Gdx.app.log("Jugador", "DEAD");
+
+                break;
 
         }
     }

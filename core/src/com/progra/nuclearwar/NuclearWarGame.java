@@ -25,6 +25,7 @@ public class NuclearWarGame extends Game {
 	public static final short WALL_BIT = 32;
 	public static final short DESTROYED_BIT = 64;
 	public static final short ENEMY_HEAD_BIT = 128;
+	public static final short ENEMY_BOUNDS_BIT =256;
 
 
 	/*por ejemplo,  si el personaje esta tocando el suelo, la combinacion en numeros binarios

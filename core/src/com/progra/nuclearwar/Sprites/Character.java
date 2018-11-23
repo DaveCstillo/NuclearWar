@@ -43,8 +43,8 @@ public class Character extends Sprite {
         Currentstate = State.STANDING;
         PreviousState = State.STANDING;
 
-        characterStand = new TextureRegion(atlas,0,0,10,18);
-        setBounds(0,0,10/NuclearWarGame.PPM,18/NuclearWarGame.PPM);
+        characterStand = new TextureRegion(atlas,0,0,8,16);
+        setBounds(0,0,8/NuclearWarGame.PPM,16/NuclearWarGame.PPM);
         setRegion(characterStand);
         this.world = world;
         defineCharacter();
@@ -55,12 +55,12 @@ public class Character extends Sprite {
         Array<TextureRegion> frames = new Array<TextureRegion>();
 
         for(int i=3;i<7;i++){
-            frames.add(new TextureRegion(atlas,i*10,0,10,18));
+            frames.add(new TextureRegion(atlas,i*8,0,8,16));
         }
         characterRun = new Animation(0.2f,frames);
         frames.clear();
 
-        characterJump = new TextureRegion(atlas,10,0,10,18);
+        characterJump = new TextureRegion(atlas,8,0,8,16);
 
     }
 
