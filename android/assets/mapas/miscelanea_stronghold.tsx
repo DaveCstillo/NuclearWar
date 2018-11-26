@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.2" tiledversion="1.2.0" name="miscelanea_stronghold" tilewidth="32" tileheight="48" tilecount="28" columns="0">
+<tileset version="1.2" tiledversion="1.2.1" name="miscelanea_stronghold" tilewidth="32" tileheight="48" tilecount="29" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0">
   <image width="16" height="32" source="../Multi_Platformer_Tileset_v2/Stronghold/Details/Stronghold_Armor.png"/>
@@ -84,5 +84,8 @@
  </tile>
  <tile id="27">
   <image width="16" height="16" source="../Multi_Platformer_Tileset_v2/Stronghold/Details/Stronghold_WaterJar.png"/>
+ </tile>
+ <tile id="28">
+  <image width="16" height="16" source="../Multi_Platformer_Tileset_v2/Stronghold/Details/Stronghold_Open_Chest.png"/>
  </tile>
 </tileset>
