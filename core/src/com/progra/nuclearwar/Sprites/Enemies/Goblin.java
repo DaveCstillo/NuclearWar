@@ -1,7 +1,6 @@
-package com.progra.nuclearwar.Sprites;
+package com.progra.nuclearwar.Sprites.Enemies;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -11,12 +10,12 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
+import com.progra.nuclearwar.Hud;
 import com.progra.nuclearwar.NuclearWarGame;
 import com.progra.nuclearwar.Screens.PlayScreen;
 
 public class Goblin  extends Enemy{
     BodyDef bodydef;
-    Body body;
 
     boolean setOnDestroy;
     boolean destroyed;
@@ -107,6 +106,7 @@ public class Goblin  extends Enemy{
     @Override
     public void onHeadHit() {
         setOnDestroy = true;
+        Hud.addScore(150);
     }
 
     @Override

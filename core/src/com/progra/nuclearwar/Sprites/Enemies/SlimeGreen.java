@@ -1,4 +1,4 @@
-package com.progra.nuclearwar.Sprites;
+package com.progra.nuclearwar.Sprites.Enemies;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -9,16 +9,17 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
+import com.progra.nuclearwar.Hud;
 import com.progra.nuclearwar.NuclearWarGame;
 import com.progra.nuclearwar.Screens.PlayScreen;
 
 public class SlimeGreen extends Enemy {
 
     BodyDef bodydef;
-    Body body;
 
     boolean setOnDestroy;
     boolean destroyed;
+    boolean runningRight = false;
 
     private float stateTime;
     private Animation walkAnimation;
@@ -48,9 +49,23 @@ public class SlimeGreen extends Enemy {
             stateTime = 0;
         } else if (!destroyed) {
             setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
-            setRegion((TextureRegion) walkAnimation.getKeyFrame(stateTime, true));
+            setRegion(getFrame(dt));
         }
     }
+
+    public TextureRegion getFrame(float dt) {
+        TextureRegion region = (TextureRegion) walkAnimation.getKeyFrame(stateTime, true);
+
+        if ((body.getLinearVelocity().x < 0 || !runningRight) && !region.isFlipX()) {
+            region.flip(true, false);
+            runningRight = false;
+        } else if ((body.getLinearVelocity().x > 0 || runningRight) && region.isFlipX()) {
+            region.flip(true, false);
+            runningRight = true;
+        }
+        return region;
+    }
+
 
     @Override
     protected void defineEnemy() {
@@ -98,5 +113,6 @@ public class SlimeGreen extends Enemy {
     @Override
     public void onHeadHit() {
         setOnDestroy = true;
+        Hud.addScore(150);
     }
 }

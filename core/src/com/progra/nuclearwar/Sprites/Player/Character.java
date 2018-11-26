@@ -1,4 +1,4 @@
-package com.progra.nuclearwar.Sprites;
+package com.progra.nuclearwar.Sprites.Player;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -128,12 +128,14 @@ public class Character extends Sprite {
         fixturedef.filter.categoryBits = NuclearWarGame.PLAYER_BIT;
         fixturedef.filter.maskBits =
                 NuclearWarGame.GROUND_BIT |
+                NuclearWarGame.CHEST_BIT |
                 NuclearWarGame.WALL_BIT |
                 NuclearWarGame.ENEMY_BIT |
-                NuclearWarGame.ENEMY_HEAD_BIT;
+                NuclearWarGame.ENEMY_HEAD_BIT |
+                NuclearWarGame.ITEM_BIT;
 
         fixturedef.shape = circle;
-        body.createFixture(fixturedef).setUserData("player");
+        body.createFixture(fixturedef).setUserData(this);
 
         EdgeShape feet = new EdgeShape();
         feet.set(new Vector2(-4/NuclearWarGame.PPM, -9 /NuclearWarGame.PPM),new Vector2(4/NuclearWarGame.PPM, -9/NuclearWarGame.PPM));
@@ -144,7 +146,11 @@ public class Character extends Sprite {
         body.createFixture(fixturedef).setUserData("feet");
     }
 
-    public void moveCharacter( float x, float y){
+    public State getPreviousState() {
+        return PreviousState;
+    }
+
+    public void moveCharacter(float x, float y){
 
         bodydef.position.set(x,y);
 
