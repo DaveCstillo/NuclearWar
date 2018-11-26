@@ -22,7 +22,7 @@ public class Character extends Sprite {
 
     TextureRegion characterStand, characterJump;
 
-    public enum State{FALLING, JUMPING, STANDING, RUNNING, CLIMBING}
+    public enum State{FALLING, JUMPING, STANDING, RUNNING}
 
     public State Currentstate, PreviousState;
 
