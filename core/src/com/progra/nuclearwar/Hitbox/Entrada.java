@@ -1,5 +1,6 @@
 package com.progra.nuclearwar.Hitbox;
 
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.progra.nuclearwar.NuclearWarGame;
@@ -11,8 +12,8 @@ public class Entrada extends InteractiveTileObject {
     Suelo_Temporal temporal;
     TiledMap castillomapa;
 
-    public Entrada(PlayScreen screen, Rectangle bds,Suelo_Temporal temporal,Suelo_Total total) {
-        super(screen, bds);
+    public Entrada(PlayScreen screen, MapObject object, Suelo_Temporal temporal, Suelo_Total total) {
+        super(screen, object);
         pantalla = screen;
         this.temporal = temporal;
         this.total = total;

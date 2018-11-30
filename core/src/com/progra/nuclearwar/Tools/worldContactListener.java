@@ -1,7 +1,6 @@
 package com.progra.nuclearwar.Tools;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -12,7 +11,8 @@ import com.progra.nuclearwar.Hitbox.InteractiveTileObject;
 import com.progra.nuclearwar.Hitbox.Puerta1;
 import com.progra.nuclearwar.Hitbox.Puerta2;
 import com.progra.nuclearwar.NuclearWarGame;
-import com.progra.nuclearwar.Sprites.Enemy;
+import com.progra.nuclearwar.Sprites.Enemies.Enemy;
+import com.progra.nuclearwar.Sprites.Player.Character;
 
 public class worldContactListener implements ContactListener {
     boolean onLadder;
@@ -22,6 +22,8 @@ public class worldContactListener implements ContactListener {
         Gdx.app.log("Contact", "Begin Contact");
         Fixture fixA = contact.getFixtureA();
         Fixture fixB = contact.getFixtureB();
+
+        int cDef =  fixA.getFilterData().categoryBits | fixB.getFilterData().categoryBits;
 
         if (fixA.getUserData() == "feet" || fixB.getUserData() == "feet") {
             Fixture feet = fixA.getUserData() == "feet" ? fixA : fixB;
@@ -36,19 +38,31 @@ public class worldContactListener implements ContactListener {
             }
         }
 
-        if (fixA.getUserData() == "player" || fixB.getUserData() == "player") {
-            Fixture feet = fixA.getUserData() == "player" ? fixA : fixB;
-            Fixture object = feet == fixA ? fixB : fixA;
+        switch (cDef){
 
-            if (object.getUserData().getClass() == Puerta1.class) {
-                Gdx.app.log("Puerta", " Puerta 1 tocando");
-                ((Puerta1) object.getUserData()).entrar();
-            }
-            if (object.getUserData().getClass() == Puerta2.class) {
-                Gdx.app.log("Puerta", " Puerta 2 tocando");
-                ((Puerta2) object.getUserData()).entrar();
-            }
+            case NuclearWarGame.ENEMY_HEAD_BIT | NuclearWarGame.PLAYER_BIT:
+                if(fixA.getFilterData().categoryBits == NuclearWarGame.ENEMY_HEAD_BIT)
+                    ((Enemy)fixA.getUserData()).onHeadHit();
+                if(fixB.getFilterData().categoryBits==NuclearWarGame.ENEMY_HEAD_BIT)
+                    ((Enemy)fixB.getUserData()).onHeadHit();
+
+                break;
+            case NuclearWarGame.PLAYER_BIT | NuclearWarGame.DOORS_BIT:
+                if(fixA.getUserData().getClass() == Puerta1.class)
+                    ((Puerta1) fixA.getUserData()).entrar((Character) fixB.getUserData());
+                else
+                    ((Puerta1) fixB.getUserData()).entrar((Character) fixA.getUserData());
+
+                if(fixA.getUserData().getClass() == Puerta2.class)
+                    ((Puerta2) fixA.getUserData()).entrar((Character) fixB.getUserData());
+                else
+                    ((Puerta2) fixB.getUserData()).entrar((Character) fixA.getUserData());
+
+                break;
+
+
         }
+
     }
 
     @Override
@@ -57,8 +71,6 @@ public class worldContactListener implements ContactListener {
         Fixture fixA = contact.getFixtureA();
         Fixture fixB = contact.getFixtureB();
 
-
-        int cDef =  fixA.getFilterData().categoryBits | fixB.getFilterData().categoryBits;
 
         if(fixA.getUserData()=="feet"||fixB.getUserData()=="feet"){
             Fixture feet = fixA.getUserData() =="feet" ? fixA:fixB;
@@ -76,18 +88,6 @@ public class worldContactListener implements ContactListener {
 
         }
 
-        switch (cDef){
-
-            case NuclearWarGame.ENEMY_HEAD_BIT | NuclearWarGame.PLAYER_BIT:
-                if(fixA.getFilterData().categoryBits == NuclearWarGame.ENEMY_HEAD_BIT)
-                    ((Enemy)fixA.getUserData()).onHeadHit();
-                if(fixB.getFilterData().categoryBits==NuclearWarGame.ENEMY_HEAD_BIT)
-                    ((Enemy)fixB.getUserData()).onHeadHit();
-
-                break;
-
-
-        }
     }
 
     @Override

@@ -11,33 +11,31 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.progra.nuclearwar.Hitbox.GroundTriangles;
-import com.progra.nuclearwar.Hitbox.InteractiveTileObject;
 import com.progra.nuclearwar.Hud;
 import com.progra.nuclearwar.NuclearWarGame;
-import com.progra.nuclearwar.Sprites.Character;
-import com.progra.nuclearwar.Sprites.Enemy;
-import com.progra.nuclearwar.Sprites.FireSkull;
-import com.progra.nuclearwar.Sprites.Goblin;
-import com.progra.nuclearwar.Sprites.Mushroom;
-import com.progra.nuclearwar.Sprites.Skull;
+import com.progra.nuclearwar.Sprites.Items.Coin;
+import com.progra.nuclearwar.Sprites.Items.Heart;
+import com.progra.nuclearwar.Sprites.Items.Item;
+import com.progra.nuclearwar.Sprites.Items.ItemDef;
+import com.progra.nuclearwar.Sprites.Player.Character;
+import com.progra.nuclearwar.Sprites.Enemies.Enemy;
+import com.progra.nuclearwar.Sprites.Enemies.FireSkull;
+import com.progra.nuclearwar.Sprites.Enemies.Goblin;
+import com.progra.nuclearwar.Sprites.Enemies.Mushroom;
 import com.progra.nuclearwar.Tools.AController;
 import com.progra.nuclearwar.Tools.B2WC_Castillo;
-import com.progra.nuclearwar.Tools.B2worldcreator;
 import com.progra.nuclearwar.Tools.MController;
 import com.progra.nuclearwar.Tools.WCL_Castillo;
 import com.progra.nuclearwar.Tools.screenControllers;
-import com.progra.nuclearwar.Tools.worldContactListener;
 
-import java.util.SimpleTimeZone;
+import java.util.concurrent.LinkedBlockingQueue;
 
-import static com.progra.nuclearwar.NuclearWarGame.V_HEIGHT;
 import static com.progra.nuclearwar.NuclearWarGame.V_WIDTH;
 
 
@@ -72,9 +70,14 @@ public class PlayScreen implements Screen {
 
     //Enemigos
 
-    private Goblin duende;
     private FireSkull calaca;
     private Mushroom hongo;
+
+
+
+    //Items
+    private Array<Item> items;
+    private LinkedBlockingQueue<ItemDef> itemsToSpawn;
 
 
     B2WC_Castillo creator;
@@ -92,7 +95,7 @@ public class PlayScreen implements Screen {
         SpriteBatch batch = new SpriteBatch();
 
         mainCamera.position.set(gameport.getWorldWidth()/2,gameport.getWorldHeight()/2,0);
-        world = new World(new Vector2(0, -40),false);//gravedad
+        world = new World(new Vector2(0, -10),false);//gravedad
         box2drenderer = new Box2DDebugRenderer();
 
         gameStage = new Stage(gameport,batch);
@@ -111,7 +114,6 @@ public class PlayScreen implements Screen {
 
         //temporal
 
-        duende = new Goblin(this,3.68f,2.88f);
         calaca = new FireSkull(this, 2.88f,5.28f);
         hongo = new Mushroom(this,1.12f,2.56f);
 
@@ -130,7 +132,30 @@ public class PlayScreen implements Screen {
         grassSound.setLooping(true);
 
         //music.play();
+
+
+
+        items = new Array<Item>();
+        itemsToSpawn = new LinkedBlockingQueue<ItemDef>();
     }
+
+    public void spawnItems(ItemDef idef){
+        itemsToSpawn.add(idef);
+    }
+
+    public void handleSpawningItems(){
+        if(!itemsToSpawn.isEmpty()) {
+            ItemDef idef = itemsToSpawn.poll();
+            if(idef.type == Coin.class){
+                items.add(new Coin(this,idef.position.x,idef.position.y));
+            }
+            if(idef.type == Heart.class){
+                items.add(new Heart(this,idef.position.x,idef.position.y));
+            }
+        }
+
+    }
+
 
     public void setGravity(float x, float y){
         world.setGravity(new Vector2(x,y));
@@ -143,15 +168,15 @@ public class PlayScreen implements Screen {
     public void handleinput(float dt){
         if (isOnGround()) {
                 if (mcontroller.isLpressed()) {
-                    player.body.setLinearVelocity(new Vector2(-1.5f, 0));
+                    player.body.setLinearVelocity(new Vector2(-1f, 0));
                 }
                 if (mcontroller.isRpressed()) {
-                    player.body.setLinearVelocity(new Vector2(1.5f, 0));
+                    player.body.setLinearVelocity(new Vector2(1f, 0));
                 }
         //TODO: Arreglar salto.^v
         if(acontroller.isJumppressed()) {
                mcontroller.setPressedButtons(true);
-                player.body.applyLinearImpulse(new Vector2(0, 4f), player.body.getWorldCenter(), true);
+                player.body.applyLinearImpulse(new Vector2(0, 1.9f), player.body.getWorldCenter(), true);
                 //  player.body.applyForceToCenter(player.body.getLinearVelocity().x,300f,true);
         }
         if(!acontroller.isJumppressed()){
@@ -167,13 +192,14 @@ public class PlayScreen implements Screen {
 //        if(!isOnGround() && acontroller.isJumppressed()){
 //        }
         }
-        if(!isOnGround()) {
+        if(!isOnGround() && (player.getState() == Character.State.JUMPING)) {
             if (mcontroller.isLpressed()) {
-                player.body.setLinearVelocity(new Vector2(-1.0f, 0));
+                player.body.setLinearVelocity(new Vector2(-1f, 0));
             }
             if (mcontroller.isRpressed()) {
-                player.body.setLinearVelocity(new Vector2(1.0f, 0));
+                player.body.setLinearVelocity(new Vector2(1f, 0));
             }
+        }else {
         }
     }
 
@@ -181,19 +207,40 @@ public class PlayScreen implements Screen {
      public void update(float dt){
         player.update(dt);
         hud.update(dt);
+        handleinput(dt);
+        handleSpawningItems();
+        world.step(1/60f,6,2);
 
-        for(Enemy enemy :creator.getEsqueletos()){
+
+
+
+         for(Enemy enemy : creator.getEsqueletos()){
             enemy.update(dt);
+            if(enemy.getY() < player.getY() + 1.5f)//si la posicion del enemigo es menor a la posicion del jugador mas la distancia a calcular
+                enemy.body.setActive(true);//activar al enemigo
         }
 
-        duende.update(dt);
+         for(Enemy enemy : creator.getDuendes()){
+             enemy.update(dt);
+             if(enemy.getY() < player.getY() + 1.5f)//si la posicion del enemigo es menor a la posicion del jugador mas la distancia a calcular
+                 enemy.body.setActive(true);//activar al enemigo
+         }
+
+        for(Item item : items)
+             item.update(dt);
+
+
         calaca.update(dt);
         hongo.update(dt);
 
-        handleinput(dt);
-        world.step(1/60f,6,2);
+         if(calaca.getY() < player.getY() + 1.5f)
+             calaca.body.setActive(true);
 
-        mainCamera.position.x = player.body.getPosition().x;
+         if(hongo.getY() < player.getY() + 1.5f)
+             hongo.body.setActive(true);
+
+
+       /// mainCamera.position.x = player.body.getPosition().x;    //esto es para que no se mueva en x
 
         /*float res = player.body.getPosition().y%7;
         int simpleRes = (int) res;
@@ -202,12 +249,11 @@ public class PlayScreen implements Screen {
         Gdx.app.log("PosicionP", "simpleRes: "+ String.valueOf(simpleRes));
         Gdx.app.log("PosicionP", "simpleSecRes: "+ String.valueOf(simpleSecRes));*/
 
-
-        if(player.getState() != Character.State.JUMPING)
-            mainCamera.position.y = player.body.getPosition().y;
-
-
-
+//esto es para que solo al caer en el suelo, se mueva la camara
+        if(((player.getState() != Character.State.JUMPING) && isOnGround()) && player.body.getPosition().y <6.7f)
+            mainCamera.position.y = player.body.getPosition().y+0.4f;
+//(80/NuclearWarGame.PPM)
+         Gdx.app.log("Jugador", "Posicion: (x,y) " + player.body.getPosition().toString());
 
 
          mainCamera.update();
@@ -256,7 +302,12 @@ public class PlayScreen implements Screen {
         for(Enemy enemy : creator.getEsqueletos()){
             enemy.draw(Game.batch);
         }
-        duende.draw(Game.batch);
+        for(Enemy enemy : creator.getDuendes()){
+            enemy.draw(Game.batch);
+        }
+        for(Item item : items)
+            item.draw(Game.batch);
+
         calaca.draw(Game.batch);
         hongo.draw(Game.batch);
         Game.batch.end();

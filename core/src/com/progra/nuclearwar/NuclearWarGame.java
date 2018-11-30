@@ -19,13 +19,14 @@ public class NuclearWarGame extends Game {
 
 	public static final short GROUND_BIT = 1;
 	public static final short PLAYER_BIT = 2;
-	public static final short COINS_BIT = 4;
+	public static final short CHEST_BIT = 4;
 	public static final short ENEMY_BIT = 8;
 	public static final short DOORS_BIT = 16;
 	public static final short WALL_BIT = 32;
 	public static final short DESTROYED_BIT = 64;
 	public static final short ENEMY_HEAD_BIT = 128;
 	public static final short ENEMY_BOUNDS_BIT =256;
+	public static final short ITEM_BIT =512;
 
 
 	/*por ejemplo,  si el personaje esta tocando el suelo, la combinacion en numeros binarios
@@ -48,6 +49,9 @@ public class NuclearWarGame extends Game {
 		assetManager.load("audio/sounds/ladder.wav",Music.class);
 		assetManager.load("audio/sounds/running_in_grass.wav",Music.class);
 		assetManager.load("audio/sounds/spike_trap.wav",Music.class);
+		assetManager.load("audio/sounds/chest_opening.wav",Music.class);
+		assetManager.load("audio/sounds/coin.wav",Music.class);
+        assetManager.load( "audio/sounds/pitch_item.wav",Music.class);
 		assetManager.finishLoading();
 		setScreen(new PlayScreen(this));
 	}

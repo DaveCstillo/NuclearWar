@@ -6,13 +6,15 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.progra.nuclearwar.Hitbox.Cofre;
 import com.progra.nuclearwar.Hitbox.Entrada;
-import com.progra.nuclearwar.Hitbox.Ground;
 import com.progra.nuclearwar.Hitbox.InteractiveTileObject;
 import com.progra.nuclearwar.Hitbox.Suelo;
 import com.progra.nuclearwar.Hitbox.Suelo_Total;
 import com.progra.nuclearwar.NuclearWarGame;
-import com.progra.nuclearwar.Sprites.Enemy;
+import com.progra.nuclearwar.Sprites.Enemies.Enemy;
+import com.progra.nuclearwar.Sprites.Items.Item;
+import com.progra.nuclearwar.Sprites.Player.Character;
 
 public class WCL_Castillo implements ContactListener {
     @Override
@@ -64,7 +66,19 @@ public class WCL_Castillo implements ContactListener {
                     Gdx.app.log("Jugador", "DEAD");
 
                 break;
+            case NuclearWarGame.PLAYER_BIT | NuclearWarGame.CHEST_BIT:
+                if(fixA.getFilterData().categoryBits == NuclearWarGame.CHEST_BIT)
+                    ((Cofre) fixA.getUserData()).openChest();
+                else
+                    ((Cofre) fixB.getUserData()).openChest();
 
+                break;
+            case NuclearWarGame.PLAYER_BIT | NuclearWarGame.ITEM_BIT:
+                if(fixA.getFilterData().categoryBits == NuclearWarGame.ITEM_BIT)
+                    ((Item) fixA.getUserData()).use((Character) fixB.getUserData());
+                else
+                    ((Item) fixB.getUserData()).use((Character) fixA.getUserData());
+                break;
         }
     }
 

@@ -1,8 +1,12 @@
 package com.progra.nuclearwar.Hitbox;
 
 
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -23,10 +27,16 @@ public abstract class InteractiveTileObject {
     protected Fixture fixture;
     public boolean Climbing;
 
-    public InteractiveTileObject(PlayScreen screen, Rectangle bds) {
+    protected MapObject object;
+
+    protected PlayScreen screen;
+
+    public InteractiveTileObject(PlayScreen screen, MapObject object) {
+        this.object = object;
+        this.screen = screen;
         this.world = screen.getWorld();
         this.map = screen.getMap();
-        this.bounds = bds;
+        this.bounds = ((RectangleMapObject) object).getRectangle();
         BodyDef bdef = new BodyDef();
         FixtureDef fdef = new FixtureDef();
         PolygonShape shape = new PolygonShape();
@@ -61,4 +71,11 @@ public abstract class InteractiveTileObject {
     public void setClimbing(boolean climbing) {
         Climbing = climbing;
     }
+
+
+    public TiledMapTileLayer.Cell getCell() {
+        TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get("Chests");
+        return layer.getCell((int) (body.getPosition().x * NuclearWarGame.PPM / 16), (int) (body.getPosition().y * NuclearWarGame.PPM / 16));
+            //body.position.x determina la posicion del objeto, * PPM es el escalado, multiplicado para el original, dividido para lo que se ve y 16 es el tamaño de los tiles en el mapa
+     }
 }

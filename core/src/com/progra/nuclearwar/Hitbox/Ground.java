@@ -3,6 +3,7 @@ package com.progra.nuclearwar.Hitbox;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -16,8 +17,8 @@ import java.awt.Polygon;
 public class Ground extends InteractiveTileObject{
     PlayScreen pantalla;
 
-    public Ground(PlayScreen screen, Rectangle bounds) {
-        super(screen, bounds);
+    public Ground(PlayScreen screen, MapObject object) {
+        super(screen, object);
         pantalla = screen;
         fixture.setUserData(this);
         setCategoryFilter(NuclearWarGame.GROUND_BIT);

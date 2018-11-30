@@ -36,6 +36,9 @@ public class Character extends Sprite {
     public Body body;
     public BodyDef bodydef;
 
+    public boolean toMove;
+
+
     public Character(World world, PlayScreen screen) {
         super(screen.getAtlas().findRegion("Oliver"));
 
@@ -51,6 +54,7 @@ public class Character extends Sprite {
 
         stateTimer = 0;
         runningRight = true;
+        toMove = false;
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
 
@@ -152,10 +156,50 @@ public class Character extends Sprite {
 
     public void moveCharacter(float x, float y){
 
-        bodydef.position.set(x,y);
+        bodydef = new BodyDef();
+        bodydef.position.set(x/ NuclearWarGame.PPM,y/NuclearWarGame.PPM);
+        bodydef.type = BodyDef.BodyType.DynamicBody;
 
+        body = world.createBody(bodydef);
+
+        CircleShape circle = new CircleShape();
+        FixtureDef fixturedef = new FixtureDef();
+
+        circle.setRadius(8/NuclearWarGame.PPM);
+
+        fixturedef.filter.categoryBits = NuclearWarGame.PLAYER_BIT;
+        fixturedef.filter.maskBits =
+                NuclearWarGame.GROUND_BIT |
+                        NuclearWarGame.CHEST_BIT |
+                        NuclearWarGame.WALL_BIT |
+                        NuclearWarGame.ENEMY_BIT |
+                        NuclearWarGame.ENEMY_HEAD_BIT |
+                        NuclearWarGame.ITEM_BIT;
+
+        fixturedef.shape = circle;
+        body.createFixture(fixturedef).setUserData(this);
+
+        EdgeShape feet = new EdgeShape();
+        feet.set(new Vector2(-4/NuclearWarGame.PPM, -9 /NuclearWarGame.PPM),new Vector2(4/NuclearWarGame.PPM, -9/NuclearWarGame.PPM));
+        fixturedef.shape = feet;
+        fixturedef.isSensor = true;
+        fixturedef.filter.maskBits = NuclearWarGame.GROUND_BIT | NuclearWarGame.DOORS_BIT;
+
+        body.createFixture(fixturedef).setUserData("feet");
 
 
     }
 
+    public void tpCharacter(float x, float y){
+        if(toMove){
+            world.destroyBody(body);
+            moveCharacter(x,y);
+        }
+    }
+
+
+    public void setToMove(boolean toMove, float x, float y) {
+        this.toMove = toMove;
+        tpCharacter(x,y);
+    }
 }

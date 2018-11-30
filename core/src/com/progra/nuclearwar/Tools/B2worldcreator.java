@@ -19,15 +19,15 @@ public class B2worldcreator {
     public B2worldcreator(PlayScreen playScreen) {
         TiledMap map = playScreen.getMap();
 
+        //cambio a interactive tileobject, en el constructor ya no pide RectangleMaoObject, ahora pide MapObject
 
+        //eliminamos el rectangulo, y solo pasamos el objeto
         for (MapObject object : map.getLayers().get("limites").getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect = ((RectangleMapObject)object).getRectangle();
-            new Walls(playScreen, rect);
+            new Walls(playScreen, object);
         }
         //TODO: decomment plataformas
         for (MapObject object : map.getLayers().get("plataformas").getObjects().getByType(RectangleMapObject.class)) {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            new Platforms(playScreen,rect);
+            new Platforms(playScreen,object);
         }
 //        for (MapObject object : map.getLayers().get("spikes").getObjects().getByType(RectangleMapObject.class)){
 //            Rectangle rect = ((RectangleMapObject)object).getRectangle();
@@ -36,47 +36,16 @@ public class B2worldcreator {
 
         //TODO decomment castillo, puerta1, puerta2
         for (MapObject object : map.getLayers().get("castillo").getObjects().getByType(RectangleMapObject.class)){
-                Rectangle rect = ((RectangleMapObject)object).getRectangle();
-                new Walls(playScreen,rect);
+                new Walls(playScreen,object);
         }
         for (MapObject object : map.getLayers().get("puerta1").getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect = ((RectangleMapObject)object).getRectangle();
-            new Puerta1(playScreen,rect);
+            new Puerta1(playScreen,object);
         }
         for (MapObject object : map.getLayers().get("puerta2").getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect = ((RectangleMapObject)object).getRectangle();
-            new Puerta2(playScreen,rect);
+            new Puerta2(playScreen,object);
         }
         for (MapObject object : map.getLayers().get("suelo").getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect = ((RectangleMapObject)object).getRectangle();
-            new Ground(playScreen,rect);
+            new Ground(playScreen,object);
         }
-//        for (MapObject object : map.getLayers().get("suelo").getObjects().getByType(PolygonMapObject.class)){
-//           PolygonShape polygonShape = getPolygon((PolygonMapObject)object);
-//            new GroundTriangles(playScreen,polygonShape);
-//        }
-            //Coins
-       /* for (MapObject object : map.getLayers().get("coins").getObjects().getByType(EllipseMapObject.class)){
-            Ellipse ellipse = ((EllipseMapObject)object).getEllipse();
-            new Coins(playScreen, ellipse);
-        }*/
     }
-
-
-    private static PolygonShape getPolygon(PolygonMapObject polygonObject) {
-        PolygonShape polygon = new PolygonShape();
-        float[] vertices = polygonObject.getPolygon().getTransformedVertices();
-
-        float[] worldVertices = new float[vertices.length];
-
-        for (int i = 0; i < vertices.length; ++i) {
-            System.out.println(vertices[i]);
-            worldVertices[i] = vertices[i] / NuclearWarGame.PPM;
-        }
-
-        polygon.set(worldVertices);
-        return polygon;
-    }
-
-
 }

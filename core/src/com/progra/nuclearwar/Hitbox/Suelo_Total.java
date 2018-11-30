@@ -1,5 +1,6 @@
 package com.progra.nuclearwar.Hitbox;
 
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.progra.nuclearwar.NuclearWarGame;
 import com.progra.nuclearwar.Screens.PlayScreen;
@@ -7,8 +8,8 @@ import com.progra.nuclearwar.Screens.PlayScreen;
 public class Suelo_Total extends InteractiveTileObject{
     PlayScreen pantalla;
 
-    public Suelo_Total(PlayScreen screen, Rectangle bds) {
-        super(screen, bds);
+    public Suelo_Total(PlayScreen screen,MapObject object) {
+        super(screen, object);
         pantalla = screen;
         fixture.setUserData(this);
         setCategoryFilter(NuclearWarGame.DESTROYED_BIT);
