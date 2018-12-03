@@ -19,12 +19,13 @@ public class worldContactListener implements ContactListener {
 
     @Override
     public void beginContact(Contact contact) {
-        Gdx.app.log("Contact", "Begin Contact");
+        //creamos dos figuras que determinaran quien es el jugador y quien es un objeto
         Fixture fixA = contact.getFixtureA();
         Fixture fixB = contact.getFixtureB();
 
         int cDef =  fixA.getFilterData().categoryBits | fixB.getFilterData().categoryBits;
 
+        //aqui se detecta cuando los pies tocan contra el suelo
         if (fixA.getUserData() == "feet" || fixB.getUserData() == "feet") {
             Fixture feet = fixA.getUserData() == "feet" ? fixA : fixB;
             Fixture object = feet == fixA ? fixB : fixA;
@@ -39,7 +40,7 @@ public class worldContactListener implements ContactListener {
         }
 
         switch (cDef){
-
+            //se detecta cuando el personaje choca contra cualquier cosa
             case NuclearWarGame.ENEMY_HEAD_BIT | NuclearWarGame.PLAYER_BIT:
                 if(fixA.getFilterData().categoryBits == NuclearWarGame.ENEMY_HEAD_BIT)
                     ((Enemy)fixA.getUserData()).onHeadHit();
@@ -67,7 +68,6 @@ public class worldContactListener implements ContactListener {
 
     @Override
     public void endContact(Contact contact) {
-        Gdx.app.log("Contact","End Contact");
         Fixture fixA = contact.getFixtureA();
         Fixture fixB = contact.getFixtureB();
 

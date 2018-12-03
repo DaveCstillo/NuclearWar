@@ -15,11 +15,10 @@ import com.progra.nuclearwar.NuclearWarGame;
 import com.progra.nuclearwar.Sprites.Enemies.Enemy;
 import com.progra.nuclearwar.Sprites.Items.Item;
 import com.progra.nuclearwar.Sprites.Player.Character;
-
+//igual al world contact listener con objetos del mapa castillo.
 public class WCL_Castillo implements ContactListener {
     @Override
     public void beginContact(Contact contact) {
-        Gdx.app.log("Contact","Begin Contact");
         Fixture fixA = contact.getFixtureA();
         Fixture fixB = contact.getFixtureB();
 

@@ -1,15 +1,9 @@
 package com.progra.nuclearwar;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.progra.nuclearwar.Screens.PlayScreen;
 
 public class NuclearWarGame extends Game {
@@ -17,6 +11,7 @@ public class NuclearWarGame extends Game {
 	public static final int V_HEIGHT = 416;  //416
 	public static final float PPM = 100; //Pixeles Por Metro
 
+	//Bits multiplos de 2 para la colision de objetos(hitbox)
 	public static final short GROUND_BIT = 1;
 	public static final short PLAYER_BIT = 2;
 	public static final short CHEST_BIT = 4;
@@ -32,8 +27,11 @@ public class NuclearWarGame extends Game {
 	/*por ejemplo,  si el personaje esta tocando el suelo, la combinacion en numeros binarios
 	de esa colision es de 00011 que es actualmente 3
 */
+
+	//la imagen general del juego, se dibuja todo sobre esto
 	public SpriteBatch batch;
 
+	//la variable dedicada para los recursos
 	public static AssetManager assetManager;
 
 	
@@ -41,6 +39,7 @@ public class NuclearWarGame extends Game {
 	public void create () {
 		batch = new SpriteBatch();
 		assetManager = new AssetManager();
+		//cargar musica
 		assetManager.load("audio/music/music1.wav",Music.class);
 		assetManager.load("audio/music/music2.wav",Music.class);
 		assetManager.load("audio/music/music3.wav",Music.class);

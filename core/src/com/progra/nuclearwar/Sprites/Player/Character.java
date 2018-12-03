@@ -19,18 +19,17 @@ import com.progra.nuclearwar.Screens.PlayScreen;
 
 
 public class Character extends Sprite {
-
+//imagenes del personaje, estando parado y saltando
     TextureRegion characterStand, characterJump;
-
+//es una enumeracion que indica que en que estado se encuentra el personaje
     public enum State{FALLING, JUMPING, STANDING, RUNNING}
-
+//para verificar en que estado esta y estuvo el personaje
     public State Currentstate, PreviousState;
 
-    Animation characterRun;
-    Animation characterClimb;
+    Animation characterRun;//animacion del personaje, corriendo
 
-    boolean runningRight;
-    float stateTimer;
+    boolean runningRight;//verifica si el personaje esta coriendo hacia la derecha
+    float stateTimer;//actualizaion del mundo
 
     World world;
     public Body body;
@@ -38,19 +37,18 @@ public class Character extends Sprite {
 
     public boolean toMove;
 
-
     public Character(World world, PlayScreen screen) {
         super(screen.getAtlas().findRegion("Oliver"));
-
+//la imagen del personaje esta en la region de "Oliver" de la imagen Characters.png
         TextureAtlas.AtlasRegion atlas = screen.getAtlas().findRegion("Oliver");
         Currentstate = State.STANDING;
         PreviousState = State.STANDING;
 
         characterStand = new TextureRegion(atlas,0,0,8,16);
-        setBounds(0,0,8/NuclearWarGame.PPM,16/NuclearWarGame.PPM);
-        setRegion(characterStand);
+        setBounds(0,0,8/NuclearWarGame.PPM,16/NuclearWarGame.PPM);//escalar la imagen
+        setRegion(characterStand);//pone la imagen del personaje al hitbox
         this.world = world;
-        defineCharacter();
+        defineCharacter();//define el cuerpo de box2d(hitbox) en el mundo
 
         stateTimer = 0;
         runningRight = true;
@@ -58,13 +56,16 @@ public class Character extends Sprite {
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
 
+        //animacion del personaje corriendo
         for(int i=3;i<7;i++){
+            //i=3 quiere decir que la imagen comienza en la tercera posicion, i<7 quiere decir que la animcaion termina antes de la septima posicion
             frames.add(new TextureRegion(atlas,i*8,0,8,16));
+            //i*8 indica el desplazamiento de posicion de cada imagen en el atlas, porque cada imagen tiene 8 pixeles de ancho
         }
-        characterRun = new Animation(0.2f,frames);
+        characterRun = new Animation(0.2f,frames);//se agrega las imagenes a la animacion y se coloca un tiempo de duracion
         frames.clear();
 
-        characterJump = new TextureRegion(atlas,8,0,8,16);
+        characterJump = new TextureRegion(atlas,8,0,8,16);//para definir la imagen del personaje saltando
 
     }
 
@@ -74,7 +75,7 @@ public class Character extends Sprite {
     }
 
 
-    public TextureRegion getFrame(float dt){
+    public TextureRegion getFrame(float dt){//determina en que estado se encuentra el personaje para darle una imagen
         Currentstate = getState();
 
         TextureRegion region;
@@ -86,7 +87,7 @@ public class Character extends Sprite {
                 region = (TextureRegion) characterRun.getKeyFrame(stateTimer,true);
                 break;
             case FALLING:
-                case STANDING:
+            case STANDING:
             default: region = characterStand;
             break;
         }

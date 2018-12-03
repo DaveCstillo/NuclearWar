@@ -1,18 +1,13 @@
 package com.progra.nuclearwar.Tools;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.progra.nuclearwar.NuclearWarGame;
-import com.progra.nuclearwar.Screens.PlayScreen;
 
 public class AController {
     boolean jumppressed, firepressed;
@@ -44,9 +39,7 @@ public class AController {
             }
 
         });
-
         table.add(jumpbtn).size(jumpbtn.getWidth(),jumpbtn.getHeight());
-
         this.stage.addActor(table);
     }
 

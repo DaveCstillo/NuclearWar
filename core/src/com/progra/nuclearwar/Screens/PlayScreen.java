@@ -41,27 +41,28 @@ import static com.progra.nuclearwar.NuclearWarGame.V_WIDTH;
 
 public class PlayScreen implements Screen {
 
-    NuclearWarGame Game;
+    NuclearWarGame Game;//centro de todo el codigo
 
+    //declaarciones de variables generales
     OrthographicCamera mainCamera;
     Viewport gameport;
     Hud hud;
     TiledMap map;
     OrthogonalTiledMapRenderer renderer;
     TmxMapLoader loader;
-
     World world;
     Box2DDebugRenderer box2drenderer;
-
     Stage gameStage;
 
+    //declaracion del jugador
     Character player;
     TextureAtlas atlas;
 
+    //musica
     private Music music, grassSound;
 
+    //controlador que determina si esta tocando el suelo
     boolean onGround = false;
-    boolean onTriangle = false;
 
     //Area de controles
     MController mcontroller;
@@ -69,23 +70,17 @@ public class PlayScreen implements Screen {
     screenControllers controllers;
 
     //Enemigos
-
     private FireSkull calaca;
     private Mushroom hongo;
-
-
 
     //Items
     private Array<Item> items;
     private LinkedBlockingQueue<ItemDef> itemsToSpawn;
 
-
     B2WC_Castillo creator;
-    //TODo: Arreglar bien el mapa.
 
     public PlayScreen(NuclearWarGame game) {
         atlas = new TextureAtlas("Characters.atlas");
-
         this.Game = game;
         mainCamera = new OrthographicCamera();
         gameport = new FitViewport((V_WIDTH/2) /Game.PPM, (Game.V_HEIGHT/2) / Game.PPM,mainCamera);
@@ -97,7 +92,6 @@ public class PlayScreen implements Screen {
         mainCamera.position.set(gameport.getWorldWidth()/2,gameport.getWorldHeight()/2,0);
         world = new World(new Vector2(0, -10),false);//gravedad
         box2drenderer = new Box2DDebugRenderer();
-
         gameStage = new Stage(gameport,batch);
 
         controllers = new screenControllers(Game.batch);
@@ -111,14 +105,10 @@ public class PlayScreen implements Screen {
 
         player = new Character(world,this);
 
-
         //temporal
-
         calaca = new FireSkull(this, 2.88f,5.28f);
         hongo = new Mushroom(this,1.12f,2.56f);
-
         //temporal
-
 
         //world.setContactListener(new worldContactListener());
         world.setContactListener(new WCL_Castillo());
@@ -127,13 +117,9 @@ public class PlayScreen implements Screen {
 
         music = NuclearWarGame.assetManager.get("audio/music/music1.wav",Music.class);
         music.setLooping(true);
-
         grassSound =  NuclearWarGame.assetManager.get("audio/sounds/running_in_grass.wav", Music.class);
         grassSound.setLooping(true);
-
         //music.play();
-
-
 
         items = new Array<Item>();
         itemsToSpawn = new LinkedBlockingQueue<ItemDef>();
@@ -177,7 +163,6 @@ public class PlayScreen implements Screen {
         if(acontroller.isJumppressed()) {
                mcontroller.setPressedButtons(true);
                 player.body.applyLinearImpulse(new Vector2(0, 1.9f), player.body.getWorldCenter(), true);
-                //  player.body.applyForceToCenter(player.body.getLinearVelocity().x,300f,true);
         }
         if(!acontroller.isJumppressed()){
             mcontroller.setPressedButtons(false);
@@ -186,11 +171,6 @@ public class PlayScreen implements Screen {
         if(!mcontroller.isLpressed() && ! mcontroller.isRpressed() && !acontroller.isJumppressed()){
                 player.body.setLinearVelocity(0,0);
         }
-//        if(isOnGround() && acontroller.isJumppressed() && mcontroller.isanypressed()){
-//            player.body.applyLinearImpulse(new Vector2(0,5f),player.body.getWorldCenter(),true);
-//        }
-//        if(!isOnGround() && acontroller.isJumppressed()){
-//        }
         }
         if(!isOnGround() && (player.getState() == Character.State.JUMPING)) {
             if (mcontroller.isLpressed()) {
@@ -211,9 +191,6 @@ public class PlayScreen implements Screen {
         handleSpawningItems();
         world.step(1/60f,6,2);
 
-
-
-
          for(Enemy enemy : creator.getEsqueletos()){
             enemy.update(dt);
             if(enemy.getY() < player.getY() + 1.5f)//si la posicion del enemigo es menor a la posicion del jugador mas la distancia a calcular
@@ -229,7 +206,6 @@ public class PlayScreen implements Screen {
         for(Item item : items)
              item.update(dt);
 
-
         calaca.update(dt);
         hongo.update(dt);
 
@@ -239,15 +215,7 @@ public class PlayScreen implements Screen {
          if(hongo.getY() < player.getY() + 1.5f)
              hongo.body.setActive(true);
 
-
        /// mainCamera.position.x = player.body.getPosition().x;    //esto es para que no se mueva en x
-
-        /*float res = player.body.getPosition().y%7;
-        int simpleRes = (int) res;
-        float secRes = simpleRes%2;
-        int simpleSecRes = (int) secRes;
-        Gdx.app.log("PosicionP", "simpleRes: "+ String.valueOf(simpleRes));
-        Gdx.app.log("PosicionP", "simpleSecRes: "+ String.valueOf(simpleSecRes));*/
 
 //esto es para que solo al caer en el suelo, se mueva la camara
         if(((player.getState() != Character.State.JUMPING) && isOnGround()) && player.body.getPosition().y <6.7f)
@@ -255,16 +223,12 @@ public class PlayScreen implements Screen {
 //(80/NuclearWarGame.PPM)
          Gdx.app.log("Jugador", "Posicion: (x,y) " + player.body.getPosition().toString());
 
-
          mainCamera.update();
          Game.batch.setProjectionMatrix(mainCamera.combined);
-
 
         renderer.setView(mainCamera);
 
         corriendo();
-
-
      }
 
      public void corriendo(){
@@ -273,7 +237,6 @@ public class PlayScreen implements Screen {
         }else{
             grassSound.stop();
          }
-
      }
      public Viewport getViewport(){
         return gameport;
@@ -291,12 +254,10 @@ public class PlayScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-
         renderer.render();
 
         box2drenderer.render(world, mainCamera.combined);
         Game.batch.setProjectionMatrix(mainCamera.combined);
-
         Game.batch.begin();
         player.draw(Game.batch);
         for(Enemy enemy : creator.getEsqueletos()){
@@ -307,16 +268,12 @@ public class PlayScreen implements Screen {
         }
         for(Item item : items)
             item.draw(Game.batch);
-
         calaca.draw(Game.batch);
         hongo.draw(Game.batch);
         Game.batch.end();
 
-
-
         hud.draw();
         controllers.draw();
-
     }
 
     @Override
@@ -324,22 +281,18 @@ public class PlayScreen implements Screen {
         gameport.update(width,height);
         acontroller.resize(width,height);
         mcontroller.resize(width,height);
-
     }
 
     @Override
     public void pause() {
-
     }
 
     @Override
     public void resume() {
-
     }
 
     @Override
     public void hide() {
-
     }
 
     @Override
@@ -350,7 +303,6 @@ public class PlayScreen implements Screen {
         box2drenderer.dispose();
         hud.dispose();
         controllers.dispose();
-
     }
 
     public World getWorld() {
@@ -371,13 +323,5 @@ public class PlayScreen implements Screen {
 
     public void setOnGround(boolean onGround) {
         this.onGround = onGround;
-    }
-
-    public boolean isOnTriangle() {
-        return onTriangle;
-    }
-
-    public void setOnTriangle(boolean onTriangle) {
-        this.onTriangle = onTriangle;
     }
 }

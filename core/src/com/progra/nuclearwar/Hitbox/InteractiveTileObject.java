@@ -6,7 +6,6 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -25,10 +24,8 @@ public abstract class InteractiveTileObject {
     protected Rectangle bounds;
     protected Body body;
     protected Fixture fixture;
-    public boolean Climbing;
 
     protected MapObject object;
-
     protected PlayScreen screen;
 
     public InteractiveTileObject(PlayScreen screen, MapObject object) {
@@ -40,7 +37,6 @@ public abstract class InteractiveTileObject {
         BodyDef bdef = new BodyDef();
         FixtureDef fdef = new FixtureDef();
         PolygonShape shape = new PolygonShape();
-        Climbing = false;
 
         bdef.type = BodyDef.BodyType.StaticBody;
         bdef.position.set((bounds.getX() + bounds.getWidth() / 2)  / NuclearWarGame.PPM, (bounds.getY() + bounds.getHeight() / 2)  / NuclearWarGame.PPM);
@@ -49,7 +45,6 @@ public abstract class InteractiveTileObject {
         shape.setAsBox((bounds.getWidth()/2) / NuclearWarGame.PPM , (bounds.getHeight()/2)  / NuclearWarGame.PPM);
         fdef.shape = shape;
         fixture = body.createFixture(fdef);
-
     }
     public  abstract void onHeadHit();
     public abstract void onFeetHit();
@@ -63,15 +58,6 @@ public abstract class InteractiveTileObject {
     public Filter getCategoryFilter(){
         return fixture.getFilterData();
     }
-
-    public boolean isClimbing() {
-        return Climbing;
-    }
-
-    public void setClimbing(boolean climbing) {
-        Climbing = climbing;
-    }
-
 
     public TiledMapTileLayer.Cell getCell() {
         TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get("Chests");

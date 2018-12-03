@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -56,12 +55,10 @@ public class Goblin  extends Enemy{
         bodydef = new BodyDef();
         bodydef.position.set(getX(),getY());
         bodydef.type = BodyDef.BodyType.DynamicBody;
-
         body = world.createBody(bodydef);
 
         CircleShape circle = new CircleShape();
         FixtureDef fixturedef = new FixtureDef();
-
         circle.setRadius(8/NuclearWarGame.PPM);
 
         fixturedef.filter.categoryBits = NuclearWarGame.ENEMY_BIT;

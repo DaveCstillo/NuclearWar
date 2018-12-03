@@ -17,21 +17,17 @@ public class screenControllers implements Disposable {
     AController actionC;
     MController movementC;
 
-
-
+    //clase creada para el manejo de los controles
     public screenControllers(SpriteBatch batch) {
 
         camera = new OrthographicCamera();
         port = new FitViewport(NuclearWarGame.V_WIDTH/NuclearWarGame.PPM, NuclearWarGame.V_HEIGHT/NuclearWarGame.PPM,camera);
         stage = new Stage(port,batch);
 
-
         actionC = new AController(stage, port);
         movementC=new MController(stage, port);
 
-
         Gdx.input.setInputProcessor(stage);
-
     }
 
 
