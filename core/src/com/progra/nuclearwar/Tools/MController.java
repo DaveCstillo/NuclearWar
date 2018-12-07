@@ -1,21 +1,16 @@
 package com.progra.nuclearwar.Tools;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.progra.nuclearwar.NuclearWarGame;
-import com.progra.nuclearwar.Screens.PlayScreen;
 
 public class MController {
+    //variablees de control que determinan si se presionan los botones
     boolean lpressed, rpressed;
 
     Viewport btnvport;
@@ -32,7 +27,7 @@ public class MController {
         Table table = new Table();
         table.left().bottom().setBounds(0,0,1,1);
 
-        Image leftbtn = new Image(new Texture("leftbtn.png"));
+        Image leftbtn = new Image(new Texture("leftbtn.png"));//se carga la imagen del boton izquierdo
         leftbtn.setSize(60/ NuclearWarGame.PPM,60/NuclearWarGame.PPM);
         leftbtn.addListener(new InputListener(){
             @Override
@@ -46,24 +41,26 @@ public class MController {
                 lpressed = false;
             }
         });
-        Image rightbtn = new Image(new Texture("rightbtn.png"));
+        Image rightbtn = new Image(new Texture("rightbtn.png"));//se carga la imagen del boton derecho
         rightbtn.setSize(60/NuclearWarGame.PPM,60/NuclearWarGame.PPM);
         rightbtn.addListener(new InputListener(){
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {//TouchDown es para detectar si toca la pantalla
                 rpressed = true;
                 return true;
             }
 
             @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {//TouchUp es para detectar cuando suelta la pantalla
                 rpressed = false;
             }
         });
 
+        //para agregar los botones a la tabla
         table.add(leftbtn).size(leftbtn.getWidth(),leftbtn.getHeight()).pad(1/NuclearWarGame.PPM,0.2f,1/NuclearWarGame.PPM,2/NuclearWarGame.PPM);
         table.add(rightbtn).size(rightbtn.getWidth(),rightbtn.getHeight()).pad(1/NuclearWarGame.PPM,2/NuclearWarGame.PPM,1/NuclearWarGame.PPM,0.2f);
 
+        //se agrega la tabla al escenario
         stage.addActor(table);
     }
 
@@ -98,7 +95,6 @@ public class MController {
 
     public void draw(){
         stage.draw();
-
     }
 
     public void setPressedButtons(boolean paused){

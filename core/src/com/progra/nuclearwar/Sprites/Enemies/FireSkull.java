@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -17,7 +16,7 @@ import com.progra.nuclearwar.Screens.PlayScreen;
 public class FireSkull extends Enemy {
 
     BodyDef bodydef;
-
+//variables de control para determinar cuando se va a destruir o si ya esta destruido
     boolean setOnDestroy;
     boolean destroyed;
     boolean runningRight = true;
@@ -26,12 +25,10 @@ public class FireSkull extends Enemy {
     private Animation walkAnimation;
     private Array<TextureRegion> frames;
 
-
     public FireSkull(PlayScreen screen, float x, float y) {
         super(screen, x, y);
         frames = new Array<TextureRegion>();
 
-        //Todo cambiar tamaño
         for(int i = 0; i<3;i++)
             frames.add(new TextureRegion(screen.getAtlas().findRegion("FireSkull"),i*16,0,16,21));
         walkAnimation = new Animation(0.4f,frames);
@@ -58,16 +55,13 @@ public class FireSkull extends Enemy {
 
     @Override
     protected void defineEnemy() {
-
         bodydef = new BodyDef();
         bodydef.position.set(getX(),getY());
         bodydef.type = BodyDef.BodyType.DynamicBody;
-
         body = world.createBody(bodydef);
 
         CircleShape circle = new CircleShape();
         FixtureDef fixturedef = new FixtureDef();
-
         circle.setRadius(8/NuclearWarGame.PPM);
 
         fixturedef.filter.categoryBits = NuclearWarGame.ENEMY_BIT;
@@ -81,7 +75,6 @@ public class FireSkull extends Enemy {
         fixturedef.shape = circle;
         body.createFixture(fixturedef).setUserData(this);
 
-
         PolygonShape head = new PolygonShape();
         Vector2[] vertices = new Vector2[4];
         vertices[0] = new Vector2(-7,10).scl(1/ NuclearWarGame.PPM);
@@ -94,8 +87,6 @@ public class FireSkull extends Enemy {
         fixturedef.restitution = 0.8f;
         fixturedef.filter.categoryBits = NuclearWarGame.ENEMY_HEAD_BIT;
         body.createFixture(fixturedef).setUserData(this);
-
-
     }
 
     public TextureRegion getFrame(float dt){
@@ -108,7 +99,6 @@ public class FireSkull extends Enemy {
             region.flip(true, false);
             runningRight = true;
         }
-
         return region;
     }
 

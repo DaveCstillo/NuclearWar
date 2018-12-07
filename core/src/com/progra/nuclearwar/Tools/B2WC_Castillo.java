@@ -18,7 +18,7 @@ import com.progra.nuclearwar.Sprites.Enemies.Goblin;
 import com.progra.nuclearwar.Sprites.Enemies.Skull;
 
 public class B2WC_Castillo {
-
+//arreglo para los enemigos (esqueletos, duendes)
     Array<Skull> Esqueletos;
     Array<Goblin> Duendes;
 
@@ -61,11 +61,13 @@ public class B2WC_Castillo {
         for (MapObject object : map.getLayers().get("Esqueletos").getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject)object).getRectangle();
             Esqueletos.add(new Skull(playScreen, rect.getX() / NuclearWarGame.PPM, rect.getY() / NuclearWarGame.PPM));
+            //para agregar los esqueletos en la posicion del objeto dentro del mapa
         }
         Duendes = new Array<Goblin>();
         for (MapObject object : map.getLayers().get("Duendes").getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject)object).getRectangle();
             Duendes.add(new Goblin(playScreen, rect.getX() / NuclearWarGame.PPM, rect.getY() / NuclearWarGame.PPM));
+        //para agregar los duendes en la posicion del objeto dentro del mapa
         }
     }
 
