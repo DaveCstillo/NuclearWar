@@ -1,5 +1,6 @@
 package com.progra.nuclearwar.Sprites.Enemies;
 
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -104,6 +105,7 @@ public class Goblin  extends Enemy{
     public void onHeadHit() {
         setOnDestroy = true;
         Hud.addScore(150);
+        NuclearWarGame.assetManager.get("audio/sounds/goblin-death.wav",Music.class).play();
     }
 
     @Override

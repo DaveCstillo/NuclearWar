@@ -1,5 +1,6 @@
 package com.progra.nuclearwar.Sprites.Player;
 
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -36,6 +37,7 @@ public class Character extends Sprite {
     public BodyDef bodydef;
 
     public boolean toMove;
+    public float moveToX, moveToY;
 
     public Character(World world, PlayScreen screen) {
         super(screen.getAtlas().findRegion("Oliver"));
@@ -72,6 +74,9 @@ public class Character extends Sprite {
     public void update(float dt){
         setPosition(body.getPosition().x-getWidth()/2,body.getPosition().y-getHeight()/2);
         setRegion(getFrame(dt));
+        if(toMove){
+            tpCharacter();
+        }
     }
 
 
@@ -137,7 +142,8 @@ public class Character extends Sprite {
                 NuclearWarGame.WALL_BIT |
                 NuclearWarGame.ENEMY_BIT |
                 NuclearWarGame.ENEMY_HEAD_BIT |
-                NuclearWarGame.ITEM_BIT;
+                NuclearWarGame.ITEM_BIT |
+                NuclearWarGame.DOORS_BIT;
 
         fixturedef.shape = circle;
         body.createFixture(fixturedef).setUserData(this);
@@ -146,7 +152,7 @@ public class Character extends Sprite {
         feet.set(new Vector2(-4/NuclearWarGame.PPM, -9 /NuclearWarGame.PPM),new Vector2(4/NuclearWarGame.PPM, -9/NuclearWarGame.PPM));
         fixturedef.shape = feet;
         fixturedef.isSensor = true;
-        fixturedef.filter.maskBits = NuclearWarGame.GROUND_BIT | NuclearWarGame.DOORS_BIT;
+        fixturedef.filter.maskBits = NuclearWarGame.GROUND_BIT;
 
         body.createFixture(fixturedef).setUserData("feet");
     }
@@ -155,10 +161,10 @@ public class Character extends Sprite {
         return PreviousState;
     }
 
-    public void moveCharacter(float x, float y){
+    public void moveCharacter(){
 
         bodydef = new BodyDef();
-        bodydef.position.set(x/ NuclearWarGame.PPM,y/NuclearWarGame.PPM);
+        bodydef.position.set(moveToX,moveToY);
         bodydef.type = BodyDef.BodyType.DynamicBody;
 
         body = world.createBody(bodydef);
@@ -175,7 +181,8 @@ public class Character extends Sprite {
                         NuclearWarGame.WALL_BIT |
                         NuclearWarGame.ENEMY_BIT |
                         NuclearWarGame.ENEMY_HEAD_BIT |
-                        NuclearWarGame.ITEM_BIT;
+                        NuclearWarGame.ITEM_BIT |
+                        NuclearWarGame.DOORS_BIT;
 
         fixturedef.shape = circle;
         body.createFixture(fixturedef).setUserData(this);
@@ -184,23 +191,25 @@ public class Character extends Sprite {
         feet.set(new Vector2(-4/NuclearWarGame.PPM, -9 /NuclearWarGame.PPM),new Vector2(4/NuclearWarGame.PPM, -9/NuclearWarGame.PPM));
         fixturedef.shape = feet;
         fixturedef.isSensor = true;
-        fixturedef.filter.maskBits = NuclearWarGame.GROUND_BIT | NuclearWarGame.DOORS_BIT;
+        fixturedef.filter.maskBits = NuclearWarGame.GROUND_BIT;
 
         body.createFixture(fixturedef).setUserData("feet");
-
+        toMove = false;
 
     }
 
-    public void tpCharacter(float x, float y){
-        if(toMove){
-            world.destroyBody(body);
-            moveCharacter(x,y);
-        }
+    public void tpCharacter(){
+        world.destroyBody(body);
+        moveCharacter();
     }
 
 
-    public void setToMove(boolean toMove, float x, float y) {
-        this.toMove = toMove;
-        tpCharacter(x,y);
+    public void setToMove(float x, float y) {
+        toMove = true;
+        moveToX = x;
+        moveToY = y;
+    }
+    public void hit(){
+        NuclearWarGame.assetManager.get("audio/sounds/hit_player.wav",Music.class).play();
     }
 }

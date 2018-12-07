@@ -51,6 +51,12 @@ public class NuclearWarGame extends Game {
 		assetManager.load("audio/sounds/chest_opening.wav",Music.class);
 		assetManager.load("audio/sounds/coin.wav",Music.class);
         assetManager.load( "audio/sounds/pitch_item.wav",Music.class);
+		assetManager.load( "audio/sounds/falling-bones.wav",Music.class);
+		assetManager.load( "audio/sounds/goblin-death.wav",Music.class);
+		assetManager.load( "audio/sounds/hit_player.wav",Music.class);
+		assetManager.load( "audio/sounds/slow-zombie-death.mp3",Music.class);
+		assetManager.load( "audio/sounds/game-die.mp3",Music.class);
+		assetManager.load( "audio/sounds/videogame-dieorlose.flac",Music.class);
 		assetManager.finishLoading();
 		setScreen(new PlayScreen(this));
 	}

@@ -32,11 +32,7 @@ public class Puerta1 extends InteractiveTileObject {
     public void entrar(Character player){
         Gdx.app.log("Puerta", "Entrando");
 
-        Vector2 position = player.body.getPosition();
-        Gdx.app.log("Puerta", "Posicion del player: "+ position.toString());
-        //player.translate(-5, 2);
-        player.setToMove(true,724f/NuclearWarGame.PPM,280f/NuclearWarGame.PPM);
-
+        player.setToMove(520f/NuclearWarGame.PPM,352f/NuclearWarGame.PPM);
     }
 
     @Override

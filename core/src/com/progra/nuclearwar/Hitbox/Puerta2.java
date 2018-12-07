@@ -32,7 +32,8 @@ public class Puerta2 extends InteractiveTileObject {
 
     public void entrar(Character player){
         Gdx.app.log("Puerta", "Entrando");
-        player.moveCharacter(724f/NuclearWarGame.PPM,280f/NuclearWarGame.PPM);
+        player.setToMove(744f/NuclearWarGame.PPM,112f/NuclearWarGame.PPM);
+
     }
 
 

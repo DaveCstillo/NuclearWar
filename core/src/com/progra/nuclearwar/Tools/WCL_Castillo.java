@@ -78,6 +78,10 @@ public class WCL_Castillo implements ContactListener {
                 else
                     ((Item) fixB.getUserData()).use((Character) fixA.getUserData());
                 break;
+            case NuclearWarGame.ENEMY_BIT | NuclearWarGame.ENEMY_BIT:
+                ((Enemy)fixA.getUserData()).reverseVelocity(true, false);
+                ((Enemy)fixB.getUserData()).reverseVelocity(true, false);
+                break;
         }
     }
 

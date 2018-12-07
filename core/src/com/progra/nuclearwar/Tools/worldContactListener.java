@@ -6,12 +6,14 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.progra.nuclearwar.Hitbox.Cofre;
 import com.progra.nuclearwar.Hitbox.Ground;
 import com.progra.nuclearwar.Hitbox.InteractiveTileObject;
 import com.progra.nuclearwar.Hitbox.Puerta1;
 import com.progra.nuclearwar.Hitbox.Puerta2;
 import com.progra.nuclearwar.NuclearWarGame;
 import com.progra.nuclearwar.Sprites.Enemies.Enemy;
+import com.progra.nuclearwar.Sprites.Items.Item;
 import com.progra.nuclearwar.Sprites.Player.Character;
 
 public class worldContactListener implements ContactListener {
@@ -48,20 +50,53 @@ public class worldContactListener implements ContactListener {
                     ((Enemy)fixB.getUserData()).onHeadHit();
 
                 break;
+            case NuclearWarGame.ENEMY_BIT | NuclearWarGame.ENEMY_BOUNDS_BIT:
+                if(fixA.getFilterData().categoryBits == NuclearWarGame.ENEMY_BIT)
+                    ((Enemy) fixA.getUserData()).reverseVelocity(true,false);
+                else
+                    ((Enemy)fixB.getUserData()).reverseVelocity(true,false);
+
+                break;
+            case NuclearWarGame.ENEMY_BIT | NuclearWarGame.PLAYER_BIT:
+                if(fixA.getFilterData().categoryBits == NuclearWarGame.PLAYER_BIT)
+                    ((Character)fixA.getUserData()).hit();
+                else
+                    ((Character)fixB.getUserData()).hit();
+
+                break;
+            case NuclearWarGame.PLAYER_BIT | NuclearWarGame.CHEST_BIT:
+                if(fixA.getFilterData().categoryBits == NuclearWarGame.CHEST_BIT)
+                    ((Cofre) fixA.getUserData()).openChest();
+                else
+                    ((Cofre) fixB.getUserData()).openChest();
+
+                break;
+            case NuclearWarGame.PLAYER_BIT | NuclearWarGame.ITEM_BIT:
+                if(fixA.getFilterData().categoryBits == NuclearWarGame.ITEM_BIT)
+                    ((Item) fixA.getUserData()).use((Character) fixB.getUserData());
+                else
+                    ((Item) fixB.getUserData()).use((Character) fixA.getUserData());
+                break;
+            case NuclearWarGame.ENEMY_BIT:
+                ((Enemy)fixA.getUserData()).reverseVelocity(true, false);
+                ((Enemy)fixB.getUserData()).reverseVelocity(true, false);
+                break;
             case NuclearWarGame.PLAYER_BIT | NuclearWarGame.DOORS_BIT:
                 if(fixA.getUserData().getClass() == Puerta1.class)
                     ((Puerta1) fixA.getUserData()).entrar((Character) fixB.getUserData());
-                else
+                else if(fixB.getUserData().getClass() == Puerta1.class)
                     ((Puerta1) fixB.getUserData()).entrar((Character) fixA.getUserData());
+                else
+
 
                 if(fixA.getUserData().getClass() == Puerta2.class)
                     ((Puerta2) fixA.getUserData()).entrar((Character) fixB.getUserData());
-                else
+                else if(fixB.getUserData().getClass() == Puerta2.class)
                     ((Puerta2) fixB.getUserData()).entrar((Character) fixA.getUserData());
+                else
+
 
                 break;
-
-
         }
 
     }

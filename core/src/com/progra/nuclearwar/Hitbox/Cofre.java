@@ -16,7 +16,7 @@ public class Cofre extends InteractiveTileObject {
 
     PlayScreen pantalla;
     private static TiledMapTileSet tileset;
-    private final int OPEN_CHEST = 406;
+    private final int OPEN_CHEST = 2103;
     TiledMap map;
     private Music openChest;
 

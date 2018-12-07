@@ -1,5 +1,6 @@
 package com.progra.nuclearwar.Sprites.Enemies;
 
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -92,7 +93,6 @@ public class Skull extends Enemy {
                         NuclearWarGame.ENEMY_BOUNDS_BIT |
                         NuclearWarGame.PLAYER_BIT |
                         NuclearWarGame.ENEMY_BIT |
-                        NuclearWarGame.DOORS_BIT |
                         NuclearWarGame.WALL_BIT;
 
         fixturedef.shape = circle;
@@ -120,6 +120,7 @@ public class Skull extends Enemy {
     public void onHeadHit() {
         setOnDestroy = true;
         Hud.addScore(150);
+        NuclearWarGame.assetManager.get("audio/sounds/falling-bones.wav",Music.class).play();
     }
 
     @Override
