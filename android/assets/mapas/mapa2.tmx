@@ -98,7 +98,11 @@
   <object id="34" x="1120" y="256" width="112" height="16"/>
  </objectgroup>
  <objectgroup id="21" name="Cofres">
-  <object id="35" x="736" y="135.333" width="16" height="8.66667"/>
+  <object id="35" x="736" y="135.333" width="16" height="8.66667">
+   <properties>
+    <property name="Coin" value=""/>
+   </properties>
+  </object>
   <object id="36" x="896" y="295.333" width="15.6667" height="8.66667"/>
   <object id="37" x="1296" y="183" width="16.3333" height="9">
    <properties>
