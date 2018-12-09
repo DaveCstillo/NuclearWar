@@ -33,7 +33,6 @@ public class Puerta1 extends InteractiveTileObject {
         //posicion de la puerta 45, 7
         Gdx.app.log("Puerta", "Entrando");
         player.setToMove(520f/NuclearWarGame.PPM,352f/NuclearWarGame.PPM);
-
     }
 
     @Override

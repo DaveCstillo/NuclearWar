@@ -79,8 +79,9 @@ public class Character extends Sprite {
     public void update(float dt){
         setPosition(body.getPosition().x-getWidth()/2,body.getPosition().y-getHeight()/2);
         setRegion(getFrame(dt));
-        if(toMove)
+        if(toMove){
             tpCharacter();
+        }
     }
 
 
@@ -147,12 +148,13 @@ public class Character extends Sprite {
         fixturedef.filter.categoryBits = NuclearWarGame.PLAYER_BIT;
         fixturedef.filter.maskBits =
                 NuclearWarGame.GROUND_BIT |
-                        NuclearWarGame.CHEST_BIT |
-                        NuclearWarGame.WALL_BIT |
-                        NuclearWarGame.ENEMY_BIT |
-                        NuclearWarGame.ENEMY_HEAD_BIT |
-                        NuclearWarGame.ITEM_BIT |
-                        NuclearWarGame.DOORS_BIT;
+
+                NuclearWarGame.CHEST_BIT |
+                NuclearWarGame.WALL_BIT |
+                NuclearWarGame.ENEMY_BIT |
+                NuclearWarGame.ENEMY_HEAD_BIT |
+                NuclearWarGame.ITEM_BIT |
+                NuclearWarGame.DOORS_BIT;
 
         fixturedef.shape = circle;
         body.createFixture(fixturedef).setUserData(this);
@@ -204,6 +206,7 @@ public class Character extends Sprite {
 
         body.createFixture(fixturedef).setUserData("feet");
         toMove = false;
+
     }
 
     public void tpCharacter(){
@@ -229,6 +232,8 @@ public class Character extends Sprite {
             fix.setUserData(filter);
 
         body.applyLinearImpulse(new Vector2(0, 4f),body.getWorldCenter(),true);
+
+
 
     }
 }

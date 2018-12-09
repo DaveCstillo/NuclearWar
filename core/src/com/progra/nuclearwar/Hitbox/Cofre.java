@@ -16,7 +16,8 @@ public class Cofre extends InteractiveTileObject {
 
     PlayScreen pantalla;
     private static TiledMapTileSet tileset;
-    private final int OPEN_CHEST = 406;
+   // private final int OPEN_CHEST = 406;
+    private final int OPEN_CHEST = 2103;
     TiledMap map;
     private Music openChest;
 
@@ -25,7 +26,7 @@ public class Cofre extends InteractiveTileObject {
         super(screen, object);
         pantalla = screen;
         map = screen.getMap();
-        tileset = map.getTileSets().getTileSet(1);
+        tileset = map.getTileSets().getTileSet(9);
         fixture.setUserData(this);
         setCategoryFilter(NuclearWarGame.CHEST_BIT);
         openChest = NuclearWarGame.assetManager.get("audio/sounds/chest_opening.wav", Music.class);

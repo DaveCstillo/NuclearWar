@@ -30,9 +30,11 @@ import com.progra.nuclearwar.Sprites.Enemies.Goblin;
 import com.progra.nuclearwar.Sprites.Enemies.Mushroom;
 import com.progra.nuclearwar.Tools.AController;
 import com.progra.nuclearwar.Tools.B2WC_Castillo;
+import com.progra.nuclearwar.Tools.B2worldcreator;
 import com.progra.nuclearwar.Tools.MController;
 import com.progra.nuclearwar.Tools.WCL_Castillo;
 import com.progra.nuclearwar.Tools.screenControllers;
+import com.progra.nuclearwar.Tools.worldContactListener;
 
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -77,15 +79,15 @@ public class PlayScreen implements Screen {
     private Array<Item> items;
     private LinkedBlockingQueue<ItemDef> itemsToSpawn;
 
-    B2WC_Castillo creator;
-
+   // B2WC_Castillo creator;
+        B2worldcreator creator;
     public PlayScreen(NuclearWarGame game) {
         atlas = new TextureAtlas("Characters.atlas");
         this.Game = game;
         mainCamera = new OrthographicCamera();
         gameport = new FitViewport((V_WIDTH/2) /Game.PPM, (Game.V_HEIGHT/2) / Game.PPM,mainCamera);
         loader = new TmxMapLoader();
-        map = loader.load("mapas/Castillo_Mapa.tmx");
+        map = loader.load("mapas/mapa2.tmx");
         renderer = new OrthogonalTiledMapRenderer(map,1/Game.PPM);
         SpriteBatch batch = new SpriteBatch();
 
@@ -100,8 +102,8 @@ public class PlayScreen implements Screen {
         mcontroller = controllers.getMovementC();
         acontroller = controllers.getActionC();
 
-        //new B2worldcreator(this);
-        creator = new B2WC_Castillo(this);
+        creator = new B2worldcreator(this);
+//        creator = new B2WC_Castillo(this);
 
         player = new Character(world,this);
 
@@ -110,8 +112,8 @@ public class PlayScreen implements Screen {
         hongo = new Mushroom(this,1.12f,2.56f);
         //temporal
 
-        //world.setContactListener(new worldContactListener());
-        world.setContactListener(new WCL_Castillo());
+        world.setContactListener(new worldContactListener());
+        //world.setContactListener(new WCL_Castillo());
 
         mainCamera.position.y = 1f;
         NuclearWarGame.assetManager.get("audio/music/music1.wav",Music.class).setLooping(true);
@@ -216,9 +218,8 @@ public class PlayScreen implements Screen {
          if(hongo.getY() < player.getY() + 1.5f)
              hongo.body.setActive(true);
 
-
          if(player.getState() != Character.State.DEAD) { //new if oliver is dead, don´t let camera follow oliver
-         // mainCamera.position.x = player.body.getPosition().x;    //esto es para que no se mueva en x
+          mainCamera.position.x = player.body.getPosition().x;    //esto es para que no se mueva en x
         //esto es para que solo al caer en el suelo, se mueva la camara
              if (((player.getState() != Character.State.JUMPING) && isOnGround()) && player.body.getPosition().y < 6.7f)
                  mainCamera.position.y = player.body.getPosition().y + 0.4f;

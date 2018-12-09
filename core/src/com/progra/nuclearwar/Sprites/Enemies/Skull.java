@@ -93,7 +93,6 @@ public class Skull extends Enemy {
                         NuclearWarGame.ENEMY_BOUNDS_BIT |
                         NuclearWarGame.PLAYER_BIT |
                         NuclearWarGame.ENEMY_BIT |
-                        NuclearWarGame.DOORS_BIT |
                         NuclearWarGame.WALL_BIT;
 
         fixturedef.shape = circle;
