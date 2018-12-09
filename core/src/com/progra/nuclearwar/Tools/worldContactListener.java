@@ -51,16 +51,21 @@ public class worldContactListener implements ContactListener {
             case NuclearWarGame.PLAYER_BIT | NuclearWarGame.DOORS_BIT:
                 if(fixA.getUserData().getClass() == Puerta1.class)
                     ((Puerta1) fixA.getUserData()).entrar((Character) fixB.getUserData());
-                else
+                else if(fixB.getUserData().getClass() == Puerta1.class)
                     ((Puerta1) fixB.getUserData()).entrar((Character) fixA.getUserData());
+                else
+
+
 
                 if(fixA.getUserData().getClass() == Puerta2.class)
                     ((Puerta2) fixA.getUserData()).entrar((Character) fixB.getUserData());
-                else
+                else if(fixB.getUserData().getClass() == Puerta2.class)
                     ((Puerta2) fixB.getUserData()).entrar((Character) fixA.getUserData());
+                else
 
-                break;
 
+
+                    break;
 
         }
 

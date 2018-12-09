@@ -3,6 +3,7 @@ package com.progra.nuclearwar;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.progra.nuclearwar.Screens.PlayScreen;
 
@@ -12,6 +13,7 @@ public class NuclearWarGame extends Game {
 	public static final float PPM = 100; //Pixeles Por Metro
 
 	//Bits multiplos de 2 para la colision de objetos(hitbox)
+    public static final short NOTHING_BIT =0;
 	public static final short GROUND_BIT = 1;
 	public static final short PLAYER_BIT = 2;
 	public static final short CHEST_BIT = 4;
@@ -40,6 +42,7 @@ public class NuclearWarGame extends Game {
 		batch = new SpriteBatch();
 		assetManager = new AssetManager();
 		//cargar musica
+		assetManager = new AssetManager();
 		assetManager.load("audio/music/music1.wav",Music.class);
 		assetManager.load("audio/music/music2.wav",Music.class);
 		assetManager.load("audio/music/music3.wav",Music.class);
@@ -50,7 +53,13 @@ public class NuclearWarGame extends Game {
 		assetManager.load("audio/sounds/spike_trap.wav",Music.class);
 		assetManager.load("audio/sounds/chest_opening.wav",Music.class);
 		assetManager.load("audio/sounds/coin.wav",Music.class);
-        assetManager.load( "audio/sounds/pitch_item.wav",Music.class);
+		assetManager.load( "audio/sounds/pitch_item.wav",Music.class);
+		assetManager.load( "audio/sounds/hit_player.wav",Music.class);
+		assetManager.load( "audio/sounds/game-die.mp3",Sound.class);
+		assetManager.load( "audio/sounds/videogame-dieorlose.flac",Sound.class);
+		assetManager.load( "audio/sounds/falling-bones.wav",Music.class);
+		assetManager.load( "audio/sounds/goblin-death.wav",Music.class);
+		assetManager.load( "audio/sounds/slow-zombie-death.mp3",Music.class);
 		assetManager.finishLoading();
 		setScreen(new PlayScreen(this));
 	}

@@ -78,6 +78,7 @@ public class WCL_Castillo implements ContactListener {
                 else
                     ((Item) fixB.getUserData()).use((Character) fixA.getUserData());
                 break;
+
         }
     }
 

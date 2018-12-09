@@ -12,6 +12,7 @@ import com.progra.nuclearwar.Screens.PlayScreen;
 
 public class B2worldcreator {
 
+
     public B2worldcreator(PlayScreen playScreen) {
         TiledMap map = playScreen.getMap();//para regresar el mapa para controlar
 

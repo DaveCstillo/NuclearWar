@@ -59,7 +59,7 @@ public class PlayScreen implements Screen {
     TextureAtlas atlas;
 
     //musica
-    private Music music, grassSound;
+    private Music grassSound;
 
     //controlador que determina si esta tocando el suelo
     boolean onGround = false;
@@ -114,12 +114,11 @@ public class PlayScreen implements Screen {
         world.setContactListener(new WCL_Castillo());
 
         mainCamera.position.y = 1f;
+        NuclearWarGame.assetManager.get("audio/music/music1.wav",Music.class).setLooping(true);
+        NuclearWarGame.assetManager.get("audio/music/music1.wav",Music.class).play();
 
-        music = NuclearWarGame.assetManager.get("audio/music/music1.wav",Music.class);
-        music.setLooping(true);
         grassSound =  NuclearWarGame.assetManager.get("audio/sounds/running_in_grass.wav", Music.class);
         grassSound.setLooping(true);
-        //music.play();
 
         items = new Array<Item>();
         itemsToSpawn = new LinkedBlockingQueue<ItemDef>();
@@ -152,34 +151,36 @@ public class PlayScreen implements Screen {
     }
 
     public void handleinput(float dt){
-        if (isOnGround()) {
+        if(player.getState() != Character.State.DEAD) { //new if oliver is dead, dont handle any input
+            if (isOnGround()) {
                 if (mcontroller.isLpressed()) {
                     player.body.setLinearVelocity(new Vector2(-1f, 0));
                 }
                 if (mcontroller.isRpressed()) {
                     player.body.setLinearVelocity(new Vector2(1f, 0));
                 }
-        //TODO: Arreglar salto.^v
-        if(acontroller.isJumppressed()) {
-               mcontroller.setPressedButtons(true);
-                player.body.applyLinearImpulse(new Vector2(0, 1.9f), player.body.getWorldCenter(), true);
-        }
-        if(!acontroller.isJumppressed()){
-            mcontroller.setPressedButtons(false);
-        }
+                //TODO: Arreglar salto.^v
+                if (acontroller.isJumppressed()) {
+                    mcontroller.setPressedButtons(true);
+                    player.body.applyLinearImpulse(new Vector2(0, 1.9f), player.body.getWorldCenter(), true);
+                }
+                if (!acontroller.isJumppressed()) {
+                    mcontroller.setPressedButtons(false);
+                }
 
-        if(!mcontroller.isLpressed() && ! mcontroller.isRpressed() && !acontroller.isJumppressed()){
-                player.body.setLinearVelocity(0,0);
-        }
-        }
-        if(!isOnGround() && (player.getState() == Character.State.JUMPING)) {
-            if (mcontroller.isLpressed()) {
-                player.body.setLinearVelocity(new Vector2(-1f, 0));
+                if (!mcontroller.isLpressed() && !mcontroller.isRpressed() && !acontroller.isJumppressed()) {
+                    player.body.setLinearVelocity(0, 0);
+                }
             }
-            if (mcontroller.isRpressed()) {
-                player.body.setLinearVelocity(new Vector2(1f, 0));
+            if (!isOnGround() && (player.getState() == Character.State.JUMPING)) {
+                if (mcontroller.isLpressed()) {
+                    player.body.setLinearVelocity(new Vector2(-1f, 0));
+                }
+                if (mcontroller.isRpressed()) {
+                    player.body.setLinearVelocity(new Vector2(1f, 0));
+                }
+            } else {
             }
-        }else {
         }
     }
 
@@ -215,12 +216,14 @@ public class PlayScreen implements Screen {
          if(hongo.getY() < player.getY() + 1.5f)
              hongo.body.setActive(true);
 
-       /// mainCamera.position.x = player.body.getPosition().x;    //esto es para que no se mueva en x
 
-//esto es para que solo al caer en el suelo, se mueva la camara
-        if(((player.getState() != Character.State.JUMPING) && isOnGround()) && player.body.getPosition().y <6.7f)
-            mainCamera.position.y = player.body.getPosition().y+0.4f;
-//(80/NuclearWarGame.PPM)
+         if(player.getState() != Character.State.DEAD) { //new if oliver is dead, don´t let camera follow oliver
+         // mainCamera.position.x = player.body.getPosition().x;    //esto es para que no se mueva en x
+        //esto es para que solo al caer en el suelo, se mueva la camara
+             if (((player.getState() != Character.State.JUMPING) && isOnGround()) && player.body.getPosition().y < 6.7f)
+                 mainCamera.position.y = player.body.getPosition().y + 0.4f;
+         }
+        //(80/NuclearWarGame.PPM)
          Gdx.app.log("Jugador", "Posicion: (x,y) " + player.body.getPosition().toString());
 
          mainCamera.update();

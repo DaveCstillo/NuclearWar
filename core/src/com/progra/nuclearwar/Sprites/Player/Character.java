@@ -1,5 +1,6 @@
 package com.progra.nuclearwar.Sprites.Player;
 
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -9,6 +10,8 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
+import com.badlogic.gdx.physics.box2d.Filter;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -20,9 +23,9 @@ import com.progra.nuclearwar.Screens.PlayScreen;
 
 public class Character extends Sprite {
 //imagenes del personaje, estando parado y saltando
-    TextureRegion characterStand, characterJump;
+    TextureRegion characterStand, characterJump, characterDead;
 //es una enumeracion que indica que en que estado se encuentra el personaje
-    public enum State{FALLING, JUMPING, STANDING, RUNNING}
+    public enum State{FALLING, JUMPING, STANDING, RUNNING, DEAD} //new enum DEAD
 //para verificar en que estado esta y estuvo el personaje
     public State Currentstate, PreviousState;
 
@@ -36,6 +39,8 @@ public class Character extends Sprite {
     public BodyDef bodydef;
 
     public boolean toMove;
+    public boolean isOliverDead;//new control variable
+    public float moveToX, moveToY;
 
     public Character(World world, PlayScreen screen) {
         super(screen.getAtlas().findRegion("Oliver"));
@@ -53,6 +58,7 @@ public class Character extends Sprite {
         stateTimer = 0;
         runningRight = true;
         toMove = false;
+        isOliverDead = false;
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
 
@@ -67,11 +73,14 @@ public class Character extends Sprite {
 
         characterJump = new TextureRegion(atlas,8,0,8,16);//para definir la imagen del personaje saltando
 
+        characterDead = new TextureRegion(atlas, 16,0,8,16);//new textureRegion para el personaje muerto
     }
 
     public void update(float dt){
         setPosition(body.getPosition().x-getWidth()/2,body.getPosition().y-getHeight()/2);
         setRegion(getFrame(dt));
+        if(toMove)
+            tpCharacter();
     }
 
 
@@ -85,6 +94,9 @@ public class Character extends Sprite {
                 break;
             case RUNNING:
                 region = (TextureRegion) characterRun.getKeyFrame(stateTimer,true);
+                break;
+            case DEAD: //new case to set the TextureRegion
+                region = characterDead;
                 break;
             case FALLING:
             case STANDING:
@@ -112,6 +124,8 @@ public class Character extends Sprite {
             return State.FALLING;
         }else if(body.getLinearVelocity().x!=0){
             return State.RUNNING;
+        }else if(isOliverDead){//new if statement to get State of character
+            return State.DEAD;
         }
         else{
             return State.STANDING;
@@ -133,11 +147,12 @@ public class Character extends Sprite {
         fixturedef.filter.categoryBits = NuclearWarGame.PLAYER_BIT;
         fixturedef.filter.maskBits =
                 NuclearWarGame.GROUND_BIT |
-                NuclearWarGame.CHEST_BIT |
-                NuclearWarGame.WALL_BIT |
-                NuclearWarGame.ENEMY_BIT |
-                NuclearWarGame.ENEMY_HEAD_BIT |
-                NuclearWarGame.ITEM_BIT;
+                        NuclearWarGame.CHEST_BIT |
+                        NuclearWarGame.WALL_BIT |
+                        NuclearWarGame.ENEMY_BIT |
+                        NuclearWarGame.ENEMY_HEAD_BIT |
+                        NuclearWarGame.ITEM_BIT |
+                        NuclearWarGame.DOORS_BIT;
 
         fixturedef.shape = circle;
         body.createFixture(fixturedef).setUserData(this);
@@ -146,7 +161,7 @@ public class Character extends Sprite {
         feet.set(new Vector2(-4/NuclearWarGame.PPM, -9 /NuclearWarGame.PPM),new Vector2(4/NuclearWarGame.PPM, -9/NuclearWarGame.PPM));
         fixturedef.shape = feet;
         fixturedef.isSensor = true;
-        fixturedef.filter.maskBits = NuclearWarGame.GROUND_BIT | NuclearWarGame.DOORS_BIT;
+        fixturedef.filter.maskBits = NuclearWarGame.GROUND_BIT;
 
         body.createFixture(fixturedef).setUserData("feet");
     }
@@ -155,10 +170,10 @@ public class Character extends Sprite {
         return PreviousState;
     }
 
-    public void moveCharacter(float x, float y){
+    public void moveCharacter(){
 
         bodydef = new BodyDef();
-        bodydef.position.set(x/ NuclearWarGame.PPM,y/NuclearWarGame.PPM);
+        bodydef.position.set(moveToX,moveToY);
         bodydef.type = BodyDef.BodyType.DynamicBody;
 
         body = world.createBody(bodydef);
@@ -175,7 +190,8 @@ public class Character extends Sprite {
                         NuclearWarGame.WALL_BIT |
                         NuclearWarGame.ENEMY_BIT |
                         NuclearWarGame.ENEMY_HEAD_BIT |
-                        NuclearWarGame.ITEM_BIT;
+                        NuclearWarGame.ITEM_BIT |
+                        NuclearWarGame.DOORS_BIT;
 
         fixturedef.shape = circle;
         body.createFixture(fixturedef).setUserData(this);
@@ -184,23 +200,35 @@ public class Character extends Sprite {
         feet.set(new Vector2(-4/NuclearWarGame.PPM, -9 /NuclearWarGame.PPM),new Vector2(4/NuclearWarGame.PPM, -9/NuclearWarGame.PPM));
         fixturedef.shape = feet;
         fixturedef.isSensor = true;
-        fixturedef.filter.maskBits = NuclearWarGame.GROUND_BIT | NuclearWarGame.DOORS_BIT;
+        fixturedef.filter.maskBits = NuclearWarGame.GROUND_BIT;
 
         body.createFixture(fixturedef).setUserData("feet");
-
-
+        toMove = false;
     }
 
-    public void tpCharacter(float x, float y){
-        if(toMove){
-            world.destroyBody(body);
-            moveCharacter(x,y);
-        }
+    public void tpCharacter(){
+        world.destroyBody(body);
+        moveCharacter();
     }
 
 
-    public void setToMove(boolean toMove, float x, float y) {
-        this.toMove = toMove;
-        tpCharacter(x,y);
+    public void setToMove(float x, float y) {
+        this.toMove = true;
+        this.moveToX = x;
+        this.moveToY = y;
+    }
+
+
+    public void hit(){ //new code here
+        NuclearWarGame.assetManager.get("audio/music/music1.wav",Music.class).stop();
+        NuclearWarGame.assetManager.get("audio/sounds/hit-player.wav",Music.class).play();
+        isOliverDead= true;
+        Filter filter = new Filter();
+        filter.maskBits = NuclearWarGame.NOTHING_BIT;
+        for(Fixture fix : body.getFixtureList())
+            fix.setUserData(filter);
+
+        body.applyLinearImpulse(new Vector2(0, 4f),body.getWorldCenter(),true);
+
     }
 }
