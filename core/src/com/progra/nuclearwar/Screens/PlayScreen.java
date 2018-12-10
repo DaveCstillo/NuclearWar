@@ -52,8 +52,8 @@ public class PlayScreen extends BaseScreen {
 
         B2worldcreator creator;
 
-    public PlayScreen(NuclearWarGame game) {
-        super(game);
+    public PlayScreen(NuclearWarGame juego) {
+        super(juego);
         mainCamera = new OrthographicCamera();
         gameport = new FitViewport((V_WIDTH/2) /game.PPM, (game.V_HEIGHT/2) / game.PPM,mainCamera);
         loader = new TmxMapLoader();

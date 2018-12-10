@@ -142,7 +142,7 @@ public class Character extends Sprite {
 
     public void defineCharacter(){
         bodydef = new BodyDef();
-        bodydef.position.set(positionX/ NuclearWarGame.PPM,positionY/NuclearWarGame.PPM);
+        bodydef.position.set(positionX/ NuclearWarGame.PPM, positionY/NuclearWarGame.PPM);
         bodydef.type = BodyDef.BodyType.DynamicBody;
 
         body = world.createBody(bodydef);
@@ -231,7 +231,8 @@ public class Character extends Sprite {
     public void hit(){ //new code here
         NuclearWarGame.assetManager.get("audio/music/music1.wav",Music.class).stop();
         NuclearWarGame.assetManager.get("audio/sounds/hit_player.wav",Music.class).play();
-        NuclearWarGame.assetManager.get("audio/sounds/evil-laugh_cackle.wav",Music.class).play();
+       // NuclearWarGame.assetManager.get("audio/sounds/evil-laugh_cackle.wav",Music.class).play();
+        NuclearWarGame.assetManager.get("audio/sounds/videogame-dieorlose.flac",Music.class).play();
         isOliverDead= true;
         Filter filter = new Filter();
         filter.maskBits = NuclearWarGame.NOTHING_BIT;
