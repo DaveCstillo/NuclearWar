@@ -5,6 +5,8 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
+import com.progra.nuclearwar.Hitbox.Agua;
+import com.progra.nuclearwar.Hitbox.CastilloEntrada;
 import com.progra.nuclearwar.Hitbox.Cofre;
 import com.progra.nuclearwar.Hitbox.Enemy_Bounds;
 import com.progra.nuclearwar.Hitbox.Ground;
@@ -13,6 +15,7 @@ import com.progra.nuclearwar.Hitbox.Puerta1;
 import com.progra.nuclearwar.Hitbox.Puerta2;
 import com.progra.nuclearwar.Hitbox.Walls;
 import com.progra.nuclearwar.NuclearWarGame;
+import com.progra.nuclearwar.Screens.BaseScreen;
 import com.progra.nuclearwar.Screens.PlayScreen;
 import com.progra.nuclearwar.Sprites.Enemies.Goblin;
 import com.progra.nuclearwar.Sprites.Enemies.Skull;
@@ -22,7 +25,7 @@ public class B2worldcreator {
     Array<Goblin> Duendes;
 
 
-    public B2worldcreator(PlayScreen playScreen) {
+    public B2worldcreator(BaseScreen playScreen) {
         TiledMap map = playScreen.getMap();//para regresar el mapa para controlar
 
         //cambio a interactive tileobject, en el constructor ya no pide RectangleMaoObject, ahora pide MapObject
@@ -33,9 +36,6 @@ public class B2worldcreator {
         }
         for (MapObject object : map.getLayers().get("plataformas").getObjects().getByType(RectangleMapObject.class)) {
             new Platforms(playScreen,object);
-        }
-        for (MapObject object : map.getLayers().get("castillo").getObjects().getByType(RectangleMapObject.class)){
-                new Walls(playScreen,object);
         }
         for (MapObject object : map.getLayers().get("puerta1").getObjects().getByType(RectangleMapObject.class)){
             new Puerta1(playScreen,object);
@@ -51,6 +51,12 @@ public class B2worldcreator {
         }
         for (MapObject object : map.getLayers().get("BOUNDS").getObjects().getByType(RectangleMapObject.class)){
             new Enemy_Bounds(playScreen, object);
+        }
+        for (MapObject object : map.getLayers().get("castillo").getObjects().getByType(RectangleMapObject.class)){
+            new CastilloEntrada(playScreen, object);
+        }
+        for (MapObject object : map.getLayers().get("dieLimit").getObjects().getByType(RectangleMapObject.class)){
+            new Agua(playScreen, object);
         }
 
         Esqueletos = new Array<Skull>();

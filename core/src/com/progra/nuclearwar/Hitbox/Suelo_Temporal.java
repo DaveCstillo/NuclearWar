@@ -3,12 +3,13 @@ package com.progra.nuclearwar.Hitbox;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.progra.nuclearwar.NuclearWarGame;
+import com.progra.nuclearwar.Screens.BaseScreen;
 import com.progra.nuclearwar.Screens.PlayScreen;
 
 public class Suelo_Temporal extends InteractiveTileObject {
-    PlayScreen pantalla;
+    BaseScreen pantalla;
 
-    public Suelo_Temporal(PlayScreen screen,MapObject object) {
+    public Suelo_Temporal(BaseScreen screen, MapObject object) {
         super(screen, object);
         pantalla = screen;
         fixture.setUserData(this);

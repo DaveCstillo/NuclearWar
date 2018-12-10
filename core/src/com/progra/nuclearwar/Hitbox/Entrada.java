@@ -4,21 +4,22 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.progra.nuclearwar.NuclearWarGame;
+import com.progra.nuclearwar.Screens.BaseScreen;
 import com.progra.nuclearwar.Screens.PlayScreen;
 
 public class Entrada extends InteractiveTileObject {
-    PlayScreen pantalla;
+    BaseScreen pantalla;
     Suelo_Total total;
     Suelo_Temporal temporal;
     TiledMap castillomapa;
 
-    public Entrada(PlayScreen screen, MapObject object, Suelo_Temporal temporal, Suelo_Total total) {
+    public Entrada(BaseScreen screen, MapObject object, Suelo_Temporal temporal, Suelo_Total total) {
         super(screen, object);
         pantalla = screen;
         this.temporal = temporal;
         this.total = total;
         fixture.setUserData(this);
-        setCategoryFilter(NuclearWarGame.DOORS_BIT);
+        setCategoryFilter(NuclearWarGame.ENTRANCE_BIT);
         castillomapa = screen.getMap();
 
     }

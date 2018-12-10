@@ -6,10 +6,11 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.progra.nuclearwar.NuclearWarGame;
 
-public class AController {
+public class AController implements Disposable {
     boolean jumppressed, firepressed;
 
     Viewport btnvport;
@@ -56,6 +57,11 @@ public class AController {
             return false;
         }
 
+    }
+
+    @Override
+    public void dispose() {
+        stage.dispose();
     }
 
     public void resize(int width, int height){

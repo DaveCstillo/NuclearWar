@@ -5,14 +5,15 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.progra.nuclearwar.NuclearWarGame;
+import com.progra.nuclearwar.Screens.BaseScreen;
 import com.progra.nuclearwar.Screens.PlayScreen;
 import com.progra.nuclearwar.Sprites.Player.Character;
 
 public class Puerta1 extends InteractiveTileObject {
 
-    PlayScreen pantalla;
+    BaseScreen pantalla;
 
-    public Puerta1(PlayScreen screen, MapObject object) {
+    public Puerta1(BaseScreen screen, MapObject object) {
         super(screen, object);
         pantalla = screen;
         fixture.setUserData(this);

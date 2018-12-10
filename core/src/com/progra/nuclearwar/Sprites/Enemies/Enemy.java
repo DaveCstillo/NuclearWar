@@ -5,17 +5,18 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import com.progra.nuclearwar.Screens.BaseScreen;
 import com.progra.nuclearwar.Screens.PlayScreen;
 
 public abstract class Enemy extends Sprite {
 
    protected World world;
-   PlayScreen screen;
+   BaseScreen screen;
    Vector2 velocidad;
    public Body body; //traspaso de variable desde cada uno de los enemigos a una sola variable dentro de Enemy
 
 
-    public Enemy(PlayScreen screen, float x, float y) {
+    public Enemy(BaseScreen screen, float x, float y) {
         this.screen = screen;
         this.world = screen.getWorld();
         setPosition(x, y);

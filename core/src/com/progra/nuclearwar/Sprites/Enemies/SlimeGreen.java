@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.progra.nuclearwar.Hud;
 import com.progra.nuclearwar.NuclearWarGame;
+import com.progra.nuclearwar.Screens.BaseScreen;
 import com.progra.nuclearwar.Screens.PlayScreen;
 
 public class SlimeGreen extends Enemy {
@@ -26,7 +27,7 @@ public class SlimeGreen extends Enemy {
     private Array<TextureRegion> frames;
 
 
-    public SlimeGreen(PlayScreen screen, float x, float y) {
+    public SlimeGreen(BaseScreen screen, float x, float y) {
         super(screen, x, y);
         frames = new Array<TextureRegion>();
 

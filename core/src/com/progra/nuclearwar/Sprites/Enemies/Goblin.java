@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.progra.nuclearwar.Hud;
 import com.progra.nuclearwar.NuclearWarGame;
+import com.progra.nuclearwar.Screens.BaseScreen;
 import com.progra.nuclearwar.Screens.PlayScreen;
 
 public class Goblin  extends Enemy{
@@ -25,7 +26,7 @@ public class Goblin  extends Enemy{
     private Animation walkAnimation;
     private Array<TextureRegion> frames;
 
-    public Goblin(PlayScreen screen, float x, float y) {
+    public Goblin(BaseScreen screen, float x, float y) {
         super(screen, x, y);
         frames = new Array<TextureRegion>();
         for (int i = 0; i<3;i++){
@@ -68,7 +69,8 @@ public class Goblin  extends Enemy{
                 NuclearWarGame.WALL_BIT |
                 NuclearWarGame.ENEMY_BOUNDS_BIT |
                 NuclearWarGame.ENEMY_BIT |
-                NuclearWarGame.PLAYER_BIT;
+                NuclearWarGame.PLAYER_BIT |
+                NuclearWarGame.ENTRANCE_BIT;
 
         fixturedef.shape = circle;
         body.createFixture(fixturedef).setUserData(this);
@@ -105,7 +107,7 @@ public class Goblin  extends Enemy{
     public void onHeadHit() {
         setOnDestroy = true;
         Hud.addScore(150);
-        NuclearWarGame.assetManager.get("audio/sounds/goblin-death.wav",Music.class).play();
+        NuclearWarGame.assetManager.get("audio/sounds/evil-yelling.wav",Music.class).play();
     }
 
     @Override

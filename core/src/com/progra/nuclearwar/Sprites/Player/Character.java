@@ -13,16 +13,19 @@ import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.progra.nuclearwar.NuclearWarGame;
+import com.progra.nuclearwar.Screens.BaseScreen;
 import com.progra.nuclearwar.Screens.PlayScreen;
+import com.progra.nuclearwar.Tools.MController;
 
 
 public class Character extends Sprite {
-//imagenes del personaje, estando parado y saltando
+//imagenes del personaje, estando parado, saltando y muerto
     TextureRegion characterStand, characterJump, characterDead;
 //es una enumeracion que indica que en que estado se encuentra el personaje
     public enum State{FALLING, JUMPING, STANDING, RUNNING, DEAD} //new enum DEAD
@@ -41,13 +44,17 @@ public class Character extends Sprite {
     public boolean toMove;
     public boolean isOliverDead;//new control variable
     public float moveToX, moveToY;
+    public float positionX, positionY; //new para meter al personaje en una posicion especifica inicial
 
-    public Character(World world, PlayScreen screen) {
+    public Character(World world, BaseScreen screen, float posX, float posY) {
         super(screen.getAtlas().findRegion("Oliver"));
 //la imagen del personaje esta en la region de "Oliver" de la imagen Characters.png
         TextureAtlas.AtlasRegion atlas = screen.getAtlas().findRegion("Oliver");
         Currentstate = State.STANDING;
         PreviousState = State.STANDING;
+
+        positionX = posX;
+        positionY = posY;
 
         characterStand = new TextureRegion(atlas,0,0,8,16);
         setBounds(0,0,8/NuclearWarGame.PPM,16/NuclearWarGame.PPM);//escalar la imagen
@@ -90,14 +97,14 @@ public class Character extends Sprite {
 
         TextureRegion region;
         switch(Currentstate) {
+            case DEAD: //new case to set the TextureRegion
+                region = characterDead;
+                break;
             case JUMPING:
                 region = characterJump;
                 break;
             case RUNNING:
                 region = (TextureRegion) characterRun.getKeyFrame(stateTimer,true);
-                break;
-            case DEAD: //new case to set the TextureRegion
-                region = characterDead;
                 break;
             case FALLING:
             case STANDING:
@@ -119,14 +126,14 @@ public class Character extends Sprite {
 
 
     public State getState(){
-        if(body.getLinearVelocity().y>0||body.getLinearVelocity().y<0&&PreviousState == State.JUMPING){
+        if(isOliverDead) {//new if statement to get State of character
+            return State.DEAD;
+        } else if(body.getLinearVelocity().y>0||body.getLinearVelocity().y<0&&PreviousState == State.JUMPING){
             return State.JUMPING;
         }else if(body.getLinearVelocity().y<0){
             return State.FALLING;
         }else if(body.getLinearVelocity().x!=0){
             return State.RUNNING;
-        }else if(isOliverDead){//new if statement to get State of character
-            return State.DEAD;
         }
         else{
             return State.STANDING;
@@ -135,7 +142,7 @@ public class Character extends Sprite {
 
     public void defineCharacter(){
         bodydef = new BodyDef();
-        bodydef.position.set(64/ NuclearWarGame.PPM,128/NuclearWarGame.PPM);
+        bodydef.position.set(positionX/ NuclearWarGame.PPM,positionY/NuclearWarGame.PPM);
         bodydef.type = BodyDef.BodyType.DynamicBody;
 
         body = world.createBody(bodydef);
@@ -148,7 +155,6 @@ public class Character extends Sprite {
         fixturedef.filter.categoryBits = NuclearWarGame.PLAYER_BIT;
         fixturedef.filter.maskBits =
                 NuclearWarGame.GROUND_BIT |
-
                 NuclearWarGame.CHEST_BIT |
                 NuclearWarGame.WALL_BIT |
                 NuclearWarGame.ENEMY_BIT |
@@ -163,7 +169,7 @@ public class Character extends Sprite {
         feet.set(new Vector2(-4/NuclearWarGame.PPM, -9 /NuclearWarGame.PPM),new Vector2(4/NuclearWarGame.PPM, -9/NuclearWarGame.PPM));
         fixturedef.shape = feet;
         fixturedef.isSensor = true;
-        fixturedef.filter.maskBits = NuclearWarGame.GROUND_BIT;
+        fixturedef.filter.maskBits = NuclearWarGame.GROUND_BIT | NuclearWarGame.ENTRANCE_BIT;
 
         body.createFixture(fixturedef).setUserData("feet");
     }
@@ -202,7 +208,7 @@ public class Character extends Sprite {
         feet.set(new Vector2(-4/NuclearWarGame.PPM, -9 /NuclearWarGame.PPM),new Vector2(4/NuclearWarGame.PPM, -9/NuclearWarGame.PPM));
         fixturedef.shape = feet;
         fixturedef.isSensor = true;
-        fixturedef.filter.maskBits = NuclearWarGame.GROUND_BIT;
+        fixturedef.filter.maskBits = NuclearWarGame.GROUND_BIT | NuclearWarGame.ENTRANCE_BIT;;
 
         body.createFixture(fixturedef).setUserData("feet");
         toMove = false;
@@ -224,16 +230,23 @@ public class Character extends Sprite {
 
     public void hit(){ //new code here
         NuclearWarGame.assetManager.get("audio/music/music1.wav",Music.class).stop();
-        NuclearWarGame.assetManager.get("audio/sounds/hit-player.wav",Music.class).play();
+        NuclearWarGame.assetManager.get("audio/sounds/hit_player.wav",Music.class).play();
+        NuclearWarGame.assetManager.get("audio/sounds/evil-laugh_cackle.wav",Music.class).play();
         isOliverDead= true;
         Filter filter = new Filter();
         filter.maskBits = NuclearWarGame.NOTHING_BIT;
-        for(Fixture fix : body.getFixtureList())
-            fix.setUserData(filter);
+        for(Fixture fixture : body.getFixtureList())
+            fixture.setFilterData(filter);
+
 
         body.applyLinearImpulse(new Vector2(0, 4f),body.getWorldCenter(),true);
 
 
 
+    }
+
+
+    public float getStateTimer() {
+        return stateTimer;
     }
 }

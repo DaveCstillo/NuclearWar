@@ -13,7 +13,7 @@ public class NuclearWarGame extends Game {
 	public static final float PPM = 100; //Pixeles Por Metro
 
 	//Bits multiplos de 2 para la colision de objetos(hitbox)
-    public static final short NOTHING_BIT =0;
+    public static final short NOTHING_BIT = 0;
 	public static final short GROUND_BIT = 1;
 	public static final short PLAYER_BIT = 2;
 	public static final short CHEST_BIT = 4;
@@ -24,6 +24,7 @@ public class NuclearWarGame extends Game {
 	public static final short ENEMY_HEAD_BIT = 128;
 	public static final short ENEMY_BOUNDS_BIT =256;
 	public static final short ITEM_BIT =512;
+	public static final short ENTRANCE_BIT = 1024;
 
 
 	/*por ejemplo,  si el personaje esta tocando el suelo, la combinacion en numeros binarios
@@ -60,6 +61,10 @@ public class NuclearWarGame extends Game {
 		assetManager.load( "audio/sounds/slow-zombie-death.mp3",Music.class);
 		assetManager.load( "audio/sounds/game-die.mp3",Music.class);
 		assetManager.load( "audio/sounds/videogame-dieorlose.flac",Music.class);
+		assetManager.load( "audio/sounds/evil-laugh_cackle.wav",Music.class);
+		assetManager.load( "audio/sounds/evil-yelling.wav",Music.class);
+		assetManager.load( "audio/sounds/gag.wav",Music.class);
+		assetManager.load( "audio/sounds/neck_snap.wav",Music.class);
 		assetManager.finishLoading();
 		setScreen(new PlayScreen(this));
 	}

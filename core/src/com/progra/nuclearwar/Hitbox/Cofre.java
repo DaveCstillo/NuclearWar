@@ -7,6 +7,8 @@ import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.math.Vector2;
 import com.progra.nuclearwar.NuclearWarGame;
+import com.progra.nuclearwar.Screens.BaseScreen;
+import com.progra.nuclearwar.Screens.Castle_Screen;
 import com.progra.nuclearwar.Screens.PlayScreen;
 import com.progra.nuclearwar.Sprites.Items.Coin;
 import com.progra.nuclearwar.Sprites.Items.Heart;
@@ -14,20 +16,27 @@ import com.progra.nuclearwar.Sprites.Items.ItemDef;
 
 public class Cofre extends InteractiveTileObject {
 
-    PlayScreen pantalla;
+    BaseScreen pantalla;
     private static TiledMapTileSet tileset;
    // private final int OPEN_CHEST = 406;
-    private final int OPEN_CHEST = 2103;
+    private int OPEN_CHEST;
     TiledMap map;
     private Music openChest;
 
 
-    public Cofre(PlayScreen screen, MapObject object) {
+    public Cofre(BaseScreen screen, MapObject object) {
         super(screen, object);
         pantalla = screen;
         map = screen.getMap();
-        tileset = map.getTileSets().getTileSet(9);
+        tileset = map.getTileSets().getTileSet("miscelanea_stronghold");
         fixture.setUserData(this);
+
+        if(screen.getClass()==PlayScreen.class)
+            OPEN_CHEST = 2103;
+        else if(screen.getClass()== Castle_Screen.class)
+            OPEN_CHEST = 406;
+
+
         setCategoryFilter(NuclearWarGame.CHEST_BIT);
         openChest = NuclearWarGame.assetManager.get("audio/sounds/chest_opening.wav", Music.class);
     }

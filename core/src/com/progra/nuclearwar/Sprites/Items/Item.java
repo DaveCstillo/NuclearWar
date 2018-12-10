@@ -6,12 +6,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.progra.nuclearwar.NuclearWarGame;
+import com.progra.nuclearwar.Screens.BaseScreen;
 import com.progra.nuclearwar.Screens.PlayScreen;
 import com.progra.nuclearwar.Sprites.Player.Character;
 
 public abstract class Item extends Sprite {
 
-    protected PlayScreen screen;
+    protected BaseScreen screen;
     protected World world;
     protected Vector2 velocity;
     protected boolean toDestroy;
@@ -19,7 +20,7 @@ public abstract class Item extends Sprite {
     protected Body body;
 
 
-    public Item(PlayScreen screen, float x, float y) {
+    public Item(BaseScreen screen, float x, float y) {
         this.screen = screen;
         this.world = screen.getWorld();
         setPosition(x,y);

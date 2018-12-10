@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.progra.nuclearwar.Hud;
 import com.progra.nuclearwar.NuclearWarGame;
+import com.progra.nuclearwar.Screens.BaseScreen;
 import com.progra.nuclearwar.Screens.PlayScreen;
 import com.progra.nuclearwar.Sprites.Player.Character;
 
@@ -14,7 +15,7 @@ public class Coin extends Item {
 
     private Music coin;
 
-    public Coin(PlayScreen screen, float x, float y) {
+    public Coin(BaseScreen screen, float x, float y) {
         super(screen, x, y);
         setRegion(screen.getAtlas().findRegion("items"),8,0,8,8);
         velocity = new Vector2(0,0);

@@ -15,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.progra.nuclearwar.NuclearWarGame;
+import com.progra.nuclearwar.Screens.BaseScreen;
 import com.progra.nuclearwar.Screens.PlayScreen;
 
 public abstract class InteractiveTileObject {
@@ -26,9 +27,9 @@ public abstract class InteractiveTileObject {
     protected Fixture fixture;
 
     protected MapObject object;
-    protected PlayScreen screen;
+    protected BaseScreen screen;
 
-    public InteractiveTileObject(PlayScreen screen, MapObject object) {
+    public InteractiveTileObject(BaseScreen screen, MapObject object) {
         this.object = object;
         this.screen = screen;
         this.world = screen.getWorld();

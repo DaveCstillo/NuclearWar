@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.progra.nuclearwar.Hud;
 import com.progra.nuclearwar.NuclearWarGame;
+import com.progra.nuclearwar.Screens.BaseScreen;
 import com.progra.nuclearwar.Screens.PlayScreen;
 
 public class Mushroom extends Enemy {
@@ -27,7 +28,7 @@ public class Mushroom extends Enemy {
     private Array<TextureRegion> frames;
 
 
-    public Mushroom(PlayScreen screen, float x, float y) {
+    public Mushroom(BaseScreen screen, float x, float y) {
         super(screen, x, y);
         frames = new Array<TextureRegion>();
 

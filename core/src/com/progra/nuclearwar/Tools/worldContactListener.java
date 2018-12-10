@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.progra.nuclearwar.Hitbox.CastilloEntrada;
 import com.progra.nuclearwar.Hitbox.Cofre;
 import com.progra.nuclearwar.Hitbox.Ground;
 import com.progra.nuclearwar.Hitbox.InteractiveTileObject;
@@ -94,6 +95,14 @@ public class worldContactListener implements ContactListener {
                 else if(fixB.getUserData().getClass() == Puerta2.class)
                     ((Puerta2) fixB.getUserData()).entrar((Character) fixA.getUserData());
                 else
+
+
+                if(fixA.getUserData().getClass() == CastilloEntrada.class)
+                    ((CastilloEntrada) fixA.getUserData()).changeMap();
+                else if(fixB.getUserData().getClass() == CastilloEntrada.class)
+                    ((CastilloEntrada) fixB.getUserData()).changeMap();
+                else
+
 
                     break;
 

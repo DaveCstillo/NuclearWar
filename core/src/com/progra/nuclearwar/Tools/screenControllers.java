@@ -46,6 +46,7 @@ public class screenControllers implements Disposable {
 
     @Override
     public void dispose() {
-
+        actionC.dispose();
+        movementC.dispose();
     }
 }

@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.progra.nuclearwar.Hud;
 import com.progra.nuclearwar.NuclearWarGame;
+import com.progra.nuclearwar.Screens.BaseScreen;
 import com.progra.nuclearwar.Screens.PlayScreen;
 
 public class Skull extends Enemy {
@@ -28,7 +29,7 @@ public class Skull extends Enemy {
 
     boolean runningRight = true;
 
-    public Skull(PlayScreen screen, float x, float y) {
+    public Skull(BaseScreen screen, float x, float y) {
         super(screen, x, y);
         frames = new Array<TextureRegion>();
 
@@ -93,7 +94,8 @@ public class Skull extends Enemy {
                         NuclearWarGame.ENEMY_BOUNDS_BIT |
                         NuclearWarGame.PLAYER_BIT |
                         NuclearWarGame.ENEMY_BIT |
-                        NuclearWarGame.WALL_BIT;
+                        NuclearWarGame.WALL_BIT |
+                        NuclearWarGame.ENTRANCE_BIT;
 
         fixturedef.shape = circle;
         body.createFixture(fixturedef).setUserData(this);
@@ -120,7 +122,7 @@ public class Skull extends Enemy {
     public void onHeadHit() {
         setOnDestroy = true;
         Hud.addScore(150);
-        NuclearWarGame.assetManager.get("audio/sounds/falling-bones.wav",Music.class).play();
+        NuclearWarGame.assetManager.get("audio/sounds/neck_snap.wav",Music.class).play();
     }
 
     @Override

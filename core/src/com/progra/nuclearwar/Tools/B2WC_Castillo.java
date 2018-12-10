@@ -13,6 +13,8 @@ import com.progra.nuclearwar.Hitbox.Suelo_Temporal;
 import com.progra.nuclearwar.Hitbox.Suelo_Total;
 import com.progra.nuclearwar.Hitbox.Walls;
 import com.progra.nuclearwar.NuclearWarGame;
+import com.progra.nuclearwar.Screens.BaseScreen;
+import com.progra.nuclearwar.Screens.Castle_Screen;
 import com.progra.nuclearwar.Screens.PlayScreen;
 import com.progra.nuclearwar.Sprites.Enemies.Goblin;
 import com.progra.nuclearwar.Sprites.Enemies.Skull;
@@ -23,7 +25,7 @@ public class B2WC_Castillo {
     Array<Goblin> Duendes;
 
 
-    public B2WC_Castillo(PlayScreen playScreen) {
+    public B2WC_Castillo(BaseScreen playScreen) {
         TiledMap map = playScreen.getMap();
 
         Suelo_Temporal temporal = null;
@@ -36,7 +38,6 @@ public class B2WC_Castillo {
             new Walls(playScreen, object);
         }
         for (MapObject object : map.getLayers().get("suelo").getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect = ((RectangleMapObject)object).getRectangle();
             new Suelo(playScreen, object);
         }
         for (MapObject object : map.getLayers().get("Piso_temporal").getObjects().getByType(RectangleMapObject.class)){

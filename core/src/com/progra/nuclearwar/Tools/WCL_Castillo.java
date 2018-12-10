@@ -59,10 +59,10 @@ public class WCL_Castillo implements ContactListener {
 
                 break;
             case NuclearWarGame.ENEMY_BIT | NuclearWarGame.PLAYER_BIT:
-                if(fixA.getFilterData().categoryBits == NuclearWarGame.ENEMY_BIT)
-                    Gdx.app.log("Jugador", "DEAD");
+                if(fixA.getFilterData().categoryBits == NuclearWarGame.PLAYER_BIT)
+                    ((Character)fixA.getUserData()).hit();
                 else
-                    Gdx.app.log("Jugador", "DEAD");
+                    ((Character)fixB.getUserData()).hit();
 
                 break;
             case NuclearWarGame.PLAYER_BIT | NuclearWarGame.CHEST_BIT:
@@ -78,7 +78,7 @@ public class WCL_Castillo implements ContactListener {
                 else
                     ((Item) fixB.getUserData()).use((Character) fixA.getUserData());
                 break;
-            case NuclearWarGame.ENEMY_BIT | NuclearWarGame.ENEMY_BIT:
+            case NuclearWarGame.ENEMY_BIT:
                 ((Enemy)fixA.getUserData()).reverseVelocity(true, false);
                 ((Enemy)fixB.getUserData()).reverseVelocity(true, false);
                 break;

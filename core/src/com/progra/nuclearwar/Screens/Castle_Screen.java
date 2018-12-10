@@ -19,15 +19,14 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.progra.nuclearwar.Hud;
 import com.progra.nuclearwar.NuclearWarGame;
+import com.progra.nuclearwar.Sprites.Enemies.Enemy;
+import com.progra.nuclearwar.Sprites.Enemies.FireSkull;
+import com.progra.nuclearwar.Sprites.Enemies.Mushroom;
 import com.progra.nuclearwar.Sprites.Items.Coin;
 import com.progra.nuclearwar.Sprites.Items.Heart;
 import com.progra.nuclearwar.Sprites.Items.Item;
 import com.progra.nuclearwar.Sprites.Items.ItemDef;
 import com.progra.nuclearwar.Sprites.Player.Character;
-import com.progra.nuclearwar.Sprites.Enemies.Enemy;
-import com.progra.nuclearwar.Sprites.Enemies.FireSkull;
-import com.progra.nuclearwar.Sprites.Enemies.Goblin;
-import com.progra.nuclearwar.Sprites.Enemies.Mushroom;
 import com.progra.nuclearwar.Tools.AController;
 import com.progra.nuclearwar.Tools.B2WC_Castillo;
 import com.progra.nuclearwar.Tools.B2worldcreator;
@@ -40,24 +39,27 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import static com.progra.nuclearwar.NuclearWarGame.V_WIDTH;
 
+public class Castle_Screen extends BaseScreen {
 
-public class PlayScreen extends BaseScreen {
+    //musica
+    private Music grassSound;
+
+    //Enemigos
+    private FireSkull calaca;
+    private Mushroom hongo;
 
     //Items
     private Array<Item> items;
     private LinkedBlockingQueue<ItemDef> itemsToSpawn;
 
-    //musica
-    private Music grassSound;
+    B2WC_Castillo creator;
 
-        B2worldcreator creator;
-
-    public PlayScreen(NuclearWarGame game) {
+    public Castle_Screen(NuclearWarGame game) {
         super(game);
         mainCamera = new OrthographicCamera();
         gameport = new FitViewport((V_WIDTH/2) /game.PPM, (game.V_HEIGHT/2) / game.PPM,mainCamera);
         loader = new TmxMapLoader();
-        map = loader.load("mapas/mapa2.tmx");
+        map = loader.load("mapas/Castillo_Mapa.tmx");
         renderer = new OrthogonalTiledMapRenderer(map,1/game.PPM);
         SpriteBatch batch = new SpriteBatch();
 
@@ -72,11 +74,19 @@ public class PlayScreen extends BaseScreen {
         mcontroller = controllers.getMovementC();
         acontroller = controllers.getActionC();
 
-        creator = new B2worldcreator(this);
+        calaca = new FireSkull(this, 2.88f,5.28f);
+        hongo = new Mushroom(this,1.12f,2.56f);
 
-        player = new Character(world,this,64,128);
+        creator = new B2WC_Castillo(this);
 
-        world.setContactListener(new worldContactListener());
+        player = new Character(world,this,48,32);
+
+        //temporal
+        calaca = new FireSkull(this, 2.88f,5.28f);
+        hongo = new Mushroom(this,1.12f,2.56f);
+        //temporal
+
+        world.setContactListener(new WCL_Castillo());
 
         mainCamera.position.y = 1f;
         NuclearWarGame.assetManager.get("audio/music/music1.wav",Music.class).setLooping(true);
@@ -88,12 +98,14 @@ public class PlayScreen extends BaseScreen {
         items = new Array<Item>();
         itemsToSpawn = new LinkedBlockingQueue<ItemDef>();
     }
+
     @Override
-    public void spawnItems(ItemDef idef){
+    public void spawnItems(ItemDef idef) {
         itemsToSpawn.add(idef);
     }
+
     @Override
-    public void handleSpawningItems(){
+    public void handleSpawningItems() {
         if(!itemsToSpawn.isEmpty()) {
             ItemDef idef = itemsToSpawn.poll();
             if(idef.type == Coin.class){
@@ -141,55 +153,71 @@ public class PlayScreen extends BaseScreen {
         }
     }
 
-
     @Override
-     public void update(float dt){
+    public void update(float dt) {
         player.update(dt);
         hud.update(dt);
 
-         if(player.Currentstate != Character.State.DEAD) { //new if oliver is dead, don´t let camera follow oliver
-             mainCamera.position.x = player.body.getPosition().x;    //esto es para que se mueva en x
-             //esto es para que solo al caer en el suelo, se mueva la camara
-             if (player.body.getPosition().y < 3.7f)
-                 mainCamera.position.y = player.body.getPosition().y + 0.4f;
-         }
+        if(player.Currentstate != Character.State.DEAD) { //new if oliver is dead, don´t let camera follow oliver
+           // mainCamera.position.x = player.body.getPosition().x;    //esto es para que se mueva en x
+            //esto es para que solo al caer en el suelo, se mueva la camara
+            if (((player.Currentstate != Character.State.JUMPING) && isOnGround()) && player.body.getPosition().y < 6.7f)
+                mainCamera.position.y = player.body.getPosition().y + 0.4f;
+        }
 
 
         handleInput(dt);
         handleSpawningItems();
         world.step(1/60f,6,2);
 
-         for(Enemy enemy : creator.getEsqueletos()){
+        for(Enemy enemy : creator.getEsqueletos()){
             enemy.update(dt);
             if(enemy.getY() < player.getY() + 1.5f)//si la posicion del enemigo es menor a la posicion del jugador mas la distancia a calcular
                 enemy.body.setActive(true);//activar al enemigo
         }
 
-         for(Enemy enemy : creator.getDuendes()){
-             enemy.update(dt);
-             if(enemy.getY() < player.getY() + 1.5f)//si la posicion del enemigo es menor a la posicion del jugador mas la distancia a calcular
-                 enemy.body.setActive(true);//activar al enemigo
-         }
+        for(Enemy enemy : creator.getDuendes()){
+            enemy.update(dt);
+            if(enemy.getY() < player.getY() + 1.5f)//si la posicion del enemigo es menor a la posicion del jugador mas la distancia a calcular
+                enemy.body.setActive(true);//activar al enemigo
+        }
 
         for(Item item : items)
-             item.update(dt);
-         mainCamera.update();
+            item.update(dt);
+
+        calaca.update(dt);
+        hongo.update(dt);
+
+        if(calaca.getY() < player.getY() + 1.5f)
+            calaca.body.setActive(true);
+
+        if(hongo.getY() < player.getY() + 1.5f)
+            hongo.body.setActive(true);
+
+        if(player.getState() != Character.State.DEAD) { //new if oliver is dead, don´t let camera follow oliver
+            mainCamera.position.x = player.body.getPosition().x;    //esto es para que no se mueva en x
+            //esto es para que solo al caer en el suelo, se mueva la camara
+            if (((player.getState() != Character.State.JUMPING) && isOnGround()) && player.body.getPosition().y < 6.7f)
+                mainCamera.position.y = player.body.getPosition().y + 0.4f;
+        }
+
+        mainCamera.update();
         //(80/NuclearWarGame.PPM)
 
-         game.batch.setProjectionMatrix(mainCamera.combined);
+        game.batch.setProjectionMatrix(mainCamera.combined);
 
         renderer.setView(mainCamera);
 
         corriendo();
-     }
+    }
 
-     public void corriendo(){
+    public void corriendo(){
         if(player.getState() == Character.State.RUNNING && isOnGround()){
             grassSound.play();
         }else{
             grassSound.stop();
-         }
-     }
+        }
+    }
 
     @Override
     public void render(float delta) {
@@ -212,15 +240,12 @@ public class PlayScreen extends BaseScreen {
         }
         for(Item item : items)
             item.draw(game.batch);
+        calaca.draw(game.batch);
+        hongo.draw(game.batch);
         game.batch.end();
 
         hud.draw();
         controllers.draw();
-
-        if(isChangingMap()){
-            game.setScreen(new Castle_Screen(game));
-            dispose();
-        }
 
         if(gameOver()){
             game.setScreen(new GameOverScreen(game));

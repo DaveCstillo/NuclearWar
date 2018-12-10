@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="left-up" width="100" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="26" nextobjectid="64">
+<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="left-up" width="100" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="27" nextobjectid="65">
  <tileset firstgid="1" source="GrassLand_Background_1.tsx"/>
  <tileset firstgid="326" source="GrassLand_Background_2.tsx"/>
  <tileset firstgid="638" source="GrassLand_Background_3.tsx"/>
@@ -120,6 +120,9 @@
   <object id="40" x="768" y="128" width="15.75" height="16"/>
   <object id="41" x="944" y="288" width="16" height="16"/>
   <object id="42" x="1328" y="288" width="16" height="16"/>
+ </objectgroup>
+ <objectgroup id="26" name="dieLimit">
+  <object id="64" x="256" y="352" width="64"/>
  </objectgroup>
  <objectgroup id="23" name="Duendes">
   <object id="44" x="1424" y="288" width="16" height="16"/>

@@ -10,14 +10,15 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.progra.nuclearwar.NuclearWarGame;
+import com.progra.nuclearwar.Screens.BaseScreen;
 import com.progra.nuclearwar.Screens.PlayScreen;
 
 import java.awt.Polygon;
 
 public class Ground extends InteractiveTileObject{
-    PlayScreen pantalla;
+    BaseScreen pantalla;
 
-    public Ground(PlayScreen screen, MapObject object) {
+    public Ground(BaseScreen screen, MapObject object) {
         super(screen, object);
         pantalla = screen;
         fixture.setUserData(this);
